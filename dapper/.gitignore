@@ -1,0 +1,10 @@
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
+venv/
+.venv/
+.DS_Store
+results/raw/
+*.mp4
+*.avi
