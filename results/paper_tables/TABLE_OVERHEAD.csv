@@ -1,0 +1,9 @@
+Quantity,Value,Basis
+Scheduler decision (mean),1.45 us,200000 calls
+Scheduler decision (median),1.40 us,200000 calls
+Scheduler decision (p95),1.80 us,200000 calls
+Scheduler decision (p99),2.00 us,200000 calls
+DAPPER mode switches / 1000 frames,268.5,5 profiles x 30 seeds
+"Benchmark wall time, local_only",4.90 us/frame,3000 frames
+"Benchmark wall time, edge_only",5.98 us/frame,3000 frames
+"Benchmark wall time, dapper",6.20 us/frame,3000 frames

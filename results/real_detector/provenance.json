@@ -1,6 +1,8 @@
 {
   "dataset_yaml": "C:\\Users\\awaiz\\OneDrive\\Desktop\\Dapper\\real_validation\\data\\coco_val2017.yaml",
   "n_images": 5000,
+  "cpu_subset_local": -1,
+  "cpu_subset_remote": 250,
   "local_model": "yolo11n.pt",
   "remote_model": "yolo11m.pt",
   "device": "cuda:0",

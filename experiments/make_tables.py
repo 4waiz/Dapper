@@ -245,19 +245,41 @@ def table_real_detector(quality: pd.DataFrame, latency: pd.DataFrame,
 
     if replay is not None and len(replay):
         r = replay[replay["deadline_sweep_ms"] == 100.0]
-        g = r.groupby("policy", as_index=False)[
-            ["delivered_recall", "delivered_safety_recall", "deadline_miss_rate",
-             "p95_latency_ms", "bandwidth_per_1000_frames_kb", "reuse_rate"]].mean()
+        cols = ["delivered_recall", "delivered_recall_fresh_only",
+                "delivered_safety_recall", "delivered_safety_recall_fresh_only",
+                "deadline_miss_rate", "p95_latency_ms",
+                "bandwidth_per_1000_frames_kb", "reuse_rate"]
+        cols = [c for c in cols if c in r.columns]
+        g = r.groupby("policy", as_index=False)[cols].mean()
         g = g.set_index("policy").reindex([p for p in POLICY_ORDER
                                            if p in set(g["policy"])]).reset_index()
-        out["TABLE_REAL_DETECTOR_REPLAY.csv"] = pd.DataFrame({
-            "Policy": [POLICY_TEX.get(p, p) for p in g["policy"]],
-            "Delivered recall": [f"{v:.3f}" for v in g["delivered_recall"]],
-            "Delivered safety recall": [f"{v:.3f}" for v in g["delivered_safety_recall"]],
-            "Miss %": [f"{v * 100:.2f}" for v in g["deadline_miss_rate"]],
-            "p95 ms": [f"{v:.1f}" for v in g["p95_latency_ms"]],
-            "BW MB/1k fr.": [f"{v * 1e-3:.2f}" for v in g["bandwidth_per_1000_frames_kb"]],
-            "Reuse %": [f"{v * 100:.1f}" for v in g["reuse_rate"]],
+        tab = {"Policy": [POLICY_TEX.get(p, p) for p in g["policy"]],
+               "Recall (all fr.)": [f"{v:.3f}" for v in g["delivered_recall"]]}
+        if "delivered_recall_fresh_only" in g:
+            tab["Recall (fresh fr.)"] = [f"{v:.3f}" for v in g["delivered_recall_fresh_only"]]
+        tab["Safety recall"] = [f"{v:.3f}" for v in g["delivered_safety_recall"]]
+        tab["Miss %"] = [f"{v * 100:.2f}" for v in g["deadline_miss_rate"]]
+        tab["p95 ms"] = [f"{v:.1f}" for v in g["p95_latency_ms"]]
+        tab["BW MB/1k fr."] = [f"{v * 1e-3:.2f}" for v in g["bandwidth_per_1000_frames_kb"]]
+        tab["Reuse %"] = [f"{v * 100:.1f}" for v in g["reuse_rate"]]
+        out["TABLE_REAL_DETECTOR_REPLAY.csv"] = pd.DataFrame(tab)
+
+        cols2 = [c for c in ["delivered_recall", "delivered_recall_fresh_only",
+                             "delivered_safety_recall", "deadline_miss_rate",
+                             "reuse_rate", "bandwidth_per_1000_frames_kb"]
+                 if c in r.columns]
+        byp = r[r["policy"].isin(["local_only", "edge_only", "dapper",
+                                  "oracle_feasible"])].groupby(
+            ["profile", "policy"], as_index=False)[cols2].mean()
+        out["TABLE_REAL_DETECTOR_BY_PROFILE.csv"] = pd.DataFrame({
+            "Profile": byp["profile"],
+            "Policy": [POLICY_TEX.get(p, p) for p in byp["policy"]],
+            "Recall (all fr.)": [f"{v:.3f}" for v in byp["delivered_recall"]],
+            "Recall (fresh fr.)": [f"{v:.3f}" for v in byp["delivered_recall_fresh_only"]],
+            "Safety recall": [f"{v:.3f}" for v in byp["delivered_safety_recall"]],
+            "Miss %": [f"{v * 100:.2f}" for v in byp["deadline_miss_rate"]],
+            "Reuse %": [f"{v * 100:.1f}" for v in byp["reuse_rate"]],
+            "BW MB/1k fr.": [f"{v * 1e-3:.2f}" for v in byp["bandwidth_per_1000_frames_kb"]],
         })
     return out
 
