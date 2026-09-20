@@ -106,28 +106,29 @@ execution:
   edge_health_check: true          # availability is observable before sending
 
 # ---------------------------------------------------------------- scheduler
-# SELECTED BY THE CALIBRATION PROTOCOL on seeds 0-9 only.
-# See results/calibration/calibration_report.md.
+# SELECTED BY THE CALIBRATION PROTOCOL on seeds 0-9 only (winning candidate
+# 201 of 400, search seed 12345). FROZEN: no value below may be re-selected on the
+# evaluation seeds. See results/calibration/calibration_report.md.
 scheduler:
-  weight_rtt: 0.35
-  weight_loss: 0.30
-  weight_load: 0.15
-  weight_frame_age: 0.05
-  weight_deadline: 0.15
-  risk_degraded_threshold: 0.70
-  risk_local_threshold: 0.40
-  local_confidence_threshold: 0.725
-  remote_deadline_margin: 0.60     # edge_accurate iff predicted arrival <= margin * D
-  hybrid_freshness_window_ms: 80.0 # a refresh is accepted only if it lands here
+  weight_rtt: 0.0198
+  weight_loss: 0.0495
+  weight_load: 0.6238
+  weight_frame_age: 0.2574
+  weight_deadline: 0.0495
+  risk_degraded_threshold: 0.75
+  risk_local_threshold: 0.55
+  local_confidence_threshold: 0.78
+  remote_deadline_margin: 0.5     # edge_accurate iff predicted arrival <= margin * D
+  hybrid_freshness_window_ms: 100 # a refresh is accepted only if it lands here
   hybrid_estimator: optimistic     # which edge-compute estimate gates hybrid offload
-  last_valid_freshness_ms: 250.0   # reuse tolerance; beyond this an output is stale
+  last_valid_freshness_ms: 200   # reuse tolerance; beyond this an output is stale
 
 # ------------------------------------------------------- adaptive baselines
 # Hyperparameters of the non-DAPPER adaptive comparators. Also selected on the
 # calibration seeds only, using each baseline's own best setting, so that no
 # comparator is a strawman.
 baselines:
-  deadline_greedy_margin: 0.90
-  confidence_deadline_threshold: 0.725
-  confidence_deadline_margin: 0.90
-  rtt_threshold_ms: 30.0
+  deadline_greedy_margin: 0.3
+  confidence_deadline_threshold: 0.68
+  confidence_deadline_margin: 0.3
+  rtt_threshold_ms: 5

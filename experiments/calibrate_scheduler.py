@@ -72,6 +72,18 @@ OBJECTIVE = (
     ("bandwidth_per_1000_frames_kb", "mean", "min"),
 )
 
+def assert_thresholds_are_interior(cfg) -> None:
+    """Fail loudly if the candidate set contains a degenerate gate threshold."""
+    lo = float(cfg["local"]["confidence_min"])
+    hi = float(cfg["local"]["confidence_max"])
+    bad = [t for t in CONFIDENCE_THRESHOLDS if not lo < t < hi]
+    if bad:
+        raise ValueError(
+            f"local_confidence_threshold candidates {bad} lie outside the open "
+            f"interval ({lo}, {hi}) spanned by the local model's confidence, so "
+            "they disable the gate rather than set it")
+
+
 PUBLISHED_REFERENCE = {
     "weight_rtt": 0.35, "weight_loss": 0.30, "weight_load": 0.15,
     "weight_frame_age": 0.05, "weight_deadline": 0.15,
@@ -86,7 +98,15 @@ UNIFORM_REFERENCE = dict(PUBLISHED_REFERENCE,
 
 LOCAL_THRESHOLDS = (0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55)
 DEGRADED_THRESHOLDS = (0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85)
-CONFIDENCE_THRESHOLDS = (0.65, 0.68, 0.70, 0.725, 0.74, 0.76, 0.78, 0.80)
+# The confidence gate is only a gate when its threshold lies strictly inside the
+# local model's confidence support (`local.confidence_min/max` in config.yaml).
+# A threshold at or beyond an endpoint fires on every frame or on no frame: that
+# is the degenerate "always offload" / "never offload" policy already covered by
+# the functional ablation, and reporting it as a tuned threshold would misstate
+# what was selected. Endpoints are therefore excluded from the search space.
+# This exclusion *lowers* the best achievable usable-confidence proxy, because
+# the degenerate "gate never fires" variant offloads most aggressively.
+CONFIDENCE_THRESHOLDS = (0.68, 0.70, 0.72, 0.725, 0.74, 0.76, 0.78)
 REMOTE_MARGINS = (0.5, 0.6, 0.7, 0.8, 0.9, 1.0)
 HYBRID_WINDOWS = (60.0, 70.0, 80.0, 90.0, 100.0)
 HYBRID_ESTIMATORS = ("optimistic", "expected")
@@ -280,6 +300,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     cfg = load_config(args.config)
     assert_disjoint(cfg)
+    assert_thresholds_are_interior(cfg)
     seeds = calibration_seeds(cfg)
     profiles = list(cfg["profiles"])
     print(f"[calibration] seeds={seeds} profiles={profiles} frames={args.frames} "
@@ -389,6 +410,25 @@ def _report(cfg, table, winner, log, chosen, bl_table, bl_selected, bl_logs, arg
             L.append("  " + line)
         L.append("  ```")
     L.append("")
+    L.append("## Parameters this calibration cannot identify\n")
+    L.append("`remote_deadline_margin` gates the `edge_accurate` mode, which "
+             "requires the *expected* remote completion to fit a fraction of the "
+             "deadline. With the configured edge envelope no frame satisfies that "
+             "test at D = 100 ms, so every candidate scores identically on this "
+             "parameter and its selected value is **not identified by this "
+             "calibration**. It is examined directly in the deadline sweep "
+             "(`results/sensitivity/deadline_sweep.csv`), which is where "
+             "`edge_accurate` first becomes reachable. This is reported rather "
+             "than hidden.\n")
+    L.append("## Search-space restriction\n")
+    L.append("`local_confidence_threshold` candidates are restricted to the open "
+             f"interval ({cfg['local']['confidence_min']}, "
+             f"{cfg['local']['confidence_max']}) spanned by the local model's "
+             "confidence. A threshold at or beyond an endpoint would fire on every "
+             "frame or on none, which is the degenerate always/never-offload "
+             "policy already measured by the functional ablation. Excluding the "
+             "endpoints *reduces* the best attainable usable-confidence proxy, so "
+             "the restriction works against DAPPER rather than for it.\n")
     L.append("## Freeze\n")
     L.append("`results/calibration/selected_config.yaml` is copied into `config.yaml` and "
              "then frozen. Every number in the final evaluation, the ablations and the "

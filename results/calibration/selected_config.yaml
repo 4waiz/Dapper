@@ -1,0 +1,114 @@
+deadline_ms: 100
+frames: 1000
+seed: 42
+calibration_seeds:
+- 0
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+- 7
+- 8
+- 9
+evaluation_seeds_start: 100
+evaluation_seeds_count: 30
+profiles:
+- stable
+- congested
+- lossy
+- variable
+- outage
+local:
+  latency_ms_min: 15
+  latency_ms_max: 35
+  confidence_min: 0.65
+  confidence_max: 0.8
+  bandwidth_kb: 0.0
+edge:
+  latency_ms_min: 45
+  latency_ms_max: 90
+  confidence_min: 0.8
+  confidence_max: 0.95
+  bandwidth_kb: 25.0
+  extra_rtt_ms: 0.0
+cloud:
+  latency_ms_min: 60
+  latency_ms_max: 130
+  confidence_min: 0.82
+  confidence_max: 0.96
+  bandwidth_kb: 35.0
+  extra_rtt_ms: 80.0
+network_profiles:
+  stable:
+    rtt_ms_mean: 25
+    rtt_ms_std: 5
+    packet_loss: 0.01
+    edge_load: 0.2
+    outage_prob: 0.0
+  congested:
+    rtt_ms_mean: 70
+    rtt_ms_std: 20
+    packet_loss: 0.05
+    edge_load: 0.7
+    outage_prob: 0.0
+  lossy:
+    rtt_ms_mean: 40
+    rtt_ms_std: 10
+    packet_loss: 0.2
+    edge_load: 0.3
+    outage_prob: 0.0
+  variable:
+    rtt_ms_mean: 50
+    rtt_ms_std: 35
+    packet_loss: 0.07
+    edge_load: 0.5
+    outage_prob: 0.02
+  outage:
+    rtt_ms_mean: 200
+    rtt_ms_std: 80
+    packet_loss: 0.35
+    edge_load: 0.9
+    outage_prob: 0.3
+execution:
+  frame_period_ms: 33.3333333333
+  load_compute_scale: 0.5
+  remote_timeout_slack_ms: 20.0
+  reuse_latency_ms: 1.0
+  edge_health_check: true
+scheduler:
+  weight_rtt: 0.019799999999999998
+  weight_loss: 0.04949999999999999
+  weight_load: 0.6237999999999999
+  weight_frame_age: 0.25739999999999996
+  weight_deadline: 0.04949999999999999
+  risk_degraded_threshold: 0.75
+  risk_local_threshold: 0.55
+  local_confidence_threshold: 0.78
+  remote_deadline_margin: 0.5
+  hybrid_freshness_window_ms: 100.0
+  hybrid_estimator: optimistic
+  last_valid_freshness_ms: 200.0
+baselines:
+  deadline_greedy_margin: 0.3
+  confidence_deadline_threshold: 0.68
+  confidence_deadline_margin: 0.3
+  rtt_threshold_ms: 5.0
+_calibration:
+  search_seed: 12345
+  candidates: 400
+  calibration_seeds:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  frames_per_cell: 500
+  deadline_ms: 100.0
+  winning_candidate_id: 201

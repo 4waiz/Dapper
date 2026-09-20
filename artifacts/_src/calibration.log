@@ -1,0 +1,31 @@
+[calibration] seeds=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9] profiles=['stable', 'congested', 'lossy', 'variable', 'outage'] frames=500 D=100.0 candidates=400 search_seed=12345
+[calibration] predeclared objective:
+             L1: minimise worst deadline_miss_rate
+             L2: minimise mean stale_acceptance_rate
+             L3: maximise mean usable_confidence_proxy
+             L4: minimise worst p95_latency_ms
+             L5: minimise mean bandwidth_per_1000_frames_kb
+  [calibration] 25/400 candidates evaluated
+  [calibration] 50/400 candidates evaluated
+  [calibration] 75/400 candidates evaluated
+  [calibration] 100/400 candidates evaluated
+  [calibration] 125/400 candidates evaluated
+  [calibration] 150/400 candidates evaluated
+  [calibration] 175/400 candidates evaluated
+  [calibration] 200/400 candidates evaluated
+  [calibration] 225/400 candidates evaluated
+  [calibration] 250/400 candidates evaluated
+  [calibration] 275/400 candidates evaluated
+  [calibration] 300/400 candidates evaluated
+  [calibration] 325/400 candidates evaluated
+  [calibration] 350/400 candidates evaluated
+  [calibration] 375/400 candidates evaluated
+  [calibration] 400/400 candidates evaluated
+  wrote results\calibration\all_candidates.csv  (400 rows)
+  wrote results\calibration\baseline_candidates.csv  (53 rows)
+  wrote results\calibration\selected_config.yaml
+  wrote results\calibration\calibration_report.md
+[calibration] winner = candidate 201
+   L1 min(worst deadline_miss_rate): best=0 from candidate 0; 1 SE over calibration seeds = 0; 314 of 400 candidates retained
+   L2 min(mean stale_acceptance_rate): best=0 from candidate 0; 1 SE over calibration seeds = 0; 314 of 314 candidates retained
+   L3 max(mean usable_confidence_proxy): best=0.743939 from candidate 201; 1 SE over calibration seeds = 0.000450275; 1 of 314 candidates retained
