@@ -1,0 +1,10 @@
+Variant,Family,Miss %,p95 ms,Conf. proxy,BW MB/1k,Reuse %
+full,risk signal,0.00,33.4,0.744,9.11,18.2
+--RTT,risk signal,0.00,33.4,0.743,8.09,17.7
+--loss,risk signal,0.00,32.6,0.734,2.50,41.3
+--load,risk signal,0.00,33.4,0.743,8.14,18.1
+--frame age,risk signal,0.00,33.4,0.744,9.11,18.2
+--deadline pressure,risk signal,0.00,33.4,0.744,9.71,18.0
+--confidence gate,functional,0.00,33.4,0.745,10.53,18.2
+--freshness gate,functional,0.00,33.4,0.744,9.96,18.2
+--degraded reuse,functional,0.00,34.0,0.744,9.11,2.7

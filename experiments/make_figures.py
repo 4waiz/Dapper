@@ -265,8 +265,16 @@ def fig_real_detector(quality: pd.DataFrame, replay: Optional[pd.DataFrame],
     if replay is not None and len(replay):
         pols = ["local_only", "edge_only", "dapper", "oracle_feasible"]
         pols = [p for p in pols if p in set(replay["policy"])]
-        vals = [replay[replay["policy"] == p]["delivered_recall"].mean() for p in pols]
-        svals = [replay[replay["policy"] == p]["delivered_safety_recall"].mean()
+        # Profiles where DAPPER does not fall back to reuse, so the delivered
+        # metric is not depressed by the unrelated-image convention. The
+        # convention and the reuse-heavy profiles are reported in the tables.
+        rp = replay[replay["profile"].isin(["stable", "lossy"])]
+        vals = [rp[rp["policy"] == p]["delivered_recall_fresh_only"].mean()
+                if "delivered_recall_fresh_only" in rp.columns
+                else rp[rp["policy"] == p]["delivered_recall"].mean() for p in pols]
+        svals = [rp[rp["policy"] == p]["delivered_safety_recall_fresh_only"].mean()
+                 if "delivered_safety_recall_fresh_only" in rp.columns
+                 else rp[rp["policy"] == p]["delivered_safety_recall"].mean()
                  for p in pols]
         x = np.arange(len(pols))
         a2.bar(x - 0.19, vals, 0.36, label="delivered recall", color=PALETTE[2])
@@ -274,7 +282,7 @@ def fig_real_detector(quality: pd.DataFrame, replay: Optional[pd.DataFrame],
         a2.set_xticks(x)
         a2.set_xticklabels([POLICY_LABEL.get(p, p) for p in pols], rotation=18,
                            ha="right")
-        a2.set_ylabel("Delivered per-frame recall")
+        a2.set_ylabel("Delivered recall\n(stable + lossy, fresh frames)")
         a2.set_ylim(0, 1.0)
         a2.legend(handlelength=1.1)
     return {"name": "fig7_real_detector",
