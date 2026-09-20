@@ -12,14 +12,23 @@
 \newcommand{\etal}{\emph{et al.}}
 
 \usepackage{flushend}
+% hyperref is loaded last so it can patch the packages above. Set
+% urlcolor=black if the proceedings require unlinked/black text in print.
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
 \begin{document}
 
 \title{DAPPER: Deadline-Aware Edge Perception for\\Mission-Critical Robots under Dynamic Network Conditions}
 
 \author{%
-\IEEEauthorblockN{Awaiz Ahmed \qquad Khubaib Amjad Alam}
-\IEEEauthorblockA{Al Ain University, Abu Dhabi, United Arab Emirates\\
-Email: \texttt{awaiz42ad@gmail.com}, \texttt{khubaib.alam@aau.ac.ae}}
+\IEEEauthorblockN{Awaiz Ahmed}
+\IEEEauthorblockA{Al Ain University\\
+Abu Dhabi, United Arab Emirates\\
+Email: \href{mailto:awaiz42ad@gmail.com}{awaiz42ad@gmail.com}}
+\and
+\IEEEauthorblockN{Khubaib Amjad Alam}
+\IEEEauthorblockA{Al Ain University\\
+Abu Dhabi, United Arab Emirates\\
+Email: \href{mailto:khubaib.alam@aau.ac.ae}{khubaib.alam@aau.ac.ae}}
 }
 
 \maketitle
@@ -55,7 +64,7 @@ The target system contains a camera-equipped robot or client, a nearby edge node
 
 \begin{figure*}[t]
     \centering
-    \includegraphics[width=0.99\textwidth]{figures/dapper_architecture.pdf}
+    \includegraphics[width=0.93\textwidth]{figures/dapper_architecture.pdf}
     \caption{DAPPER decision path, drawn from the implemented branch structure. Risk above $\theta_D$ selects the conservative degraded-safe path and risk above $\theta_L$ stays local; only the low-risk region reaches the confidence gate $\tau_c$ and the remote-feasibility gate. That gate commits to edge-accurate when the expected remote completion $\hat T$ fits the margin $mD$, requests a hybrid refinement when the optimistic completion $\hat T^{-}$ could still land inside the freshness window $W$, and otherwise stays local without transmitting. Remote results must still pass a deadline and freshness check before reaching the control loop.}
     \label{fig:architecture}
 \end{figure*}
@@ -143,7 +152,7 @@ Table~\ref{tab:main} reports the corrected fixed-policy comparison at $D=100$~ms
 
 \begin{table*}[t]
 \centering
-\caption{Repeated evaluation over 30 independent seeds (1,000 frames per seed/profile/policy, $D=100$~ms). CIs are 95\% percentile bootstrap intervals over seeds. Confidence is the synthetic confidence proxy held by the control loop at the deadline, not detector accuracy.}
+\caption{Repeated evaluation over 30 independent seeds (1,000 frames per seed/profile/policy, $D=100$~ms). CIs are 95\% percentile bootstrap intervals over seeds. Confidence is the synthetic proxy held by the control loop at the deadline, not detector accuracy.}
 \label{tab:main}
 \scriptsize
 \renewcommand{\arraystretch}{0.82}
@@ -190,12 +199,12 @@ Figure~\ref{fig:mainplots} summarizes tail latency and the usable confidence pro
 \centering
 \begin{minipage}[t]{0.49\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{figures/fig2_p95_latency_panel.pdf}\\
+    \includegraphics[width=0.93\linewidth]{figures/fig2_p95_latency_panel.pdf}\\
     \small (a) p95 control-output latency.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.49\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{figures/fig2b_usable_confidence_panel.pdf}\\
+    \includegraphics[width=0.93\linewidth]{figures/fig2b_usable_confidence_panel.pdf}\\
     \small (b) usable confidence proxy at the deadline.
 \end{minipage}
 \caption{Repeated synthetic benchmark at $D=100$~ms. Error bars are 95\% bootstrap CIs over 30 independent seeds. The confidence proxy is not detector accuracy.}
@@ -252,7 +261,7 @@ oracle$^{\dagger}$ & 13.58 & 0.00 & 60.8 & 0.7454 & 3.40 \\
 \end{table*}
 
 \subsection{Adaptive Baselines, Ablation, and Sensitivity}
-The right half of Table~\ref{tab:modes} compares DAPPER with the calibrated adaptive comparators. At $D=100$~ms the calibrated deadline-greedy and confidence-and-deadline baselines choose settings that never transmit, making them numerically identical to local-only, and the calibrated RTT-threshold policy transmits on under 0.02\% of frames. With the configured timing envelope, committing an appreciable share of 100-ms frames to the edge produces deadline misses, so each baseline's own calibration objective drives it toward local execution. DAPPER can still obtain remote quality because hybrid execution never commits the control loop to waiting: it keeps a local result and accepts the remote reply only if it actually arrives on time. Against the non-deployable offline oracle, DAPPER recovers approximately 92\% of the oracle's available gain over local-only under the stable profile (0.7250 local-only, 0.7960 DAPPER, 0.8018 oracle), although it uses more bandwidth (21.62 versus 12.81~MB/1,000 frames), exposing room for better runtime prediction.
+The right half of Table~\ref{tab:modes} compares DAPPER with the calibrated adaptive comparators. At $D=100$~ms the calibrated deadline-greedy and confidence-and-deadline baselines choose settings that never transmit, making them numerically identical to local-only, and the calibrated RTT-threshold policy transmits on under 0.02\% of frames. With this timing envelope, committing an appreciable share of 100-ms frames to the edge produces misses, so each baseline's own objective drives it toward local execution. DAPPER still obtains remote quality because hybrid never commits the control loop to waiting: it keeps a local result and accepts the remote reply only if it actually arrives on time. Against the non-deployable offline oracle, DAPPER recovers approximately 92\% of the oracle's available gain over local-only under the stable profile (0.7250 local-only, 0.7960 DAPPER, 0.8018 oracle), although it uses more bandwidth (21.62 versus 12.81~MB/1,000 frames), exposing room for better runtime prediction.
 
 Table~\ref{tab:ablation} reports one-at-a-time ablations. Removing packet loss from the risk score is the most consequential single change: it raises the risk of the remaining signals after renormalization, suppresses useful offloading, and reduces stable confidence from 0.7960 to 0.7675 and lossy confidence from 0.7406 to 0.7248. Removing the freshness gate raises variable-profile traffic from 5.78 to 9.75~MB/1,000 frames (about 69\%) without a statistically distinguishable confidence gain, which is the clearest demonstration that the gate is a bandwidth mechanism rather than a deadline mechanism. Disabling the confidence gate raises both confidence and traffic, confirming that this gate is the quality/bandwidth knob. Disabling degraded-safe reuse leaves the miss rate at zero but increases outage p95 latency from 31.19 to 33.85~ms. Removing frame age changes no reported metric, consistent with its zero calibrated weight. No ablated variant produced a nonzero deadline-miss rate.
 
@@ -288,12 +297,12 @@ Runtime-estimation error is strongly asymmetric. Biasing RTT estimates anywhere 
 \centering
 \begin{minipage}[t]{0.49\textwidth}
     \centering
-    \includegraphics[width=0.78\linewidth]{figures/fig3_deadline_mode_distribution.pdf}\\
+    \includegraphics[width=0.72\linewidth]{figures/fig3_deadline_mode_distribution.pdf}\\
     \small (a) DAPPER mode share versus control deadline.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.49\textwidth}
     \centering
-    \includegraphics[width=0.78\linewidth]{figures/runtime_bias.pdf}\\
+    \includegraphics[width=0.72\linewidth]{figures/runtime_bias.pdf}\\
     \small (b) Profile-mean deadline misses versus scheduler estimate bias.
 \end{minipage}
 \caption{Sensitivity analysis. Panel (a) is pooled over five profiles and 30 seeds. Panel (b) averages the three profiles used in the estimation-error study; negative bias means the scheduler underestimates the true runtime.}
@@ -301,7 +310,7 @@ Runtime-estimation error is strongly asymmetric. Biasing RTT estimates anywhere 
 \end{figure*}
 
 \subsection{Scheduling Overhead and Real-Detector Validation}
-Over 200,000 timed scheduler calls after warm-up, one DAPPER decision takes 1.45~$\mu$s on average (median 1.40~$\mu$s, p95 1.80~$\mu$s, p99 2.00~$\mu$s) in CPython on the evaluation workstation. Running DAPPER instead of local-only adds 1.31~$\mu$s per frame to benchmark wall time. These values measure software overhead on a desktop processor, not robot hardware or application inference latency. Depending on profile, DAPPER changes mode 12--418 times per 1,000 frames; no physical mode-switch energy or reconfiguration cost is modeled.
+Over 200,000 timed calls after warm-up, one DAPPER decision takes 1.45~$\mu$s on average (median 1.40, p95 1.80, p99 2.00~$\mu$s) in CPython on the evaluation workstation, and running DAPPER instead of local-only adds 1.31~$\mu$s per frame to benchmark wall time. These measure software overhead on a desktop processor, not robot hardware or application inference latency. Depending on profile, DAPPER changes mode 12--418 times per 1,000 frames; no physical switching cost is modeled.
 
 Table~\ref{tab:realdet} shows the measured detector gap. YOLO11m increases overall recall by 13.1 percentage points and recall on the selected safety-relevant classes (person, bicycle, car, motorcycle, bus, truck) by 11.1 points over YOLO11n. Mean inference times are 35.2~ms (YOLO11n) and 177.5~ms (YOLO11m) on the workstation central processing unit (CPU), and 6.1~ms and 8.1~ms on its graphics processing unit (GPU).
 
