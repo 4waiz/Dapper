@@ -13,3 +13,5 @@ real_validation/data/
 real_validation/weights/
 *.pt
 *.zip
+artifacts/_src/manuscript.txt
+artifacts/_src/reviews.txt
