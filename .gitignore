@@ -15,3 +15,8 @@ real_validation/weights/
 *.zip
 artifacts/_src/manuscript.txt
 artifacts/_src/reviews.txt
+
+# Local LaTeX build products
+paper/*.aux
+paper/*.log
+paper/*.out

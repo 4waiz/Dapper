@@ -370,3 +370,44 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+# --------------------------------------------------- paper half-width panels
+def fig_panel_bars(long: pd.DataFrame, metric: str, ylabel: str, name: str,
+                   out_dir: str, policies: Sequence[str], scale: float = 1.0,
+                   width_in: float = 3.46, height_in: float = 1.42) -> Dict[str, str]:
+    """
+    Same content as :func:`fig_policy_bars`, drawn at the size it is actually
+    placed at in the manuscript (a 0.49\textwidth minipage). Generating a
+    double-column figure and then shrinking it into a half-column slot halves
+    the effective font size, which is why these panels are drawn separately.
+    """
+    sub = _ci(long, metric)
+    profiles = [p for p in PROFILE_ORDER if p in set(sub["profile"])]
+    fig, ax = plt.subplots(figsize=(width_in, height_in))
+    n = len(policies)
+    width = 0.82 / n
+    x = np.arange(len(profiles))
+    for i, pol in enumerate(policies):
+        means, los, his = [], [], []
+        for prof in profiles:
+            r = sub[(sub["profile"] == prof) & (sub["policy"] == pol)]
+            if len(r) == 0:
+                means.append(np.nan); los.append(0.0); his.append(0.0); continue
+            r = r.iloc[0]
+            means.append(r["mean"] * scale)
+            los.append((r["mean"] - r["ci_lo"]) * scale)
+            his.append((r["ci_hi"] - r["mean"]) * scale)
+        ax.bar(x + i * width - 0.41 + width / 2, means, width * 0.9,
+               label=POLICY_LABEL.get(pol, pol), color=PALETTE[i % len(PALETTE)],
+               yerr=[np.abs(los), np.abs(his)],
+               error_kw={"elinewidth": 0.5, "capsize": 0.9, "capthick": 0.5})
+    ax.set_xticks(x)
+    ax.set_xticklabels(profiles, fontsize=6.2)
+    ax.tick_params(axis="y", labelsize=6.2)
+    ax.set_ylabel(ylabel, fontsize=6.8)
+    ax.set_ylim(bottom=0)
+    ax.legend(ncol=4, loc="lower center", bbox_to_anchor=(0.5, 1.0),
+              columnspacing=0.9, handlelength=1.0, fontsize=6.0,
+              borderaxespad=0.15, handletextpad=0.4)
+    return {"name": name, "caption": "", "paths": _save(fig, out_dir, name)}
