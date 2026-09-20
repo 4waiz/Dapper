@@ -1843,11 +1843,16 @@ def environment_md(d: Data) -> str:
     L.append("python -m pytest -q")
     L.append("python experiments/run_camera_ready.py --full")
     L.append("```\n")
-    L.append("The full protocol is deterministic: identical commands on this "
-             "commit reproduce identical CSVs, because every stochastic quantity "
-             "comes from a seeded pre-generated scenario and the bootstrap has a "
-             "fixed seed. `results/final/scenario_fingerprints.csv` lets a "
-             "reviewer confirm that the replayed scenarios are the same ones.\n")
+    L.append("The full protocol is deterministic: every stochastic quantity comes "
+             "from a seeded pre-generated scenario and the bootstrap has a fixed "
+             "seed. Re-running the evaluation within one process reproduces the "
+             "per-run metrics exactly (`pandas.testing.assert_frame_equal` with "
+             "`check_exact=True`), and `results/final/scenario_fingerprints.csv` "
+             "lets a reviewer confirm that a replay used the same scenarios. "
+             "Result CSVs are written at pandas' default float precision, so "
+             "comparing a fresh run against a stored CSV shows differences of "
+             "order 1e-14 from serialisation alone; that is the only source of "
+             "disagreement.\n")
     if gpu:
         L.append(f"The optional real-detector stage additionally requires a CUDA "
                  f"GPU (ours: {gpu}), the `ultralytics` package, and about 1 GB "

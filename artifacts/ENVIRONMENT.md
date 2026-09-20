@@ -3,7 +3,7 @@
 Recorded by `experiments/make_reports.py`. Every camera-ready result was produced on this machine with this software.
 
 ```
-git_commit: a87ae90b16a1c29c69a0258144bb3dab07827787
+git_commit: 51b5c1fb74aaa1cddf3889d57abe9970b3575a61
 python: 3.12.10
 platform: Windows-11-10.0.26200-SP0
 processor: Intel64 Family 6 Model 198 Stepping 2, GenuineIntel
@@ -43,7 +43,7 @@ python -m pytest -q
 python experiments/run_camera_ready.py --full
 ```
 
-The full protocol is deterministic: identical commands on this commit reproduce identical CSVs, because every stochastic quantity comes from a seeded pre-generated scenario and the bootstrap has a fixed seed. `results/final/scenario_fingerprints.csv` lets a reviewer confirm that the replayed scenarios are the same ones.
+The full protocol is deterministic: every stochastic quantity comes from a seeded pre-generated scenario and the bootstrap has a fixed seed. Re-running the evaluation within one process reproduces the per-run metrics exactly (`pandas.testing.assert_frame_equal` with `check_exact=True`), and `results/final/scenario_fingerprints.csv` lets a reviewer confirm that a replay used the same scenarios. Result CSVs are written at pandas' default float precision, so comparing a fresh run against a stored CSV shows differences of order 1e-14 from serialisation alone; that is the only source of disagreement.
 
 The optional real-detector stage additionally requires a CUDA GPU (ours: NVIDIA GeForce RTX 5080 Laptop GPU), the `ultralytics` package, and about 1 GB of downloads for COCO val2017. It is skipped automatically if the cached predictions are absent.
 
