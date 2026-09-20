@@ -1,0 +1,5 @@
+[prepare] cached coco2017labels-segments.zip (177 MB)
+[prepare] cached val2017.zip (816 MB)
+[prepare] coco val2017: 5000 images, 4952 label files
+[prepare] wrote C:\Users\awaiz\OneDrive\Desktop\Dapper\real_validation\data\coco_val2017.yaml
+DATASET_YAML=C:\Users\awaiz\OneDrive\Desktop\Dapper\real_validation\data\coco_val2017.yaml

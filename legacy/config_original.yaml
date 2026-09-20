@@ -1,0 +1,87 @@
+# DAPPER default configuration
+# All numbers are simulated and explicit. Edit freely to explore scenarios.
+
+# Core experiment defaults
+deadline_ms: 100          # End-to-end perception deadline in milliseconds
+frames: 1000              # Frames per benchmark run
+seed: 42                  # Random seed for reproducibility
+
+# Available network profiles
+profiles:
+  - stable
+  - congested
+  - lossy
+  - variable
+  - outage
+
+# Local inference characteristics (lightweight on-robot model)
+local:
+  latency_ms_min: 15
+  latency_ms_max: 35
+  confidence_min: 0.65
+  confidence_max: 0.80
+  bandwidth_kb: 0.0       # Local inference does not use network
+
+# Edge inference (nearby server, single network hop)
+edge:
+  latency_ms_min: 45      # Server-side compute
+  latency_ms_max: 90
+  confidence_min: 0.80
+  confidence_max: 0.95
+  bandwidth_kb: 25.0      # Per offloaded frame (compressed)
+  base_rtt_ms: 20         # Added on top of profile-driven jitter
+
+# Cloud inference (distant data center)
+cloud:
+  latency_ms_min: 60
+  latency_ms_max: 130
+  confidence_min: 0.82
+  confidence_max: 0.96
+  bandwidth_kb: 35.0
+  base_rtt_ms: 80         # Cloud RTT is meaningfully worse than edge
+
+# Network profiles. Each describes per-frame RTT/loss/load draws.
+network_profiles:
+  stable:
+    rtt_ms_mean: 25
+    rtt_ms_std: 5
+    packet_loss: 0.01
+    edge_load: 0.2
+    outage_prob: 0.0
+  congested:
+    rtt_ms_mean: 70
+    rtt_ms_std: 20
+    packet_loss: 0.05
+    edge_load: 0.7
+    outage_prob: 0.0
+  lossy:
+    rtt_ms_mean: 40
+    rtt_ms_std: 10
+    packet_loss: 0.20
+    edge_load: 0.3
+    outage_prob: 0.0
+  variable:
+    rtt_ms_mean: 50
+    rtt_ms_std: 35
+    packet_loss: 0.07
+    edge_load: 0.5
+    outage_prob: 0.02
+  outage:
+    rtt_ms_mean: 200
+    rtt_ms_std: 80
+    packet_loss: 0.35
+    edge_load: 0.9
+    outage_prob: 0.30
+
+# Scheduler weights for the risk formula
+scheduler:
+  weight_rtt: 0.35
+  weight_loss: 0.30
+  weight_load: 0.15
+  weight_frame_age: 0.05
+  weight_deadline: 0.15
+  # Thresholds for mode selection
+  risk_degraded_threshold: 0.70
+  risk_local_threshold: 0.40
+  hybrid_freshness_window_ms: 80     # Hybrid uses edge if it returns within this window
+  last_valid_freshness_ms: 250       # Degraded-safe stale tolerance

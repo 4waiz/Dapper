@@ -1,4 +1,4 @@
 # Commands used to produce artifacts/baseline_original/ (frozen snapshot of the
 # implementation as published, at git commit e0a728e).
 python -m pytest -q
-python benchmark.py run-all --frames 500 --deadline-ms 100 --seed 42 --out-dir artifacts/baseline_original
+python -m legacy.benchmark --config legacy/config_original.yaml run-all --frames 500 --deadline-ms 100 --seed 42 --out-dir artifacts/baseline_original

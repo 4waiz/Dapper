@@ -1,12 +1,26 @@
-# DAPPER default configuration
-# All numbers are simulated and explicit. Edit freely to explore scenarios.
+# DAPPER configuration (camera-ready).
+#
+# Every parameter that influences a reported number lives here and is validated
+# by dapper/config.py. Parameter changes relative to the originally published
+# configuration are recorded, with their justification, in
+# artifacts/PARAMETER_CHANGELOG.md. No value in this file was chosen because it
+# improved DAPPER's numbers.
+#
+# All perception latencies and confidences are SYNTHETIC. Confidence values are
+# simulated proxies, not detector accuracies. The secondary real-detector study
+# lives in real_validation/ and is reported separately.
 
-# Core experiment defaults
-deadline_ms: 100          # End-to-end perception deadline in milliseconds
-frames: 1000              # Frames per benchmark run
-seed: 42                  # Random seed for reproducibility
+# ---------------------------------------------------------------- protocol
+deadline_ms: 100          # Primary control-loop deadline
+frames: 1000              # Frames per (seed, profile, policy) cell
+seed: 42                  # Default single-run seed (exploration only)
 
-# Available network profiles
+# Disjoint seed sets. Parameters are selected on calibration seeds and never
+# on evaluation seeds.
+calibration_seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+evaluation_seeds_start: 100
+evaluation_seeds_count: 30
+
 profiles:
   - stable
   - congested
@@ -14,33 +28,40 @@ profiles:
   - variable
   - outage
 
-# Local inference characteristics (lightweight on-robot model)
+# ------------------------------------------------------- perception models
+# Local inference: lightweight on-robot model.
 local:
   latency_ms_min: 15
   latency_ms_max: 35
   confidence_min: 0.65
   confidence_max: 0.80
-  bandwidth_kb: 0.0       # Local inference does not use network
+  bandwidth_kb: 0.0       # No network use
 
-# Edge inference (nearby server, single network hop)
+# Edge inference: nearby server, one access hop.
 edge:
-  latency_ms_min: 45      # Server-side compute
+  latency_ms_min: 45      # Server-side compute, before load scaling
   latency_ms_max: 90
   confidence_min: 0.80
   confidence_max: 0.95
-  bandwidth_kb: 25.0      # Per offloaded frame (compressed)
-  base_rtt_ms: 20         # Added on top of profile-driven jitter
+  bandwidth_kb: 25.0      # Charged for EVERY transmitted request
+  extra_rtt_ms: 0.0       # The profile RTT *is* the edge access round trip.
+                          # (Renamed from base_rtt_ms: 20, which was dead code
+                          # in the published prototype; see PARAMETER_CHANGELOG.)
 
-# Cloud inference (distant data center)
+# Cloud inference: distant data centre reached across the wide-area network.
 cloud:
   latency_ms_min: 60
   latency_ms_max: 130
   confidence_min: 0.82
   confidence_max: 0.96
   bandwidth_kb: 35.0
-  base_rtt_ms: 80         # Cloud RTT is meaningfully worse than edge
+  extra_rtt_ms: 80.0      # Wide-area transit ON TOP of the access round trip.
+                          # (Renamed from base_rtt_ms: 80; value unchanged, and
+                          # now applied identically in prediction and execution.)
 
-# Network profiles. Each describes per-frame RTT/loss/load draws.
+# ------------------------------------------------------- network profiles
+# Seeded, parameterised distributions. NOT measured Wi-Fi/5G traces.
+# Unchanged from the published configuration.
 network_profiles:
   stable:
     rtt_ms_mean: 25
@@ -73,15 +94,40 @@ network_profiles:
     edge_load: 0.9
     outage_prob: 0.30
 
-# Scheduler weights for the risk formula
+# --------------------------------------------------------- execution model
+# Policy-independent transport and timing constants. Documented in
+# dapper/executor.py. These apply identically to every policy.
+execution:
+  frame_period_ms: 33.3333333333   # 30 FPS capture
+  load_compute_scale: 0.5          # compute = potential * (1 + scale * edge_load)
+  remote_timeout_slack_ms: 20.0    # client waits predicted arrival + slack,
+                                   # bounded by the deadline
+  reuse_latency_ms: 1.0            # cost of serving a cached last-valid output
+  edge_health_check: true          # availability is observable before sending
+
+# ---------------------------------------------------------------- scheduler
+# SELECTED BY THE CALIBRATION PROTOCOL on seeds 0-9 only.
+# See results/calibration/calibration_report.md.
 scheduler:
   weight_rtt: 0.35
   weight_loss: 0.30
   weight_load: 0.15
   weight_frame_age: 0.05
   weight_deadline: 0.15
-  # Thresholds for mode selection
   risk_degraded_threshold: 0.70
   risk_local_threshold: 0.40
-  hybrid_freshness_window_ms: 80     # Hybrid uses edge if it returns within this window
-  last_valid_freshness_ms: 250       # Degraded-safe stale tolerance
+  local_confidence_threshold: 0.725
+  remote_deadline_margin: 0.60     # edge_accurate iff predicted arrival <= margin * D
+  hybrid_freshness_window_ms: 80.0 # a refresh is accepted only if it lands here
+  hybrid_estimator: optimistic     # which edge-compute estimate gates hybrid offload
+  last_valid_freshness_ms: 250.0   # reuse tolerance; beyond this an output is stale
+
+# ------------------------------------------------------- adaptive baselines
+# Hyperparameters of the non-DAPPER adaptive comparators. Also selected on the
+# calibration seeds only, using each baseline's own best setting, so that no
+# comparator is a strawman.
+baselines:
+  deadline_greedy_margin: 0.90
+  confidence_deadline_threshold: 0.725
+  confidence_deadline_margin: 0.90
+  rtt_threshold_ms: 30.0

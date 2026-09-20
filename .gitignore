@@ -8,3 +8,8 @@ venv/
 results/raw/
 *.mp4
 *.avi
+# Real-detector validation assets (datasets + model weights) are never committed.
+real_validation/data/
+real_validation/weights/
+*.pt
+*.zip
