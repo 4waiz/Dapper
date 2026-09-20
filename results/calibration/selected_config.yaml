@@ -78,18 +78,18 @@ execution:
   reuse_latency_ms: 1.0
   edge_health_check: true
 scheduler:
-  weight_rtt: 0.019799999999999998
-  weight_loss: 0.04949999999999999
-  weight_load: 0.6237999999999999
-  weight_frame_age: 0.25739999999999996
-  weight_deadline: 0.04949999999999999
-  risk_degraded_threshold: 0.75
-  risk_local_threshold: 0.55
+  weight_rtt: 0.36
+  weight_loss: 0.35
+  weight_load: 0.11
+  weight_frame_age: 0.0
+  weight_deadline: 0.18
+  risk_degraded_threshold: 0.6
+  risk_local_threshold: 0.45
   local_confidence_threshold: 0.78
-  remote_deadline_margin: 0.5
+  remote_deadline_margin: 0.8
   hybrid_freshness_window_ms: 100.0
   hybrid_estimator: optimistic
-  last_valid_freshness_ms: 200.0
+  last_valid_freshness_ms: 100.0
 baselines:
   deadline_greedy_margin: 0.3
   confidence_deadline_threshold: 0.68
@@ -111,4 +111,4 @@ _calibration:
   - 9
   frames_per_cell: 500
   deadline_ms: 100.0
-  winning_candidate_id: 201
+  winning_candidate_id: 256

@@ -1,0 +1,4 @@
+policy,repeats,frames_per_repeat,median_wall_ms,wall_us_per_frame
+local_only,3,3000,14.6853,4.895099999999999
+edge_only,3,3000,17.9418,5.9806
+dapper,3,3000,18.6101,6.203366666666666

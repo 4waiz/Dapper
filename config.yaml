@@ -107,21 +107,22 @@ execution:
 
 # ---------------------------------------------------------------- scheduler
 # SELECTED BY THE CALIBRATION PROTOCOL on seeds 0-9 only (winning candidate
-# 201 of 400, search seed 12345). FROZEN: no value below may be re-selected on the
+# 256 of 400, search seed 12345). FROZEN: no value below may be re-selected on the
 # evaluation seeds. See results/calibration/calibration_report.md.
 scheduler:
-  weight_rtt: 0.0198
-  weight_loss: 0.0495
-  weight_load: 0.6238
-  weight_frame_age: 0.2574
-  weight_deadline: 0.0495
-  risk_degraded_threshold: 0.75
-  risk_local_threshold: 0.55
+  weight_rtt: 0.36
+  weight_loss: 0.35
+  weight_load: 0.11
+  weight_frame_age: 0      # pinned: the frame-age signal is identically zero in
+                           # this benchmark, so its weight is unidentifiable
+  weight_deadline: 0.18
+  risk_degraded_threshold: 0.6
+  risk_local_threshold: 0.45
   local_confidence_threshold: 0.78
-  remote_deadline_margin: 0.5     # edge_accurate iff predicted arrival <= margin * D
+  remote_deadline_margin: 0.8     # edge_accurate iff predicted arrival <= margin * D
   hybrid_freshness_window_ms: 100 # a refresh is accepted only if it lands here
   hybrid_estimator: optimistic     # which edge-compute estimate gates hybrid offload
-  last_valid_freshness_ms: 200   # reuse tolerance; beyond this an output is stale
+  last_valid_freshness_ms: 100   # reuse tolerance; beyond this an output is stale
 
 # ------------------------------------------------------- adaptive baselines
 # Hyperparameters of the non-DAPPER adaptive comparators. Also selected on the

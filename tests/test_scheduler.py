@@ -11,6 +11,7 @@ from __future__ import annotations
 import os
 import sys
 
+import numpy as np
 import pytest
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -131,24 +132,57 @@ def test_low_risk_low_confidence_infeasible_refresh_stays_local(cfg):
     assert not d.remote_attempt_intended
 
 
+def _band_inputs(scheduler, target: str) -> SchedulerInputs:
+    """
+    Find an observation whose risk lands in the requested band.
+
+    The band boundaries move when the weights are recalibrated, so a test that
+    hard-codes an RTT would break for reasons that have nothing to do with the
+    decision logic. Sweeping the observable space keeps the test about the rule.
+    """
+    best = None
+    for rtt in np.linspace(1.0, 900.0, 120):
+        for loss in (0.0, 0.05, 0.2, 0.5, 0.9, 1.0):
+            for load in (0.0, 0.1, 0.3, 0.5, 0.7, 0.9, 1.0):
+                x = _inputs(rtt_ms=float(rtt), packet_loss=loss, edge_load=load,
+                            local_confidence=0.0)
+                r = scheduler.compute_risk(x)
+                if target == "moderate" and scheduler.risk_local <= r < scheduler.risk_degraded:
+                    return x
+                if target == "high" and r >= scheduler.risk_degraded:
+                    return x
+                if target == "low" and r < scheduler.risk_local:
+                    best = best or x
+    if target == "low" and best is not None:
+        return best
+    raise AssertionError(f"no observation reaches the '{target}' risk band")
+
+
+def test_every_risk_band_is_reachable_under_the_frozen_config(scheduler):
+    """A band that no observation can reach would make its branch dead code."""
+    for band in ("low", "moderate", "high"):
+        x = _band_inputs(scheduler, band)
+        assert isinstance(scheduler.compute_risk(x), float)
+
+
 def test_moderate_risk_prefers_local(scheduler):
-    d = scheduler.decide(_inputs(rtt_ms=55.0, packet_loss=0.05, edge_load=0.5,
-                                 local_confidence=0.0))
+    d = scheduler.decide(_band_inputs(scheduler, "moderate"))
     assert scheduler.risk_local <= d.deadline_risk_score < scheduler.risk_degraded
     assert d.selected_mode == MODE_LOCAL_FAST
     assert d.reason == "risk_moderate_prefer_local"
 
 
 def test_high_risk_selects_degraded_safe(scheduler):
-    d = scheduler.decide(_inputs(rtt_ms=250.0, packet_loss=0.9, edge_load=1.0))
+    d = scheduler.decide(_band_inputs(scheduler, "high"))
     assert d.deadline_risk_score >= scheduler.risk_degraded
     assert d.selected_mode == MODE_DEGRADED_SAFE
     assert d.fallback_needed
+    assert not d.remote_attempt_intended
 
 
 def test_high_risk_without_fresh_output_falls_back_to_local(scheduler):
-    d = scheduler.decide(_inputs(rtt_ms=250.0, packet_loss=0.9, edge_load=1.0,
-                                 last_valid_age_ms=1e9))
+    x = _band_inputs(scheduler, "high")
+    d = scheduler.decide(SchedulerInputs(**{**x.__dict__, "last_valid_age_ms": 1e9}))
     assert d.selected_mode == MODE_DEGRADED_SAFE
     assert d.reason == "risk_high_local_fallback"
 

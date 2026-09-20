@@ -43,6 +43,7 @@ DEADLINES = (50.0, 75.0, 100.0, 125.0, 150.0, 200.0, 250.0)
 LOCAL_THRESHOLDS = (0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55)
 DEGRADED_THRESHOLDS = (0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85)
 CONFIDENCE_THRESHOLDS = (0.65, 0.70, 0.72, 0.74, 0.76, 0.80)
+REMOTE_MARGINS = (0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)
 ESTIMATION_BIASES = (-0.30, -0.20, -0.10, 0.0, 0.10, 0.20, 0.30)
 
 SWEEP_METRICS = (
@@ -146,11 +147,45 @@ def estimation_error_sweep(cfg, bank, deadline_ms, n_boot) -> Dict[str, pd.DataF
             "runtime_estimation_error_ci.csv": agg}
 
 
+# ----------------------------------------------- commit-margin diagnostic
+def margin_sweep(cfg, bank, deadlines, n_boot) -> Dict[str, pd.DataFrame]:
+    """
+    Diagnostic for `remote_deadline_margin`, the gate on the committing
+    `edge_accurate` mode.
+
+    This parameter is **not identified** by the calibration protocol, because at
+    D = 100 ms no frame passes the commit test under any margin, so every
+    candidate scores identically on it. The deadline sweep shows that the value
+    the search happened to pick is unsafe at intermediate deadlines, where
+    committing first becomes possible. This sweep measures the effect directly.
+
+    It is a sensitivity analysis, not a re-selection: it runs on evaluation
+    seeds and its result is deliberately NOT fed back into `config.yaml`.
+    """
+    rows = []
+    for deadline in deadlines:
+        for margin in REMOTE_MARGINS:
+            cand = with_overrides(cfg, remote_deadline_margin=margin)
+            per_run, _ = run_cells(bank, [build_policy("dapper", cand)], cand, deadline)
+            per_run["deadline_sweep_ms"] = deadline
+            per_run["remote_deadline_margin"] = margin
+            per_run["is_selected_value"] = np.isclose(
+                margin, float(cfg["scheduler"]["remote_deadline_margin"]))
+            rows.append(per_run)
+        print(f"  [margin] D={deadline:g} ms done", flush=True)
+    per_run = pd.concat(rows, ignore_index=True)
+    agg = aggregate_over_seeds(
+        per_run, ("deadline_sweep_ms", "remote_deadline_margin", "profile", "policy"),
+        [m for m in SWEEP_METRICS if m in per_run.columns], n_boot=n_boot)
+    return {"commit_margin_sweep.csv": per_run, "commit_margin_sweep_ci.csv": agg}
+
+
 def main(argv: Optional[Sequence[str]] = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--config", default=None)
-    p.add_argument("--study", nargs="*", default=["deadline", "threshold", "estimation"],
-                   choices=["deadline", "threshold", "estimation"])
+    p.add_argument("--study", nargs="*",
+                   default=["deadline", "threshold", "estimation", "margin"],
+                   choices=["deadline", "threshold", "estimation", "margin"])
     p.add_argument("--frames", type=int, default=1000)
     p.add_argument("--deadline-ms", type=float, default=100.0)
     p.add_argument("--seeds", type=int, default=None)
@@ -177,6 +212,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         est_profiles = ["stable", "congested", "variable"]
         est_bank = {k: v for k, v in bank.items() if k[1] in est_profiles}
         out.update(estimation_error_sweep(cfg, est_bank, args.deadline_ms, args.n_boot))
+    if "margin" in args.study:
+        out.update(margin_sweep(cfg, bank, (100.0, 125.0, 150.0, 200.0), args.n_boot))
 
     for name, df in out.items():
         write_csv(df, os.path.join(args.out_dir, name))

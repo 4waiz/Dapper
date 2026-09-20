@@ -138,10 +138,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     switch_rows: List[Dict] = []
     if os.path.exists(args.per_run_csv):
         per_run = pd.read_csv(args.per_run_csv)
-        sw = per_run.groupby(["policy", "profile"], as_index=False)[
-            "mode_switches_per_1000"].agg(["mean", "std"]).reset_index()
-        sw.columns = ["policy", "profile", "mode_switches_per_1000_mean",
-                      "mode_switches_per_1000_std"]
+        sw = (per_run.groupby(["policy", "profile"])["mode_switches_per_1000"]
+              .agg(mode_switches_per_1000_mean="mean",
+                   mode_switches_per_1000_std="std",
+                   n_seeds="size")
+              .reset_index())
         switch_rows = sw.to_dict("records")
         write_csv(sw, os.path.join(args.out_dir, "mode_switches.csv"))
     else:

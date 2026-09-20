@@ -220,8 +220,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     p.add_argument("--local-model", default=DEFAULT_LOCAL_MODEL)
     p.add_argument("--remote-model", default=DEFAULT_REMOTE_MODEL)
     p.add_argument("--device", default="cuda:0")
-    p.add_argument("--cpu-subset", type=int, default=250,
-                   help="images to additionally time on CPU (0 disables)")
+    p.add_argument("--cpu-subset-local", type=int, default=0,
+                   help="images to additionally time the LOCAL model on CPU "
+                        "(0 disables, -1 = all). The replay needs a per-image CPU "
+                        "timing for every frame it replays.")
+    p.add_argument("--cpu-subset-remote", type=int, default=250,
+                   help="images to additionally time the REMOTE model on CPU "
+                        "(0 disables, -1 = all). Only the latency table needs this, "
+                        "and the large model is slow on CPU.")
     p.add_argument("--imgsz", type=int, default=640)
     p.add_argument("--conf", type=float, default=0.25)
     p.add_argument("--iou", type=float, default=0.70)
@@ -241,13 +247,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         run_model(args.local_model, images, device, args.imgsz, args.conf, args.iou, "local"),
         run_model(args.remote_model, images, device, args.imgsz, args.conf, args.iou, "remote"),
     ]
-    if args.cpu_subset > 0 and device != "cpu":
-        sub = images[: args.cpu_subset]
-        print(f"[detector] additionally timing {len(sub)} images on CPU")
-        frames.append(run_model(args.local_model, sub, "cpu", args.imgsz,
-                                args.conf, args.iou, "local_cpu", warmup=5))
-        frames.append(run_model(args.remote_model, sub, "cpu", args.imgsz,
-                                args.conf, args.iou, "remote_cpu", warmup=5))
+    if device != "cpu":
+        for model_name, n_cpu, role in ((args.local_model, args.cpu_subset_local, "local_cpu"),
+                                        (args.remote_model, args.cpu_subset_remote, "remote_cpu")):
+            if n_cpu == 0:
+                continue
+            sub = images if n_cpu < 0 else images[:n_cpu]
+            print(f"[detector] timing {len(sub)} images on CPU for {role}")
+            frames.append(run_model(model_name, sub, "cpu", args.imgsz,
+                                    args.conf, args.iou, role, warmup=5))
 
     out = pd.concat(frames, ignore_index=True)
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
@@ -257,6 +265,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     meta = {
         "dataset_yaml": args.dataset,
         "n_images": len(images),
+        "cpu_subset_local": args.cpu_subset_local,
+        "cpu_subset_remote": args.cpu_subset_remote,
         "local_model": args.local_model,
         "remote_model": args.remote_model,
         "device": device,
