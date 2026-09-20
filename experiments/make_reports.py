@@ -337,10 +337,15 @@ def camera_ready_results(d: Data) -> str:
               f"{d.num(p, pol, 'bandwidth_per_1000_frames_kb', 1e-3):.2f} |")
     A("")
     if d.bl_cand is not None:
+        att = {pol: float(d.per_run[d.per_run["policy"] == pol]
+                          ["remote_attempt_rate"].mean())
+               for pol in ("deadline_greedy", "confidence_deadline", "rtt_threshold")}
         A("All three adaptive baselines were fitted on the calibration seeds with "
           "the same predeclared objective used for DAPPER, so none is a strawman. "
-          "At D = 100 ms each of them selected its most conservative setting and "
-          "therefore **coincides with local-only**. "
+          "At D = 100 ms each selected a setting under which it barely offloads: "
+          "deadline-greedy and confidence-and-deadline transmit on 0.000 % of "
+          f"frames (identical to local-only) and RTT-threshold on "
+          f"{att['rtt_threshold'] * 100:.3f} %. "
           "`results/calibration/baseline_candidates.csv` shows why: the least "
           "conservative setting that still reaches a zero worst-profile miss rate "
           "offloads on essentially no frames, and the next setting up jumps to a "
@@ -885,10 +890,11 @@ def paper_patch_text(d: Data) -> str:
           f"Every per-seed miss rate was exactly zero. "
           f"<!-- source: {S}, metric=deadline_miss_rate, policy=dapper -->\n")
     A(f"> The fixed offloading policies degraded sharply as conditions worsened. "
-      f"Under congestion, edge-only and cloud-only each missed "
-      f"{d.num('congested', 'edge_only', 'deadline_miss_rate', 100):.2f} % and "
-      f"{d.num('congested', 'cloud_only', 'deadline_miss_rate', 100):.2f} % of "
-      f"deadlines respectively; under the lossy profile edge-only missed "
+      f"Under congestion, edge-only missed "
+      f"{d.num('congested', 'edge_only', 'deadline_miss_rate', 100):.2f} % of "
+      f"deadlines and cloud-only "
+      f"{d.num('congested', 'cloud_only', 'deadline_miss_rate', 100):.2f} %; "
+      f"under the lossy profile edge-only missed "
       f"{d.num('lossy', 'edge_only', 'deadline_miss_rate', 100):.2f} % "
       f"(95 % CI "
       f"{d.v('lossy', 'edge_only', 'deadline_miss_rate')['ci_lo'] * 100:.2f}-"
@@ -933,23 +939,35 @@ def paper_patch_text(d: Data) -> str:
       f"{d.num('variable', 'dapper', 'bandwidth_per_1000_frames_kb', 1e-3):.2f} MB "
       f"against {d.num('variable', 'edge_only', 'bandwidth_per_1000_frames_kb', 1e-3):.2f} MB; "
       f"under congestion and outage it transmitted "
-      f"{d.num('congested', 'dapper', 'bandwidth_per_1000_frames_kb', 1e-3):.2f} MB "
-      f"and {d.num('outage', 'dapper', 'bandwidth_per_1000_frames_kb', 1e-3):.2f} MB. "
+      f"{d.num('congested', 'dapper', 'bandwidth_per_1000_frames_kb'):.1f} kB "
+      f"and {d.num('outage', 'dapper', 'bandwidth_per_1000_frames_kb'):.1f} kB "
+      f"per 1000 frames, that is, it effectively stopped offloading. "
       f"Bandwidth is therefore a controlled cost that the scheduler concentrates "
       f"where a remote result can actually be used, not a fixed tax - but it is "
       f"a real cost, because every transmitted request is charged whether or not "
       f"its reply is accepted. "
       f"<!-- source: {S}, metric=bandwidth_per_1000_frames_kb -->\n")
-    A(f"> At this deadline all three calibrated adaptive baselines selected their "
-      f"most conservative setting and coincide with local-only. The reason is "
-      f"visible in the calibration data: with the configured edge envelope, any "
-      f"setting that commits a frame to the edge at "
-      f"D = {d.cfg['deadline_ms']:g} ms produces a double-digit miss rate. DAPPER "
-      f"extracts remote quality at this deadline precisely because its hybrid "
-      f"mode does not commit the frame - a local answer is always in hand and "
-      f"the remote reply is accepted only if it arrives inside the freshness "
-      f"window and before the deadline. "
-      f"<!-- source: results/calibration/baseline_candidates.csv; {S} -->\n")
+    att = {pol: float(d.per_run[d.per_run["policy"] == pol]["remote_attempt_rate"].mean())
+           for pol in ("deadline_greedy", "confidence_deadline", "rtt_threshold")}
+    inert = [k for k, v in att.items() if v == 0.0]
+    near = [k for k, v in att.items() if 0.0 < v < 0.01]
+    A(f"> At this deadline the calibrated adaptive baselines converge on local "
+      f"execution. Deadline-greedy and confidence-and-deadline selected settings "
+      f"under which they never transmit, so their results are identical to "
+      f"local-only; RTT-threshold transmits on "
+      f"{att['rtt_threshold'] * 100:.3f} % of frames, all of them under the "
+      f"variable profile, giving a "
+      f"{d.num('variable', 'rtt_threshold', 'deadline_miss_rate', 100):.3f} % "
+      f"miss rate there. The reason is visible in the calibration data: with the "
+      f"configured edge envelope, any setting that commits an appreciable share "
+      f"of frames to the edge at D = {d.cfg['deadline_ms']:g} ms produces a "
+      f"double-digit miss rate, so each baseline's own objective drove it to "
+      f"stop offloading. DAPPER extracts remote quality at this deadline "
+      f"precisely because its hybrid mode does not commit the frame: a local "
+      f"answer is always in hand and the remote reply is accepted only if it "
+      f"arrives inside the freshness window and before the deadline. "
+      f"<!-- source: results/calibration/baseline_candidates.csv; {S}; "
+      f"results/final/multi_seed_per_run.csv, metric=remote_attempt_rate -->\n")
     lo = d.num("stable", "local_only", "usable_confidence_proxy")
     da = d.num("stable", "dapper", "usable_confidence_proxy")
     orc = d.num("stable", "oracle_feasible", "usable_confidence_proxy")
@@ -1384,11 +1402,15 @@ def reviewer_response(d: Data) -> str:
          "upper bound. Each baseline's hyperparameters were fitted on the "
          "calibration seeds with the same objective used for DAPPER, so none is "
          "a strawman. We report the outcome as measured: at the primary deadline "
-         "all three baselines select their most conservative setting and "
-         "coincide with local-only, because with the configured edge envelope "
-         "any setting that commits a frame to the edge at 100 ms produces a "
-         "double-digit miss rate. We also report the oracle gap, which shows how "
-         "far DAPPER is from perfect information.",
+         "each baseline's own objective drove it to a setting under which it "
+         "barely offloads, so two of them are numerically identical to "
+         "local-only and the third transmits on well under 0.1 % of frames. The "
+         "reason is that with the configured edge envelope any setting that "
+         "commits an appreciable share of frames to the edge at 100 ms produces "
+         "a double-digit miss rate. DAPPER is the only evaluated policy that "
+         "still extracts remote quality at this deadline, because its hybrid "
+         "mode never commits the frame. We also report the oracle gap, which "
+         "shows how far DAPPER remains from perfect information.",
          "New `dapper/policies.py` with all baselines and the oracle; baselines "
          "are included in the deadline sweep so they are also evaluated where "
          "they are active.",
