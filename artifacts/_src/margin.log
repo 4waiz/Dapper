@@ -1,0 +1,7 @@
+[sensitivity] studies=['margin'] seeds=100-129 frames=1000
+  [margin] D=100 ms done
+  [margin] D=125 ms done
+  [margin] D=150 ms done
+  [margin] D=200 ms done
+  wrote results\sensitivity\commit_margin_sweep.csv  (5400 rows)
+  wrote results\sensitivity\commit_margin_sweep_ci.csv  (3600 rows)

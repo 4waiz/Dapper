@@ -57,7 +57,7 @@ from _common import (  # noqa: E402
     ROOT, RESULTS, assert_disjoint, build_bank, calibration_seeds, load_config,
     run_cells, write_csv, write_text,
 )
-from dapper.config import with_overrides  # noqa: E402
+from dapper.config import RISK_WEIGHT_KEYS, with_overrides  # noqa: E402
 from dapper.policies import build_policy  # noqa: E402
 
 OUT_DIR = os.path.join(RESULTS, "calibration")
@@ -113,20 +113,71 @@ HYBRID_ESTIMATORS = ("optimistic", "expected")
 FRESHNESS_WINDOWS = (100.0, 150.0, 200.0, 250.0, 300.0)
 
 
+# --------------------------------------------------------- identifiability
+def identifiable_signals(cfg, bank, deadline_ms: float) -> Dict[str, Dict[str, float]]:
+    """
+    Report, per risk signal, how much it actually varies across the calibration
+    scenarios.
+
+    A signal that is *constant* over every frame cannot be identified: its
+    weight only adds a fixed offset to the risk score, which the two thresholds
+    absorb. Worse, leaving such a dimension in the simplex lets the search park
+    weight on it and thereby rescale the signals that do matter -- which is
+    exactly how an inert frame-age term made the risk-degraded branch
+    unreachable in a first run of this calibration. Constant signals are
+    therefore pinned to zero weight and the finding is reported.
+    """
+    nominal = 0.5 * (float(cfg["edge"]["latency_ms_min"])
+                     + float(cfg["edge"]["latency_ms_max"]))
+    scale = float(cfg["execution"]["load_compute_scale"])
+    extra = float(cfg["edge"].get("extra_rtt_ms", 0.0))
+    cols = {k: [] for k in ("rtt", "loss", "load", "frame_age", "deadline")}
+    for trace in bank.values():
+        rtt = np.asarray(trace.rtt_ms) + extra
+        load = np.asarray(trace.edge_load)
+        cols["rtt"].append(np.clip(rtt / deadline_ms, 0, 1))
+        cols["loss"].append(np.clip(np.asarray(trace.packet_loss), 0, 1))
+        cols["load"].append(np.clip(load, 0, 1))
+        # The benchmark invokes the scheduler at capture, so the frame age at
+        # the decision instant is zero for every frame.
+        cols["frame_age"].append(np.zeros(trace.frames))
+        cols["deadline"].append(
+            np.clip((rtt + nominal * (1 + scale * load)) / deadline_ms, 0, 1))
+    out = {}
+    for name, parts in cols.items():
+        v = np.concatenate(parts)
+        out[name] = {"mean": float(v.mean()), "std": float(v.std()),
+                     "min": float(v.min()), "max": float(v.max()),
+                     "identifiable": bool(v.max() - v.min() > 1e-12)}
+    return out
+
+
 # ------------------------------------------------------------------ search
-def sample_candidates(n: int, search_seed: int) -> List[Dict[str, Any]]:
-    """Deterministic random search over the joint parameter space."""
+def sample_candidates(n: int, search_seed: int,
+                      free_signals: Optional[Sequence[str]] = None) -> List[Dict[str, Any]]:
+    """
+    Deterministic random search over the joint parameter space.
+
+    ``free_signals`` names the risk signals that carry weight. Signals left out
+    are pinned to zero, so the simplex is taken only over dimensions the
+    calibration data can actually distinguish.
+    """
     rng = np.random.default_rng(search_seed)
     out: List[Dict[str, Any]] = [dict(PUBLISHED_REFERENCE), dict(UNIFORM_REFERENCE)]
     seen = {_key(c) for c in out}
     while len(out) < n:
-        w = rng.dirichlet(np.ones(5))
-        w = np.round(w, 2)
-        if w.sum() <= 0:
+        free = list(free_signals or ("rtt", "loss", "load", "frame_age", "deadline"))
+        draw = rng.dirichlet(np.ones(len(free)))
+        draw = np.round(draw, 2)
+        if draw.sum() <= 0:
             continue
-        w = w / w.sum()
-        w = np.round(w, 4)
-        w = w / w.sum()
+        draw = draw / draw.sum()
+        draw = np.round(draw, 4)
+        draw = draw / draw.sum()
+        wmap = {k: 0.0 for k in ("rtt", "loss", "load", "frame_age", "deadline")}
+        for k, v in zip(free, draw):
+            wmap[k] = float(v)
+        w = [wmap["rtt"], wmap["loss"], wmap["load"], wmap["frame_age"], wmap["deadline"]]
         local = float(rng.choice(LOCAL_THRESHOLDS))
         degraded_pool = [d for d in DEGRADED_THRESHOLDS if d > local]
         if not degraded_pool:
@@ -216,8 +267,8 @@ def evaluate_candidate(cfg: Dict[str, Any], cand: Dict[str, Any], bank,
     return per_run
 
 
-def calibrate_dapper(cfg, bank, deadline_ms, n_candidates, search_seed):
-    cands = sample_candidates(n_candidates, search_seed)
+def calibrate_dapper(cfg, bank, deadline_ms, n_candidates, search_seed, free_signals=None):
+    cands = sample_candidates(n_candidates, search_seed, free_signals)
     rows, per_seed = [], {}
     for cid, cand in enumerate(cands):
         per_run = evaluate_candidate(cfg, cand, bank, deadline_ms)
@@ -311,8 +362,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     bank = build_bank(cfg, profiles, seeds, args.frames)
 
+    signals = identifiable_signals(cfg, bank, args.deadline_ms)
+    free = [k for k, v in signals.items() if v["identifiable"]]
+    pinned = [k for k, v in signals.items() if not v["identifiable"]]
+    print("[calibration] risk-signal identifiability over the calibration data:")
+    for k, v in signals.items():
+        verdict = "free" if v["identifiable"] else "CONSTANT -> weight pinned to 0"
+        print(f"             {k:<10s} range [{v['min']:.4f}, {v['max']:.4f}] "
+              f"std {v['std']:.4f} -> {verdict}")
+    write_csv(pd.DataFrame([{"signal": k, **v} for k, v in signals.items()]),
+              os.path.join(args.out_dir, "signal_identifiability.csv"))
+
     table, winner, log, cands = calibrate_dapper(
-        cfg, bank, args.deadline_ms, args.candidates, args.search_seed)
+        cfg, bank, args.deadline_ms, args.candidates, args.search_seed, free)
     write_csv(table, os.path.join(args.out_dir, "all_candidates.csv"))
 
     bl_table, bl_selected, bl_logs = calibrate_baselines(cfg, bank, args.deadline_ms)
@@ -336,7 +398,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     write_text(yaml.safe_dump(selected_cfg, sort_keys=False, default_flow_style=False),
                os.path.join(args.out_dir, "selected_config.yaml"))
 
-    write_text(_report(cfg, table, winner, log, chosen, bl_table, bl_selected, bl_logs, args),
+    write_text(_report(cfg, table, winner, log, chosen, bl_table, bl_selected,
+                       bl_logs, args, signals, pinned),
                os.path.join(args.out_dir, "calibration_report.md"))
     print(f"[calibration] winner = candidate {winner}")
     for line in log:
@@ -344,7 +407,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     return 0
 
 
-def _report(cfg, table, winner, log, chosen, bl_table, bl_selected, bl_logs, args) -> str:
+def _report(cfg, table, winner, log, chosen, bl_table, bl_selected, bl_logs,
+            args, signals=None, pinned=None) -> str:
     ref = table[table["is_published_reference"]].iloc[0]
     win = table[table["candidate_id"] == winner].iloc[0]
     L = []
@@ -365,6 +429,35 @@ def _report(cfg, table, winner, log, chosen, bl_table, bl_selected, bl_logs, arg
              "non-negative and sum to 1 by construction; "
              "`risk_local_threshold < risk_degraded_threshold` is enforced at sampling "
              "time and re-checked by `dapper.config.validate_config`.\n")
+    L.append("## Risk-signal identifiability\n")
+    if signals:
+        L.append("A risk signal that is constant over every calibration frame "
+                 "cannot be identified: its weight only adds a fixed offset that "
+                 "the two thresholds absorb, and leaving it in the simplex lets the "
+                 "search park weight on it and thereby rescale the signals that do "
+                 "matter. Constant signals are pinned to zero weight and the "
+                 "simplex is taken over the remaining dimensions.\n")
+        L.append("| signal | min | max | std | in search |")
+        L.append("|---|---|---|---|---|")
+        for k, v in signals.items():
+            L.append(f"| `{k}` | {v['min']:.4f} | {v['max']:.4f} | {v['std']:.4f} | "
+                     f"{'yes' if v['identifiable'] else '**no - pinned to 0**'} |")
+        if pinned:
+            L.append("")
+            L.append("`" + "`, `".join(pinned) + "` "
+                     + ("is" if len(pinned) == 1 else "are")
+                     + " constant at zero because the benchmark invokes the "
+                     "scheduler at frame capture, so the frame age at the decision "
+                     "instant is always zero. This was already true of the published "
+                     "configuration, whose `weight_frame_age: 0.05` was therefore "
+                     "inert. A first run of this calibration parked 26 % of the "
+                     "weight on that inert dimension, which pushed the maximum "
+                     "attainable risk (0.743) below the selected degraded threshold "
+                     "(0.750) and made the risk-based degraded-safe branch "
+                     "unreachable. The term is retained in the risk formulation "
+                     "because it becomes identifiable in a deployment where frames "
+                     "queue before the scheduler runs.")
+        L.append("")
     L.append("## Predeclared objective\n")
     for i, (col, agg, d) in enumerate(OBJECTIVE, 1):
         L.append(f"{i}. {'minimise' if d == 'min' else 'maximise'} **{agg} `{col}`**")

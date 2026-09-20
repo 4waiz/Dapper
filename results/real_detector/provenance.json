@@ -1,0 +1,22 @@
+{
+  "dataset_yaml": "C:\\Users\\awaiz\\OneDrive\\Desktop\\Dapper\\real_validation\\data\\coco_val2017.yaml",
+  "n_images": 5000,
+  "local_model": "yolo11n.pt",
+  "remote_model": "yolo11m.pt",
+  "device": "cuda:0",
+  "gpu_name": "NVIDIA GeForce RTX 5080 Laptop GPU",
+  "imgsz": 640,
+  "conf_threshold": 0.25,
+  "nms_iou": 0.7,
+  "match_iou": 0.5,
+  "safety_classes": {
+    "0": "person",
+    "1": "bicycle",
+    "2": "car",
+    "3": "motorcycle",
+    "5": "bus",
+    "7": "truck"
+  },
+  "torch": "2.11.0+cu128",
+  "ultralytics": "8.4.104"
+}

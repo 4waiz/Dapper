@@ -138,15 +138,30 @@ def delivered_quality(log: pd.DataFrame, per_image: pd.DataFrame) -> Dict[str, f
     recall = np.where(usable, recall, 0.0)
     safety = np.where(usable, safety, 0.0)
 
+    # Fresh-only view: the quality of the outputs that were actually computed
+    # for their own frame. Reported alongside the lower bound because scoring a
+    # reused output as zero is an artefact of using unrelated still images, not
+    # a property of the scheduler.
+    fresh = met & ~reused
+    recall_fresh = np.where(use_remote, remote_r, local_r)
+    safety_fresh = np.where(use_remote, remote_s, local_s)
+
     has_gt = per_image["n_gt"].to_numpy() > 0
     has_sgt = per_image["n_gt_safety"].to_numpy() > 0
+    gf, sf = has_gt & fresh, has_sgt & fresh
+
+    def _m(v, mask):
+        return float(np.nanmean(v[mask])) if mask.any() else float("nan")
+
     return {
-        "delivered_recall": float(np.nanmean(recall[has_gt])) if has_gt.any() else float("nan"),
-        "delivered_safety_recall": (float(np.nanmean(safety[has_sgt]))
-                                    if has_sgt.any() else float("nan")),
+        "delivered_recall": _m(recall, has_gt),
+        "delivered_safety_recall": _m(safety, has_sgt),
+        "delivered_recall_fresh_only": _m(recall_fresh, gf),
+        "delivered_safety_recall_fresh_only": _m(safety_fresh, sf),
         "remote_output_share": float(use_remote.mean()),
         "usable_output_rate": float(usable.mean()),
         "frames_scored": int(has_gt.sum()),
+        "frames_scored_fresh": int(gf.sum()),
     }
 
 
@@ -191,7 +206,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     os.makedirs(args.out_dir, exist_ok=True)
     per_run.to_csv(os.path.join(args.out_dir, "dapper_replay.csv"), index=False)
 
-    metrics = ["delivered_recall", "delivered_safety_recall", "deadline_miss_rate",
+    metrics = ["delivered_recall", "delivered_safety_recall",
+               "delivered_recall_fresh_only", "delivered_safety_recall_fresh_only",
+               "deadline_miss_rate",
                "p95_latency_ms", "mean_latency_ms", "usable_confidence_proxy",
                "bandwidth_per_1000_frames_kb", "remote_output_share",
                "usable_output_rate", "reuse_rate", "remote_attempt_rate",
@@ -203,9 +220,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     main_d = per_run[per_run["deadline_sweep_ms"] == args.deadline_ms]
     summary = main_d.groupby("policy", as_index=False)[
-        ["delivered_recall", "delivered_safety_recall", "deadline_miss_rate",
-         "p95_latency_ms", "bandwidth_per_1000_frames_kb", "remote_output_share",
-         "reuse_rate"]].mean()
+        ["delivered_recall", "delivered_recall_fresh_only",
+         "delivered_safety_recall", "delivered_safety_recall_fresh_only",
+         "deadline_miss_rate", "p95_latency_ms", "bandwidth_per_1000_frames_kb",
+         "remote_output_share", "reuse_rate"]].mean()
     summary.to_csv(os.path.join(args.out_dir, "dapper_replay_summary.csv"), index=False)
 
     pd.set_option("display.width", 240)
@@ -214,7 +232,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     print("\n[replay] by profile (DAPPER vs local_only vs edge_only):")
     sub = main_d[main_d["policy"].isin(["local_only", "edge_only", "dapper"])]
     print(sub.groupby(["profile", "policy"], as_index=False)[
-        ["delivered_recall", "delivered_safety_recall", "deadline_miss_rate",
+        ["delivered_recall", "delivered_recall_fresh_only",
+         "delivered_safety_recall", "deadline_miss_rate", "reuse_rate",
          "bandwidth_per_1000_frames_kb"]].mean().to_string(index=False))
     return 0
 

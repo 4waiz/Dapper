@@ -1,0 +1,2 @@
+measurement,n_calls,mean_us,median_us,std_us,p95_us,p99_us,min_us,max_us,throughput_decisions_per_s,environment,note
+DapperScheduler.decide,200000,1.44693,1.4,0.7856289589649211,1.8,2.0,1.0,134.6,691118.436966543,"git_commit: 5341b4c296fe28c1a63708d0e04e1706391d7fde; python: 3.12.10; platform: Windows-11-10.0.26200-SP0; processor: Intel64 Family 6 Model 198 Stepping 2, GenuineIntel; cpu_count: 24",software overhead of the scheduler on a desktop CPython interpreter; NOT robot hardware overhead and NOT the simulated application latency reported elsewhere

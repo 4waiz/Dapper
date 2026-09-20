@@ -77,7 +77,10 @@ def _run_variants(cfg, bank, deadline_ms, variants, build) -> pd.DataFrame:
     for name, spec in variants:
         policy = build(name, spec)
         per_run, _ = run_cells(bank, [policy], cfg, deadline_ms)
-        per_run["variant"] = name
+        # The policy already carries the variant name, so `policy` and `variant`
+        # would otherwise be duplicate columns and break later group-bys.
+        per_run = per_run.drop(columns=["policy"])
+        per_run.insert(0, "variant", name)
         frames.append(per_run)
         print(f"  [ablation] {name} done", flush=True)
     return pd.concat(frames, ignore_index=True)
@@ -93,10 +96,12 @@ def _observations(per_run: pd.DataFrame, family: str, n_boot: int) -> List[str]:
     excludes zero, so no difference is described that the data cannot support.
     """
     lines: List[str] = []
+    null_results: List[str] = []
     tidy = per_run.rename(columns={"variant": "policy"})
     for variant in sorted(set(tidy["policy"])):
         if variant == "dapper_full":
             continue
+        found_for_variant = False
         for profile in sorted(set(tidy["profile"])):
             for metric, unit, digits in (
                 ("deadline_miss_rate", " (fraction)", 4),
@@ -112,6 +117,7 @@ def _observations(per_run: pd.DataFrame, family: str, n_boot: int) -> List[str]:
                     continue
                 if not d["excludes_zero"]:
                     continue
+                found_for_variant = True
                 verb = "increased" if d["mean_diff"] > 0 else "decreased"
                 lines.append(
                     f"* Under **{profile}**, `{variant}` {verb} `{metric}` from "
@@ -119,10 +125,19 @@ def _observations(per_run: pd.DataFrame, family: str, n_boot: int) -> List[str]:
                     f"(paired difference {d['mean_diff']:+.{digits}f}{unit}, "
                     f"95% CI [{d['ci_lo']:+.{digits}f}, {d['ci_hi']:+.{digits}f}], "
                     f"{d['n_seeds']} seeds).")
+        if not found_for_variant:
+            null_results.append(variant)
     if not lines:
         lines.append(f"* No {family} variant produced a difference from `dapper_full` "
                      "whose paired 95 % bootstrap interval excluded zero on any "
                      "reported metric.")
+    if null_results:
+        lines.append("")
+        lines.append("**Null results (reported because absence of an effect is "
+                     "itself a finding).** On every profile and every reported "
+                     "metric, the paired 95 % bootstrap interval of the "
+                     "difference from `dapper_full` included zero for: "
+                     + ", ".join(f"`{v}`" for v in null_results) + ".")
     return lines
 
 

@@ -1,0 +1,66 @@
+[sensitivity] studies=['deadline', 'threshold', 'estimation'] seeds=100-129 frames=1000
+  [deadline] D=50 ms done
+  [deadline] D=75 ms done
+  [deadline] D=100 ms done
+  [deadline] D=125 ms done
+  [deadline] D=150 ms done
+  [deadline] D=200 ms done
+  [deadline] D=250 ms done
+  [threshold] risk_local_threshold=0.25 done
+  [threshold] risk_local_threshold=0.3 done
+  [threshold] risk_local_threshold=0.35 done
+  [threshold] risk_local_threshold=0.4 done
+  [threshold] risk_local_threshold=0.45 done
+  [threshold] risk_local_threshold=0.5 done
+  [threshold] risk_local_threshold=0.55 done
+  [threshold] risk_degraded_threshold=0.55 done
+  [threshold] risk_degraded_threshold=0.6 done
+  [threshold] risk_degraded_threshold=0.65 done
+  [threshold] risk_degraded_threshold=0.7 done
+  [threshold] risk_degraded_threshold=0.75 done
+  [threshold] risk_degraded_threshold=0.8 done
+  [threshold] risk_degraded_threshold=0.85 done
+  [threshold] local_confidence_threshold=0.65 done
+  [threshold] local_confidence_threshold=0.7 done
+  [threshold] local_confidence_threshold=0.72 done
+  [threshold] local_confidence_threshold=0.74 done
+  [threshold] local_confidence_threshold=0.76 done
+  [threshold] local_confidence_threshold=0.8 done
+  [estimation] rtt bias rtt=-30% compute=+0% done
+  [estimation] rtt bias rtt=-20% compute=+0% done
+  [estimation] rtt bias rtt=-10% compute=+0% done
+  [estimation] rtt bias rtt=+0% compute=+0% done
+  [estimation] rtt bias rtt=+10% compute=+0% done
+  [estimation] rtt bias rtt=+20% compute=+0% done
+  [estimation] rtt bias rtt=+30% compute=+0% done
+  [estimation] compute bias rtt=+0% compute=-30% done
+  [estimation] compute bias rtt=+0% compute=-20% done
+  [estimation] compute bias rtt=+0% compute=-10% done
+  [estimation] compute bias rtt=+0% compute=+0% done
+  [estimation] compute bias rtt=+0% compute=+10% done
+  [estimation] compute bias rtt=+0% compute=+20% done
+  [estimation] compute bias rtt=+0% compute=+30% done
+  [estimation] both bias rtt=-30% compute=-30% done
+  [estimation] both bias rtt=-20% compute=-20% done
+  [estimation] both bias rtt=-10% compute=-10% done
+  [estimation] both bias rtt=+0% compute=+0% done
+  [estimation] both bias rtt=+10% compute=+10% done
+  [estimation] both bias rtt=+20% compute=+20% done
+  [estimation] both bias rtt=+30% compute=+30% done
+  wrote results\sensitivity\deadline_sweep.csv  (8400 rows)
+  wrote results\sensitivity\deadline_sweep_ci.csv  (5600 rows)
+  wrote results\sensitivity\deadline_mode_distribution.csv  (42 rows)
+  wrote results\sensitivity\threshold_sweep.csv  (3000 rows)
+  wrote results\sensitivity\threshold_sweep_ci.csv  (2000 rows)
+  wrote results\sensitivity\runtime_estimation_error.csv  (1890 rows)
+  wrote results\sensitivity\runtime_estimation_error_ci.csv  (1260 rows)
+
+[sensitivity] DAPPER mode shares vs deadline (all profiles pooled):
+ deadline_sweep_ms profile  pct_local_fast  pct_edge_accurate  pct_hybrid  pct_degraded_safe  remote_attempt_rate  remote_accept_rate  deadline_miss_rate  p95_latency_ms  usable_confidence_proxy  bandwidth_per_1000_frames_kb
+              50.0     ALL       48.429333           0.000000    0.000000          51.570667             0.000000            0.000000            0.000000       32.587458                 0.725134                      0.000000
+              75.0     ALL       57.370667           0.000000   10.574000          32.055333             0.105740            0.021551            0.000000       33.159897                 0.725814                   2643.500000
+             100.0     ALL       44.588667           0.000000   36.422667          18.988667             0.364227            0.161609            0.000000       33.373128                 0.743723                   9105.666667
+             125.0     ALL       42.400667          11.255333   27.532000          18.812000             0.387873            0.159746            0.052387       56.402628                 0.706561                   9696.833333
+             150.0     ALL       42.365333          31.970667    6.870667          18.793333             0.388413            0.159698            0.133127      108.582948                 0.648839                   9710.333333
+             200.0     ALL       26.066000          55.311333    0.000000          18.622667             0.553113            0.138608            0.042053      152.570985                 0.714021                  13827.833333
+             250.0     ALL       16.019333          65.532667    0.000000          18.448000             0.655327            0.138137            0.000000      156.275757                 0.744053                  16383.166667

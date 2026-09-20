@@ -1,0 +1,71 @@
+[ablation] seeds=100-129 profiles=['variable', 'congested', 'lossy', 'outage', 'stable'] frames=1000 D=100.0
+  [ablation] dapper_full done
+  [ablation] dapper_no_rtt done
+  [ablation] dapper_no_loss done
+  [ablation] dapper_no_load done
+  [ablation] dapper_no_frame_age done
+  [ablation] dapper_no_deadline done
+  wrote results\ablation\component_ablation.csv  (900 rows)
+  [ablation] dapper_full done
+  [ablation] dapper_no_confidence_gate done
+  [ablation] dapper_no_freshness_gate done
+  [ablation] dapper_no_degraded_reuse done
+  wrote results\ablation\functional_ablation.csv  (600 rows)
+  wrote results\ablation\ablation_summary.csv  (700 rows)
+  wrote results\ablation\ablation_observations.md
+
+[ablation] component means:
+            variant   profile  deadline_miss_rate  p95_latency_ms  usable_confidence_proxy  bandwidth_per_1000_frames_kb
+        dapper_full congested                 0.0       33.936633                 0.724963                      2.500000
+        dapper_full     lossy                 0.0       34.012278                 0.740591                  18126.666667
+        dapper_full    outage                 0.0       31.188384                 0.725526                      0.000000
+        dapper_full    stable                 0.0       33.984265                 0.795998                  21621.666667
+        dapper_full  variable                 0.0       33.744077                 0.731538                   5777.500000
+ dapper_no_deadline congested                 0.0       33.942690                 0.724928                      2.500000
+ dapper_no_deadline     lossy                 0.0       34.012278                 0.741949                  21150.000000
+ dapper_no_deadline    outage                 0.0       31.209068                 0.725321                      0.000000
+ dapper_no_deadline    stable                 0.0       33.984265                 0.795998                  21621.666667
+ dapper_no_deadline  variable                 0.0       33.747776                 0.731533                   5777.500000
+dapper_no_frame_age congested                 0.0       33.936633                 0.724963                      2.500000
+dapper_no_frame_age     lossy                 0.0       34.012278                 0.740591                  18126.666667
+dapper_no_frame_age    outage                 0.0       31.188384                 0.725526                      0.000000
+dapper_no_frame_age    stable                 0.0       33.984265                 0.795998                  21621.666667
+dapper_no_frame_age  variable                 0.0       33.744077                 0.731538                   5777.500000
+     dapper_no_load congested                 0.0       33.940353                 0.724929                      2.500000
+     dapper_no_load     lossy                 0.0       34.012278                 0.737638                  13292.500000
+     dapper_no_load    outage                 0.0       31.188384                 0.725526                      0.000000
+     dapper_no_load    stable                 0.0       33.984265                 0.795998                  21621.666667
+     dapper_no_load  variable                 0.0       33.741601                 0.731530                   5777.500000
+     dapper_no_loss congested                 0.0       31.162588                 0.724845                      0.000000
+     dapper_no_loss     lossy                 0.0       33.992537                 0.724759                      0.000000
+     dapper_no_loss    outage                 0.0       31.188384                 0.725526                      0.000000
+     dapper_no_loss    stable                 0.0       33.984265                 0.767481                  12323.333333
+     dapper_no_loss  variable                 0.0       32.564218                 0.725967                    172.500000
+      dapper_no_rtt congested                 0.0       33.942690                 0.724928                      2.500000
+      dapper_no_rtt     lossy                 0.0       34.012278                 0.735793                  13035.833333
+      dapper_no_rtt    outage                 0.0       31.457204                 0.725112                      0.000000
+      dapper_no_rtt    stable                 0.0       33.984265                 0.795998                  21621.666667
+      dapper_no_rtt  variable                 0.0       33.747776                 0.731533                   5777.500000
+
+[ablation] functional means:
+                  variant   profile  deadline_miss_rate  p95_latency_ms  usable_confidence_proxy  bandwidth_per_1000_frames_kb  reuse_rate
+              dapper_full congested                 0.0       33.936633                 0.724963                      2.500000    0.007433
+              dapper_full     lossy                 0.0       34.012278                 0.740591                  18126.666667    0.000000
+              dapper_full    outage                 0.0       31.188384                 0.725526                      0.000000    0.734033
+              dapper_full    stable                 0.0       33.984265                 0.795998                  21621.666667    0.000000
+              dapper_full  variable                 0.0       33.744077                 0.731538                   5777.500000    0.168300
+dapper_no_confidence_gate congested                 0.0       33.936633                 0.724963                      2.500000    0.007433
+dapper_no_confidence_gate     lossy                 0.0       34.012278                 0.742030                  20925.833333    0.000000
+dapper_no_confidence_gate    outage                 0.0       31.188384                 0.725526                      0.000000    0.734033
+dapper_no_confidence_gate    stable                 0.0       33.984265                 0.801840                  25000.000000    0.000000
+dapper_no_confidence_gate  variable                 0.0       33.744077                 0.731982                   6705.833333    0.168300
+ dapper_no_degraded_reuse congested                 0.0       33.936633                 0.724963                      2.500000    0.007433
+ dapper_no_degraded_reuse     lossy                 0.0       34.012278                 0.740591                  18126.666667    0.000000
+ dapper_no_degraded_reuse    outage                 0.0       33.854473                 0.725064                      0.000000    0.124700
+ dapper_no_degraded_reuse    stable                 0.0       33.984265                 0.795998                  21621.666667    0.000000
+ dapper_no_degraded_reuse  variable                 0.0       33.965862                 0.731253                   5777.500000    0.001433
+ dapper_no_freshness_gate congested                 0.0       33.936633                 0.724963                    150.000000    0.007433
+ dapper_no_freshness_gate     lossy                 0.0       34.012278                 0.740591                  18267.500000    0.000000
+ dapper_no_freshness_gate    outage                 0.0       31.188384                 0.725526                      0.000000    0.734033
+ dapper_no_freshness_gate    stable                 0.0       33.984265                 0.795998                  21621.666667    0.000000
+ dapper_no_freshness_gate  variable                 0.0       33.744077                 0.731538                   9745.833333    0.168300
