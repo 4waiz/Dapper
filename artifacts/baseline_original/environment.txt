@@ -1,0 +1,11 @@
+git_commit: e0a728ea3c353d7316a4768de32298278c5bc635
+python: 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]
+platform: Windows-11-10.0.26200-SP0
+processor: Intel64 Family 6 Model 198 Stepping 2, GenuineIntel
+cpu_count: 24
+numpy: 2.4.6
+pandas: 3.0.5
+matplotlib: 3.11.0
+yaml: 6.0.3
+pytest: 9.1.1
+scipy: 1.18.0
