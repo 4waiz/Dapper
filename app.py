@@ -1,12 +1,14 @@
 """
-Optional FastAPI dashboard API for the DAPPER prototype.
+Optional FastAPI demo service for the DAPPER prototype.
 
-This is intentionally small. It is meant for demos, not production:
+This is a small convenience wrapper around the corrected `dapper` package, for
+demonstrations. It is not used by any camera-ready experiment: every reported
+result is produced by the scripts in `experiments/`.
 
-    GET  /status          - service health and config snapshot
-    GET  /last-run        - most recent per-frame CSV as JSON (head)
-    GET  /metrics         - summary CSV as JSON
-    POST /run-benchmark   - trigger a benchmark run with JSON parameters
+    GET  /status          service health and configuration snapshot
+    GET  /last-run        most recent per-frame CSV (head) as JSON
+    GET  /metrics         seed-aggregated results, if they exist
+    POST /run             run one (policy, profile, seed) cell and persist it
 
 Run with:
     uvicorn app:app --reload --port 8000
@@ -18,105 +20,84 @@ import os
 from typing import Optional
 
 import pandas as pd
-import yaml
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
-from benchmark import load_config, run_benchmark, ALL_RUN_MODES
-from metrics import compute_metrics
-
+from dapper.config import load_config
+from dapper.executor import execute_run
+from dapper.metrics import compute_metrics
+from dapper.policies import ALL_POLICY_NAMES, build_policy
+from dapper.scenario import generate_scenarios
 
 CONFIG_PATH = os.environ.get("DAPPER_CONFIG", "config.yaml")
 RESULTS_DIR = os.environ.get("DAPPER_RESULTS_DIR", "results")
 LAST_RUN_PATH = os.path.join(RESULTS_DIR, "last_run.csv")
-SUMMARY_PATH = os.path.join(RESULTS_DIR, "summary.csv")
+SUMMARY_PATH = os.path.join(RESULTS_DIR, "final", "multi_seed_aggregate.csv")
 
-
-app = FastAPI(title="DAPPER Dashboard API")
+app = FastAPI(title="DAPPER demo API")
 
 
 class RunRequest(BaseModel):
-    frames: int = Field(500, ge=1, le=20000)
+    frames: int = Field(1000, ge=1, le=20000)
     deadline_ms: float = Field(100.0, gt=0.0)
     profile: str = Field("variable")
-    mode: str = Field("dapper")
+    policy: str = Field("dapper")
     seed: int = Field(42)
 
 
 @app.get("/status")
 def status():
-    """Light-weight liveness probe and config snapshot."""
     cfg = load_config(CONFIG_PATH)
     return {
         "status": "ok",
         "config_path": os.path.abspath(CONFIG_PATH),
         "results_dir": os.path.abspath(RESULTS_DIR),
-        "supported_modes": list(ALL_RUN_MODES),
+        "policies": list(ALL_POLICY_NAMES),
         "profiles": cfg.get("profiles", []),
+        "scheduler": cfg["scheduler"],
+        "note": ("demo endpoint; camera-ready results come from experiments/, "
+                 "not from this service"),
     }
 
 
 @app.get("/last-run")
 def last_run(limit: int = 200):
-    """Return the head of the most recent per-frame CSV."""
     if not os.path.exists(LAST_RUN_PATH):
-        raise HTTPException(404, f"No last run found at {LAST_RUN_PATH}")
+        raise HTTPException(404, f"no last run at {LAST_RUN_PATH}")
     df = pd.read_csv(LAST_RUN_PATH)
-    return {
-        "rows": int(len(df)),
-        "preview": df.head(limit).to_dict(orient="records"),
-    }
+    return {"rows": int(len(df)), "preview": df.head(limit).to_dict(orient="records")}
 
 
 @app.get("/metrics")
 def metrics():
-    """Return the summary CSV, if it exists."""
     if not os.path.exists(SUMMARY_PATH):
-        raise HTTPException(404, f"No summary found at {SUMMARY_PATH}")
-    df = pd.read_csv(SUMMARY_PATH)
-    return df.to_dict(orient="records")
+        raise HTTPException(
+            404, f"no aggregate at {SUMMARY_PATH}; run experiments/final_eval.py")
+    return pd.read_csv(SUMMARY_PATH).to_dict(orient="records")
 
 
-@app.post("/run-benchmark")
+@app.post("/run")
 def trigger_run(req: RunRequest):
-    """
-    Run a single benchmark synchronously and persist it to last_run.csv.
-
-    For long benchmarks, prefer running benchmark.py from the CLI; this
-    endpoint blocks until the run finishes.
-    """
-    if req.mode not in ALL_RUN_MODES:
-        raise HTTPException(400, f"Unknown mode: {req.mode}")
-
+    """Run one cell synchronously. Blocks until the run finishes."""
+    if req.policy not in ALL_POLICY_NAMES:
+        raise HTTPException(400, f"unknown policy: {req.policy}")
     cfg = load_config(CONFIG_PATH)
-    df = run_benchmark(
-        run_mode=req.mode,
-        profile=req.profile,
-        frames=req.frames,
-        deadline_ms=req.deadline_ms,
-        cfg=cfg,
-        seed=req.seed,
-    )
+    if req.profile not in cfg["network_profiles"]:
+        raise HTTPException(400, f"unknown profile: {req.profile}")
+
+    trace = generate_scenarios(req.profile, cfg, req.seed, req.frames)
+    df = execute_run(trace, build_policy(req.policy, cfg), cfg, req.deadline_ms)
     os.makedirs(RESULTS_DIR, exist_ok=True)
     df.to_csv(LAST_RUN_PATH, index=False)
-    m = compute_metrics(df, mode=req.mode, profile=req.profile)
+    m = compute_metrics(df, df.attrs.get("mode_switches"))
     return {
         "frames": len(df),
+        "scenario_fingerprint": trace.fingerprint(),
         "output_csv": os.path.abspath(LAST_RUN_PATH),
-        "metrics": {
-            "mean_latency_ms": m.mean_latency_ms,
-            "p95_latency_ms": m.p95_latency_ms,
-            "p99_latency_ms": m.p99_latency_ms,
-            "deadline_miss_rate": m.deadline_miss_rate,
-            "mean_confidence": m.mean_confidence,
-            "stale_output_rate": m.stale_output_rate,
-            "fallback_rate": m.fallback_rate,
-            "total_bandwidth_kb": m.total_bandwidth_kb,
-            "reliability_score": m.reliability_score,
-        },
+        "metrics": {k: v for k, v in m.__dict__.items()},
     }
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
