@@ -162,6 +162,17 @@ python real_validation/evaluate_detection.py
 python real_validation/replay_dapper.py
 ```
 
+## What to read next
+
+| File | What it is |
+|---|---|
+| [artifacts/CAMERA_READY_RESULTS.md](artifacts/CAMERA_READY_RESULTS.md) | The full result narrative, generated from the CSVs |
+| [artifacts/CLAIM_EVIDENCE_MATRIX.md](artifacts/CLAIM_EVIDENCE_MATRIX.md) | Every claim, its evidence, and the claims the data does **not** support |
+| [artifacts/PARAMETER_CHANGELOG.md](artifacts/PARAMETER_CHANGELOG.md) | Every parameter change and its justification |
+| [artifacts/ENVIRONMENT.md](artifacts/ENVIRONMENT.md) | The machine and the package versions the released results were produced on |
+| [artifacts/baseline_original/BASELINE_AUDIT.md](artifacts/baseline_original/BASELINE_AUDIT.md) | Audit of the originally published implementation |
+| [results/calibration/calibration_report.md](results/calibration/calibration_report.md) | How the weights and thresholds were selected |
+
 ## Experimental design
 
 * **Paired scenarios.** For each (seed, profile), the *potential* outcome of every execution site on every frame — latency, confidence, detections and the loss draw — is generated in advance from 15 independent random streams. All policies replay the identical trace, so a decision selects which outcome is realised but cannot change the random future. Comparisons are paired at frame granularity; `results/final/scenario_fingerprints.csv` lets a reviewer verify that a replay used the same scenarios.
