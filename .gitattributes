@@ -1,0 +1,17 @@
+# DAPPER: Deadline-Aware Perception Placement for Edge Robotics.
+#
+# Every text blob in this repository is already stored with LF endings, so this
+# file only pins that invariant: no checkout or commit may flip a result file to
+# CRLF and break the byte-for-byte determinism the README promises.
+* text=auto eol=lf
+
+# Never diffed, never converted.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.parquet binary
+*.woff binary
+*.woff2 binary
