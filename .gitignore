@@ -20,3 +20,7 @@ artifacts/_src/reviews.txt
 paper/*.aux
 paper/*.log
 paper/*.out
+
+# Local agent scratch (never committed)
+.claude/
+CLAUDE.md
