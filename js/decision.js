@@ -164,10 +164,10 @@ export class DecisionPath {
     add(reachedConf && t.confidence >= t.tauC, "cₜ ≥ τc",
       `${f(t.confidence, 3)} ≥ ${f(t.tauC, 2)}`, t.confidence >= t.tauC);
     const reachedFeas = reachedConf && t.confidence < t.tauC;
-    add(reachedFeas && t.predicted <= t.commitBudget, "T̂ ≤ mD",
+    add(reachedFeas && t.predicted <= t.commitBudget, "expected T ≤ mD",
       `${f(t.predicted, 1)} ≤ ${f(t.commitBudget, 1)} ms`, t.predicted <= t.commitBudget);
     add(reachedFeas && t.predicted > t.commitBudget && t.optimistic <= t.refreshBudget,
-      "T̂⁻ ≤ W", `${f(t.optimistic, 1)} ≤ ${f(t.refreshBudget, 1)} ms`,
+      "optimistic T ≤ W", `${f(t.optimistic, 1)} ≤ ${f(t.refreshBudget, 1)} ms`,
       t.optimistic <= t.refreshBudget);
     const reuseOk = t.lastValidAgeMs <= t.lastValidFreshnessMs;
     add(mode === "degraded_safe", "last-valid age ≤ freshness window",

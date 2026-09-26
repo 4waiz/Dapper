@@ -368,8 +368,115 @@ function updateStageBar(step) {
     v.textContent = "on time, local answer";
     v.style.color = "var(--text-2)";
   }
-  $("stage-chip").textContent = `${MODE_LABEL[row.selected_mode]} · ${row.decision_reason}`;
+  $("stage-chip").textContent =
+    `Selected ${MODE_LABEL[row.selected_mode]} — reason “${row.decision_reason}”, one of nine.`;
   $("path-chip").textContent = `${MODE_LABEL[row.selected_mode]} · frame ${row.frame_id}`;
+  updateHero(step);
+}
+
+/**
+ * The hero card: the same frame the console is showing, written out the way a
+ * reviewer would read it — what was chosen, why, what the gates saw, and which
+ * single test decided it.
+ */
+function updateHero(step) {
+  const row = step.row;
+  const tests = state.runners.get("dapper").policy.scheduler.gateTests(step.obs);
+  const f = (x, d = 1) => (Number.isFinite(x) ? x.toFixed(d) : "∞");
+
+  $("hero-src").textContent =
+    `${state.source === "replay" ? `${state.profile}-${state.seed}` : "live synthetic"} · frame ${row.frame_id}`;
+  const stateTag = $("hero-state");
+  stateTag.textContent = state.playing ? "live" : "paused";
+  stateTag.className = `tag ${state.playing ? "ok" : ""}`;
+
+  $("hero-mode").textContent = MODE_LABEL[row.selected_mode];
+  $("hero-mode").style.color = MODE_COLOR[row.selected_mode];
+  $("hero-why").textContent = REASON_TEXT[row.decision_reason] || row.decision_reason;
+
+  const facts = [
+    ["Deadline risk against the two thresholds", `R ${f(tests.risk, 3)} · θL ${f(tests.thetaL, 2)} · θD ${f(tests.thetaD, 2)}`],
+    ["Local model's own confidence", `c ${f(tests.confidence, 3)} · τc ${f(tests.tauC, 2)}`],
+    ["Expected remote completion", `expected ${f(tests.predicted)} ms · budget ${f(tests.commitBudget)} ms`],
+    ["Network right now", `RTT ${f(row.rtt_ms, 0)} ms · loss ${f(row.packet_loss * 100, 1)}% · load ${f(row.edge_load, 2)}`],
+  ];
+  $("hero-tests").innerHTML = facts
+    .map(([what, expr]) => `<li>${what}<span class="expr">${expr}</span></li>`)
+    .join("");
+
+  // The one test that actually settled this frame.
+  const decided = decidingGate(row.decision_reason, tests, f);
+  $("hero-critical-label").textContent = decided.label;
+  $("hero-critical-text").textContent = decided.text;
+  $("hero-critical-expr").textContent = decided.expr;
+
+  const verdict = $("hero-verdict");
+  if (!row.deadline_met) {
+    verdict.textContent = "Deadline missed.";
+    verdict.style.color = "var(--degraded)";
+  } else if (row.output_reused) {
+    verdict.textContent = `Control loop served a reused output, ${ms(row.output_age_ms, 0)} old.`;
+    verdict.style.color = "var(--text-2)";
+  } else if (row.remote_accepted) {
+    verdict.textContent = "Refinement accepted in time.";
+    verdict.style.color = "var(--ok)";
+  } else {
+    verdict.textContent = "Control loop answered on time, locally.";
+    verdict.style.color = "var(--text-2)";
+  }
+  $("hero-latency").textContent = `${ms(row.control_output_latency_ms, 1)} of ${state.deadlineMs} ms`;
+}
+
+/** Which single gate settled the frame, phrased for a reader. */
+function decidingGate(reason, t, f) {
+  switch (reason) {
+    case "edge_unavailable_reuse_fresh":
+    case "edge_unavailable_local_fallback":
+      return {
+        label: "deciding gate · health check",
+        text: "The edge was already known to be unreachable, so nothing was transmitted and nothing was charged.",
+        expr: "edge_available = false",
+      };
+    case "risk_high_reuse_fresh":
+    case "risk_high_local_fallback":
+      return {
+        label: "deciding gate · risk",
+        text: "Risk reached the degraded threshold, so the frame took the conservative path rather than the network.",
+        expr: `R ${f(t.risk, 3)} ≥ θD ${f(t.thetaD, 2)}`,
+      };
+    case "risk_moderate_prefer_local":
+      return {
+        label: "deciding gate · risk",
+        text: "Risk sat between the two thresholds, so the frame stayed local for predictable latency.",
+        expr: `θL ${f(t.thetaL, 2)} ≤ R ${f(t.risk, 3)} < θD ${f(t.thetaD, 2)}`,
+      };
+    case "local_confidence_sufficient":
+      return {
+        label: "deciding gate · confidence",
+        text: "Risk was low, but the on-board model was already confident enough to keep the frame.",
+        expr: `c ${f(t.confidence, 3)} ≥ τc ${f(t.tauC, 2)}`,
+      };
+    case "low_confidence_edge_margin_ok":
+      return {
+        label: "deciding gate · commit margin",
+        text: "The expected remote completion fitted the commit margin, so the frame was committed to the edge and keeps no local answer.",
+        expr: `expected ${f(t.predicted)} ms ≤ mD ${f(t.commitBudget)} ms`,
+      };
+    case "low_confidence_hybrid_refresh":
+      return {
+        label: "deciding gate · freshness window",
+        text: "A refinement could still land inside the freshness window, so the local answer went out now and the request went out anyway.",
+        expr: `optimistic ${f(t.optimistic)} ms ≤ W ${f(t.refreshBudget)} ms`,
+      };
+    case "low_confidence_refresh_infeasible":
+      return {
+        label: "deciding gate · freshness window",
+        text: "Even the optimistic estimate missed the freshness window, so the request was never sent: a reply rejected on arrival only spends uplink.",
+        expr: `optimistic ${f(t.optimistic)} ms > W ${f(t.refreshBudget)} ms`,
+      };
+    default:
+      return { label: "deciding gate", text: reason, expr: "" };
+  }
 }
 
 function addAudit(step) {
@@ -554,9 +661,9 @@ function drawCharts() {
 
 function refreshStatus() {
   const dot = $("status-dot");
-  dot.className = `dot ${state.playing ? "online" : "paused"}`;
-  $("status-text").textContent = state.playing ? "RUNNING" : "PAUSED";
-  $("status-mode").textContent = state.source === "replay" ? `REPLAY ${state.profile}-${state.seed}` : "LIVE SYNTHETIC";
+  dot.className = `dot-live ${state.playing ? "online" : "paused"}`;
+  $("status-text").textContent = state.playing ? "running" : "paused";
+  $("status-mode").textContent = state.source === "replay" ? `replay ${state.profile}-${state.seed}` : "live synthetic";
   $("status-frame").textContent = `frame ${int(state.frame)}`;
   const p = state.parity;
   const el = $("status-parity");
