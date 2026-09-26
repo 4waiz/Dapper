@@ -1,0 +1,240 @@
+{
+ "generated_by": "experiments/export_web_config.py",
+ "source": "config.yaml",
+ "note": "Frozen camera-ready configuration. Every perception latency and confidence in the synthetic model is simulated; confidence is a proxy, never detector accuracy.",
+ "deadline_ms": 100.0,
+ "frames": 1000,
+ "calibration_seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+ ],
+ "evaluation_seeds": {
+  "start": 100,
+  "count": 30
+ },
+ "profiles": [
+  "stable",
+  "congested",
+  "lossy",
+  "variable",
+  "outage"
+ ],
+ "network_profiles": {
+  "stable": {
+   "rtt_ms_mean": 25.0,
+   "rtt_ms_std": 5.0,
+   "packet_loss": 0.01,
+   "edge_load": 0.2,
+   "outage_prob": 0.0
+  },
+  "congested": {
+   "rtt_ms_mean": 70.0,
+   "rtt_ms_std": 20.0,
+   "packet_loss": 0.05,
+   "edge_load": 0.7,
+   "outage_prob": 0.0
+  },
+  "lossy": {
+   "rtt_ms_mean": 40.0,
+   "rtt_ms_std": 10.0,
+   "packet_loss": 0.2,
+   "edge_load": 0.3,
+   "outage_prob": 0.0
+  },
+  "variable": {
+   "rtt_ms_mean": 50.0,
+   "rtt_ms_std": 35.0,
+   "packet_loss": 0.07,
+   "edge_load": 0.5,
+   "outage_prob": 0.02
+  },
+  "outage": {
+   "rtt_ms_mean": 200.0,
+   "rtt_ms_std": 80.0,
+   "packet_loss": 0.35,
+   "edge_load": 0.9,
+   "outage_prob": 0.3
+  }
+ },
+ "local": {
+  "latency_ms_min": 15.0,
+  "latency_ms_max": 35.0,
+  "confidence_min": 0.65,
+  "confidence_max": 0.8,
+  "bandwidth_kb": 0.0
+ },
+ "edge": {
+  "latency_ms_min": 45.0,
+  "latency_ms_max": 90.0,
+  "confidence_min": 0.8,
+  "confidence_max": 0.95,
+  "bandwidth_kb": 25.0,
+  "extra_rtt_ms": 0.0
+ },
+ "cloud": {
+  "latency_ms_min": 60.0,
+  "latency_ms_max": 130.0,
+  "confidence_min": 0.82,
+  "confidence_max": 0.96,
+  "bandwidth_kb": 35.0,
+  "extra_rtt_ms": 80.0
+ },
+ "execution": {
+  "frame_period_ms": 33.3333333333,
+  "load_compute_scale": 0.5,
+  "remote_timeout_slack_ms": 20.0,
+  "reuse_latency_ms": 1.0,
+  "edge_health_check": true
+ },
+ "scheduler": {
+  "weight_rtt": 0.36,
+  "weight_loss": 0.35,
+  "weight_load": 0.11,
+  "weight_frame_age": 0.0,
+  "weight_deadline": 0.18,
+  "risk_local_threshold": 0.45,
+  "risk_degraded_threshold": 0.6,
+  "local_confidence_threshold": 0.78,
+  "remote_deadline_margin": 0.8,
+  "hybrid_freshness_window_ms": 100.0,
+  "hybrid_estimator": "optimistic",
+  "last_valid_freshness_ms": 100.0
+ },
+ "baselines": {
+  "deadline_greedy_margin": 0.3,
+  "confidence_deadline_threshold": 0.68,
+  "confidence_deadline_margin": 0.3,
+  "rtt_threshold_ms": 5.0
+ },
+ "derived": {
+  "edge_compute_ms_estimate": 67.5,
+  "edge_compute_ms_optimistic": 45.0,
+  "local_compute_ms_estimate": 25.0,
+  "nominal_compute_ms": {
+   "edge": 67.5,
+   "cloud": 95.0
+  },
+  "extra_rtt_ms": {
+   "edge": 0.0,
+   "cloud": 80.0
+  },
+  "bandwidth_kb": {
+   "local": 0.0,
+   "edge": 25.0,
+   "cloud": 35.0
+  }
+ },
+ "modes": [
+  "local_fast",
+  "edge_accurate",
+  "hybrid",
+  "degraded_safe"
+ ],
+ "reasons": [
+  "edge_unavailable_reuse_fresh",
+  "edge_unavailable_local_fallback",
+  "risk_high_reuse_fresh",
+  "risk_high_local_fallback",
+  "risk_moderate_prefer_local",
+  "local_confidence_sufficient",
+  "low_confidence_edge_margin_ok",
+  "low_confidence_hybrid_refresh",
+  "low_confidence_refresh_infeasible"
+ ],
+ "policies": {
+  "main": [
+   "local_only",
+   "edge_only",
+   "cloud_only",
+   "dapper"
+  ],
+  "adaptive": [
+   "deadline_greedy",
+   "confidence_deadline",
+   "rtt_threshold"
+  ],
+  "oracle": [
+   "oracle_feasible"
+  ]
+ },
+ "table_i": [
+  {
+   "parameter": "(w_r, w_l, w_c, w_a, w_d)",
+   "value": "(0.36, 0.35, 0.11, 0, 0.18)"
+  },
+  {
+   "parameter": "Local risk threshold θL",
+   "value": "0.45"
+  },
+  {
+   "parameter": "Degraded risk threshold θD",
+   "value": "0.60"
+  },
+  {
+   "parameter": "Local-confidence threshold τc",
+   "value": "0.78"
+  },
+  {
+   "parameter": "Remote commit margin m",
+   "value": "0.80"
+  },
+  {
+   "parameter": "Hybrid freshness window W",
+   "value": "100 ms"
+  },
+  {
+   "parameter": "Last-valid freshness window",
+   "value": "100 ms"
+  }
+ ],
+ "table_ii": [
+  {
+   "profile": "stable",
+   "rtt_ms_mean": 25.0,
+   "rtt_ms_std": 5.0,
+   "packet_loss": 0.01,
+   "edge_load": 0.2,
+   "outage_prob": 0.0
+  },
+  {
+   "profile": "congested",
+   "rtt_ms_mean": 70.0,
+   "rtt_ms_std": 20.0,
+   "packet_loss": 0.05,
+   "edge_load": 0.7,
+   "outage_prob": 0.0
+  },
+  {
+   "profile": "lossy",
+   "rtt_ms_mean": 40.0,
+   "rtt_ms_std": 10.0,
+   "packet_loss": 0.2,
+   "edge_load": 0.3,
+   "outage_prob": 0.0
+  },
+  {
+   "profile": "variable",
+   "rtt_ms_mean": 50.0,
+   "rtt_ms_std": 35.0,
+   "packet_loss": 0.07,
+   "edge_load": 0.5,
+   "outage_prob": 0.02
+  },
+  {
+   "profile": "outage",
+   "rtt_ms_mean": 200.0,
+   "rtt_ms_std": 80.0,
+   "packet_loss": 0.35,
+   "edge_load": 0.9,
+   "outage_prob": 0.3
+  }
+ ]
+}
