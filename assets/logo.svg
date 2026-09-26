@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="DAPPER">
+  <title>DAPPER</title>
+  <desc>A deadline dial closing around a perception lens: the control deadline, and the frame that has to beat it.</desc>
+  <defs>
+    <linearGradient id="d-sweep" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.55" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="d-lens" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="d-tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1222"/>
+      <stop offset="1" stop-color="#04070e"/>
+    </linearGradient>
+    <radialGradient id="d-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="8" y="8" width="496" height="496" rx="108" fill="url(#d-tile)"/>
+  <rect x="8" y="8" width="496" height="496" rx="108" fill="none" stroke="#1a2745" stroke-width="10"/>
+  <circle cx="256" cy="256" r="196" fill="url(#d-glow)"/>
+
+  <!-- the deadline dial: the full budget, then the part already spent -->
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#1e2c4d" stroke-width="34"/>
+  <path d="M 256 106 A 150 150 0 1 1 115.05 307.30"
+        fill="none" stroke="url(#d-sweep)" stroke-width="34" stroke-linecap="round"/>
+
+  <!-- the deadline itself: where a late result stops being useful -->
+  <g stroke="#ff3d71" stroke-linecap="round">
+    <path d="M 100.6 315.4 L 68.3 333.9" stroke-width="26"/>
+  </g>
+
+  <!-- robot nubs, so the lens reads as a head -->
+  <g fill="#22d3ee">
+    <rect x="176" y="236" width="18" height="40" rx="9"/>
+    <rect x="318" y="236" width="18" height="40" rx="9"/>
+  </g>
+
+  <!-- the perception lens -->
+  <circle cx="256" cy="256" r="72" fill="#04070e"/>
+  <circle cx="256" cy="256" r="62" fill="url(#d-lens)"/>
+  <circle cx="256" cy="256" r="26" fill="#04070e"/>
+  <circle cx="234" cy="234" r="11" fill="#e8eef8" opacity="0.9"/>
+
+  <!-- the hand, pointing at the deadline -->
+  <path d="M 256 256 L 158.3 291.6" fill="none" stroke="#22d3ee" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="256" cy="256" r="15" fill="#22d3ee"/>
+</svg>

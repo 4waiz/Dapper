@@ -1,0 +1,197 @@
+/*
+ * DAPPER paper, web edition.
+ *
+ * Print (and the PDF this page prints to) follows the IEEE conference layout on
+ * A4, which is what the camera-ready uses: 210x297 mm, two 88.9 mm columns with
+ * a 5.6 mm gutter, Times 10 pt body, 24 pt title, 9 pt bold abstract, small-caps
+ * section headings with Roman numerals, 8 pt tables, captions and references.
+ * The screen version keeps the same typography in one readable column.
+ */
+:root {
+  --ink: #000;
+  --muted: #3f3f46;
+  --link: #1d4ed8;
+  --page: #fff;
+  --desk: #e7e9ee;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--desk); }
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--desk);
+  font: 18px/1.5 "Times New Roman", Times, Tinos, "Liberation Serif", "Nimbus Roman", serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.toolbar {
+  position: sticky; top: 0; z-index: 5; display: flex; gap: 18px; align-items: center;
+  justify-content: center; flex-wrap: wrap;
+  padding: 9px 16px; background: rgba(4, 7, 14, 0.94); backdrop-filter: blur(8px);
+  font: 600 13px/1.2 "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+}
+.toolbar a { color: #67e8f9; text-decoration: none; display: inline-flex; align-items: center; gap: 7px; }
+.toolbar a:hover { text-decoration: underline; }
+
+article {
+  max-width: 860px; margin: 28px auto 64px; padding: 60px 72px 64px; background: var(--page);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Title block */
+.paper-head { text-align: center; }
+h1 { font-weight: normal; font-size: 2.05em; line-height: 1.15; margin: 0 0 0.85em; }
+.authors {
+  display: flex; justify-content: center; gap: 3em; flex-wrap: wrap;
+  font-size: 1.05em; line-height: 1.25; margin: 0 0 1.6em;
+}
+.authors .who { text-align: center; }
+.authors .who i { font-style: italic; display: block; }
+.authors .who a { color: inherit; }
+
+/* Accepted-manuscript notice */
+.notice {
+  border: 0.5pt solid #9ca3af; background: #f6f7f9; padding: 0.7em 0.9em; margin: 0 0 1.6em;
+  font-size: 0.72em; line-height: 1.45; text-align: left; color: var(--muted);
+}
+.notice b { color: var(--ink); }
+
+/* Abstract and index terms */
+.abstract, .index-terms {
+  font-weight: bold; font-size: 0.9em; line-height: 1.4; text-align: justify; text-indent: 1.5em;
+  margin: 0 0 0.9em; hyphens: auto;
+}
+.index-terms { font-style: italic; margin-bottom: 1.2em; }
+
+/* Headings: I. Introduction (small caps, centered), A. Subsection (italic) */
+h2 {
+  font-weight: normal; font-size: 1em; font-variant: small-caps; text-align: center;
+  letter-spacing: 0.02em; margin: 1.7em 0 0.55em;
+}
+h3 { font-weight: normal; font-style: italic; font-size: 1em; margin: 1.15em 0 0.35em; }
+
+p { margin: 0 0 0.6em; text-indent: 1.5em; text-align: justify; hyphens: auto; }
+p.cont { text-indent: 0; }
+a { color: var(--link); text-decoration: none; overflow-wrap: anywhere; }
+a:hover { text-decoration: underline; }
+ul.bullets { margin: 0.4em 0 0.7em; padding-left: 1.4em; }
+ul.bullets li { margin-bottom: 0.3em; text-align: justify; }
+
+/* Equations. In print an 88.9 mm column is narrow, so the display equation is
+   set in two aligned lines and kept inside the column rather than allowed to
+   spill across the gutter. */
+.eq { overflow-x: auto; overflow-y: hidden; max-width: 100%; break-inside: avoid; }
+.eq .katex-display { overflow-x: auto; overflow-y: hidden; }
+.katex { font-size: 1.08em; }
+.katex-display { margin: 0.55em 0; }
+.eqno { text-align: right; text-indent: 0; margin: -0.35em 0 0.6em; }
+
+/* Figures: "Fig. 1." captions below */
+figure { margin: 1.4em 0; text-align: center; }
+figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+figcaption { font-size: 0.8em; line-height: 1.35; text-align: justify; margin-top: 0.6em; hyphens: auto; }
+.lab { margin-right: 0.6em; }
+.subfigs { display: flex; gap: 1em; justify-content: center; flex-wrap: wrap; }
+.subfigs > div { flex: 1 1 260px; min-width: 0; }
+.subcap { font-size: 0.78em; margin-top: 0.3em; text-align: center; }
+
+/* Tables: "TABLE I." captions above, full grid, bold header */
+.tbl { margin: 1.4em 0; overflow-x: auto; }
+table { border-collapse: collapse; margin: 0 auto; font-size: 0.8em; line-height: 1.3; }
+caption { font-variant: small-caps; text-align: center; padding-bottom: 0.55em; line-height: 1.3; }
+caption .lab { font-variant: normal; text-transform: uppercase; margin-right: 1.4em; }
+th, td { border: 0.5pt solid #000; padding: 1px 5px; text-align: center; vertical-align: middle; }
+th { font-weight: bold; }
+td.l, th.l { text-align: left; }
+td.b { font-weight: bold; }
+tr.grp td { font-style: italic; text-align: left; }
+.sd, .ci { font-size: 0.86em; white-space: nowrap; }
+/* Table IV is two sub-tables under one caption, as the camera-ready sets it. */
+.standalone-cap {
+  font-variant: small-caps; text-align: center; text-indent: 0; margin: 0 0 0.55em; line-height: 1.3;
+  font-size: 0.8em;
+}
+.standalone-cap .lab { font-variant: normal; text-transform: uppercase; margin-right: 1.4em; }
+.twoup { display: flex; gap: 2em; justify-content: center; align-items: flex-start; flex-wrap: wrap; }
+.twoup > table { margin: 0; }
+.tnote { font-size: 0.72em; line-height: 1.3; text-align: justify; margin: 0.45em auto 0; max-width: 34em; }
+
+/* References: [n] with a hanging indent */
+.refs-head { margin-top: 1.9em; }
+.refs { list-style: none; counter-reset: ref; margin: 0; padding: 0; font-size: 0.8em; line-height: 1.35; }
+.refs li { counter-increment: ref; position: relative; padding-left: 2.6em; margin: 0 0 0.3em; text-align: justify; }
+.refs li::before { content: "[" counter(ref) "]"; position: absolute; left: 0; }
+
+/* Screen-only narrow layout. Width queries must never leak into print. */
+@media screen and (max-width: 760px) {
+  body { font-size: 17px; }
+  article { margin: 0; padding: 28px 16px 44px; box-shadow: none; }
+  h1 { font-size: 1.5em; }
+  .authors { gap: 1.4em; }
+  p, .abstract, .index-terms, figcaption, .refs li, ul.bullets li { text-align: left; }
+  table { font-size: 0.72em; }
+}
+
+.site-foot {
+  max-width: 860px; margin: -40px auto 48px; padding: 0 16px; text-align: center; color: #52525b;
+  font: 13px/1.5 "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+}
+
+/* ---------- Print / PDF: IEEE conference layout on A4 ---------- */
+@page { size: 210mm 297mm; margin: 19mm 15.9mm 25mm 15.9mm; }
+
+@media print {
+  html, body { background: #fff; }
+  body { font-size: 10pt; line-height: 10.9pt; }
+  .toolbar, .site-foot, .noprint { display: none; }
+  article { max-width: none; margin: 0; padding: 0; box-shadow: none; }
+
+  h1 { font-size: 24pt; line-height: 27.6pt; margin: 0 0 21pt; }
+  .authors { font-size: 11pt; line-height: 12.6pt; margin: 0 0 8pt; gap: 3em; }
+  .notice { font-size: 7pt; line-height: 8.6pt; margin: 0 0 10pt; padding: 4pt 6pt; }
+
+  .cols { column-count: 2; column-gap: 5.6mm; column-fill: balance; }
+
+  .abstract, .index-terms { font-size: 9pt; line-height: 10.35pt; text-indent: 13.5pt; margin: 0 0 10pt; }
+  .index-terms { margin-bottom: 7pt; }
+
+  h2 { font-size: 10pt; line-height: 11pt; margin: 8pt 0 4pt; letter-spacing: 0; break-after: avoid; }
+  h3 { font-size: 10pt; line-height: 11pt; margin: 6pt 0 3pt; break-after: avoid; }
+  p { margin: 0 0 6pt; text-indent: 14.4pt; orphans: 2; widows: 2; }
+  p.cont { text-indent: 0; }
+  a { color: inherit; }
+  ul.bullets { margin: 3pt 0 6pt; padding-left: 12pt; }
+  ul.bullets li { margin-bottom: 2pt; }
+
+  .katex { font-size: 0.96em; }
+  .katex-display { margin: 3pt 0 4pt; }
+  .eq { overflow: visible; max-width: 100%; break-inside: avoid; }
+  .eq .katex-display { overflow: visible; }
+  .eqno { margin: -2pt 0 6pt; font-size: 10pt; }
+
+  figure { margin: 6pt 0 10pt; break-inside: avoid; }
+  figcaption { font-size: 8pt; line-height: 9pt; margin-top: 4pt; }
+  .lab { margin-right: 4pt; }
+  .subcap { font-size: 8pt; margin-top: 2pt; }
+
+  .tbl { margin: 8pt 0 10pt; overflow: visible; break-inside: avoid; }
+  table { font-size: 8pt; line-height: 9.2pt; }
+  caption { padding-bottom: 5pt; line-height: 9.5pt; }
+  caption .lab { margin-right: 12pt; }
+  th, td { padding: 0.5pt 3.5pt; }
+  .tnote { font-size: 7pt; line-height: 8.2pt; margin-top: 3pt; max-width: none; }
+  .standalone-cap { font-size: 8pt; line-height: 9.5pt; margin: 0 0 5pt; }
+  .standalone-cap .lab { margin-right: 12pt; }
+  .twoup { gap: 14pt; }
+
+  /* Double-column floats (IEEE figure* / table*). Placed in the source where
+     the column break should fall, so a page never ends half empty. */
+  .wide { column-span: all; margin: 4pt 0 12pt; }
+  figure.wide img { max-width: 100%; }
+
+  .refs-head { margin-top: 8pt; }
+  .refs { font-size: 8pt; line-height: 9.1pt; }
+  .refs li { padding-left: 18pt; margin: 0 0 2.4pt; }
+}

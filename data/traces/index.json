@@ -1,0 +1,111 @@
+{
+ "generated_by": "experiments/export_web_traces.py",
+ "frame_period_ms": 33.3333333333,
+ "traces": [
+  {
+   "profile": "stable",
+   "seed": 100,
+   "frames": 1000,
+   "file": "stable-100.json",
+   "fingerprint": "72b84153"
+  },
+  {
+   "profile": "stable",
+   "seed": 101,
+   "frames": 1000,
+   "file": "stable-101.json",
+   "fingerprint": "bb4fe908"
+  },
+  {
+   "profile": "stable",
+   "seed": 102,
+   "frames": 1000,
+   "file": "stable-102.json",
+   "fingerprint": "1ca7180d"
+  },
+  {
+   "profile": "congested",
+   "seed": 100,
+   "frames": 1000,
+   "file": "congested-100.json",
+   "fingerprint": "69ade526"
+  },
+  {
+   "profile": "congested",
+   "seed": 101,
+   "frames": 1000,
+   "file": "congested-101.json",
+   "fingerprint": "07708041"
+  },
+  {
+   "profile": "congested",
+   "seed": 102,
+   "frames": 1000,
+   "file": "congested-102.json",
+   "fingerprint": "bbbb74e2"
+  },
+  {
+   "profile": "lossy",
+   "seed": 100,
+   "frames": 1000,
+   "file": "lossy-100.json",
+   "fingerprint": "63ca457c"
+  },
+  {
+   "profile": "lossy",
+   "seed": 101,
+   "frames": 1000,
+   "file": "lossy-101.json",
+   "fingerprint": "7f965415"
+  },
+  {
+   "profile": "lossy",
+   "seed": 102,
+   "frames": 1000,
+   "file": "lossy-102.json",
+   "fingerprint": "55c08f74"
+  },
+  {
+   "profile": "variable",
+   "seed": 100,
+   "frames": 1000,
+   "file": "variable-100.json",
+   "fingerprint": "e76f8fbd"
+  },
+  {
+   "profile": "variable",
+   "seed": 101,
+   "frames": 1000,
+   "file": "variable-101.json",
+   "fingerprint": "b6e8533e"
+  },
+  {
+   "profile": "variable",
+   "seed": 102,
+   "frames": 1000,
+   "file": "variable-102.json",
+   "fingerprint": "7f3aa0fb"
+  },
+  {
+   "profile": "outage",
+   "seed": 100,
+   "frames": 1000,
+   "file": "outage-100.json",
+   "fingerprint": "e9cd21c5"
+  },
+  {
+   "profile": "outage",
+   "seed": 101,
+   "frames": 1000,
+   "file": "outage-101.json",
+   "fingerprint": "7d9dc718"
+  },
+  {
+   "profile": "outage",
+   "seed": 102,
+   "frames": 1000,
+   "file": "outage-102.json",
+   "fingerprint": "8ebdd49b"
+  }
+ ]
+}
