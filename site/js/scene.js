@@ -13,13 +13,13 @@
 
 import { MODE_COLOR } from "./fmt.js";
 
-const BG = "#02040a";
-const GRID = "#101a30";
-const INK = "#a3b3cc";
-const INK_DIM = "#6d809e";
-const OK = "#34d399";
-const LATE = "#ff3d71";
-const DROP = "#64748b";
+const BG = "#080706";
+const GRID = "#1a1615";
+const INK = "#a49a93";
+const INK_DIM = "#6f6762";
+const OK = "#6ec49b";
+const LATE = "#d9634f";
+const DROP = "#7a716b";
 
 const PACKET_LIFETIME_MS = 1500;
 
@@ -129,8 +129,8 @@ export class Scene {
 
     this.packetsLayer(ctx, robot, edge, cloud);
     this.robot(ctx, robot);
-    this.node(ctx, edge, "EDGE", "45–90 ms compute", "#8b5cf6");
-    this.node(ctx, cloud, "CLOUD", "60–130 ms compute", "#f472b6");
+    this.node(ctx, edge, "EDGE", "45–90 ms compute", "#9a86e0");
+    this.node(ctx, cloud, "CLOUD", "60–130 ms compute", "#c98aa8");
     this.controlLoop(ctx, control);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
@@ -152,7 +152,7 @@ export class Scene {
   }
 
   link(ctx, a, b, label) {
-    ctx.strokeStyle = "#1e2c4d";
+    ctx.strokeStyle = "#2b2624";
     ctx.lineWidth = 2;
     ctx.setLineDash([6, 5]);
     ctx.beginPath();
@@ -169,7 +169,7 @@ export class Scene {
   }
 
   controlLink(ctx, robot, control) {
-    ctx.strokeStyle = "#1e2c4d";
+    ctx.strokeStyle = "#2b2624";
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(robot.x, robot.y + 26);
@@ -182,10 +182,10 @@ export class Scene {
     const r = 30 * s;
     const glow = 0.25 + 0.5 * this.localPulse;
     ctx.save();
-    ctx.shadowColor = `rgba(34, 211, 238, ${glow})`;
+    ctx.shadowColor = `rgba(95, 179, 161, ${glow})`;
     ctx.shadowBlur = 22;
-    ctx.fillStyle = "#0b1626";
-    ctx.strokeStyle = "#22d3ee";
+    ctx.fillStyle = "#12100f";
+    ctx.strokeStyle = "#5fb3a1";
     ctx.lineWidth = 2;
     roundRect(ctx, p.x - r, p.y - r * 0.8, r * 2, r * 1.6, 9 * s);
     ctx.fill();
@@ -193,16 +193,16 @@ export class Scene {
     ctx.restore();
 
     // camera eye
-    ctx.fillStyle = "#22d3ee";
+    ctx.fillStyle = "#5fb3a1";
     ctx.beginPath();
     ctx.arc(p.x, p.y - 2, 7 * s, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = "#02040a";
+    ctx.fillStyle = "#080706";
     ctx.beginPath();
     ctx.arc(p.x, p.y - 2, 3 * s, 0, Math.PI * 2);
     ctx.fill();
     // treads
-    ctx.strokeStyle = "#22d3ee";
+    ctx.strokeStyle = "#5fb3a1";
     ctx.lineWidth = 3 * s;
     ctx.beginPath();
     ctx.moveTo(p.x - r + 4 * s, p.y + r * 0.9);
@@ -221,13 +221,13 @@ export class Scene {
     }
 
     if (this.reuseGlow > 0) {
-      ctx.strokeStyle = `rgba(255, 61, 113, ${0.65 * this.reuseGlow})`;
+      ctx.strokeStyle = `rgba(217, 99, 79, ${0.65 * this.reuseGlow})`;
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(p.x, p.y, r + 12 + 10 * (1 - this.reuseGlow), 0, Math.PI * 2);
       ctx.stroke();
       if (!this.compact) {
-        ctx.fillStyle = `rgba(255, 61, 113, ${0.9 * this.reuseGlow})`;
+        ctx.fillStyle = `rgba(217, 99, 79, ${0.9 * this.reuseGlow})`;
         ctx.font = '600 10px "JetBrains Mono", monospace';
         ctx.textAlign = "left";
         ctx.fillText("REUSING LAST VALID", p.x + r + 16, p.y - 6);
@@ -239,7 +239,7 @@ export class Scene {
     const s = this.s;
     const wBox = 96 * s;
     const hBox = 48 * s;
-    ctx.fillStyle = "#0b1626";
+    ctx.fillStyle = "#12100f";
     ctx.strokeStyle = color;
     ctx.lineWidth = 2;
     roundRect(ctx, p.x - wBox / 2, p.y - hBox / 2, wBox, hBox, 9 * s);
@@ -263,7 +263,7 @@ export class Scene {
     const r = 34 * s;
     const recent = this.flashes.slice(-14);
     const missed = recent.filter((f) => f.missed).length;
-    ctx.strokeStyle = "#243457";
+    ctx.strokeStyle = "#332d29";
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.arc(p.x, p.y, r, 0, Math.PI * 2);

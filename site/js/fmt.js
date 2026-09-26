@@ -9,29 +9,29 @@ export const MODE_LABEL = {
 };
 
 export const MODE_COLOR = {
-  local_fast: "#22d3ee",
-  edge_accurate: "#8b5cf6",
-  hybrid: "#f5a524",
-  degraded_safe: "#ff3d71",
+  local_fast: "#5fb3a1",
+  edge_accurate: "#9a86e0",
+  hybrid: "#d9a441",
+  degraded_safe: "#d9634f",
 };
 
 export const TERM_COLOR = {
-  rtt: "#22d3ee",
-  loss: "#ff3d71",
-  load: "#8b5cf6",
-  frame_age: "#64748b",
-  deadline: "#f5a524",
+  rtt: "#5fb3a1",
+  loss: "#d9634f",
+  load: "#9a86e0",
+  frame_age: "#5a534f",
+  deadline: "#d9a441",
 };
 
 export const POLICY_COLOR = {
-  local_only: "#22d3ee",
-  edge_only: "#8b5cf6",
-  cloud_only: "#f472b6",
-  dapper: "#34d399",
-  deadline_greedy: "#f5a524",
-  confidence_deadline: "#60a5fa",
-  rtt_threshold: "#a78bfa",
-  oracle_feasible: "#94a3b8",
+  local_only: "#5fb3a1",
+  edge_only: "#9a86e0",
+  cloud_only: "#c98aa8",
+  dapper: "#d97757",
+  deadline_greedy: "#d9a441",
+  confidence_deadline: "#7fa8c9",
+  rtt_threshold: "#b09ae8",
+  oracle_feasible: "#8a817b",
 };
 
 const NBSP = " "; // thin space, for unit separation

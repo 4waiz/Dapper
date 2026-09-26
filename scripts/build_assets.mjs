@@ -114,42 +114,42 @@ await shot(join(root, "assets", "logo-256.png"), 256, 256, img(256));
 // iOS masks the corners itself and does not honour transparency, so this one
 // is drawn opaque, edge to edge.
 await shot(join(root, "site", "assets", "apple-touch-icon.png"), 180, 180,
-  `<div style="width:180px;height:180px;background:#04070e;display:grid;place-items:center">${img(164)}</div>`,
-  { background: "#04070e" });
+  `<div style="width:180px;height:180px;background:#0b0a09;display:grid;place-items:center">${img(164)}</div>`,
+  { background: "#0b0a09" });
 
 // --- social preview and README banner ---------------------------------------
 const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">`;
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">`;
 
 function card(w, h, { title, sub, tag, logo, pad }) {
   return `${FONTS}<div style="
       width:${w}px;height:${h}px;padding:${pad}px;display:flex;align-items:center;gap:${Math.round(pad * 0.9)}px;
       background:
-        radial-gradient(900px 420px at 86% -18%, rgba(139,92,246,.30), transparent 62%),
-        radial-gradient(760px 420px at -6% 22%, rgba(34,211,238,.20), transparent 62%),
-        linear-gradient(135deg,#070c18,#04070e);
-      font-family:Inter,system-ui,sans-serif;color:#e8eef8;position:relative;overflow:hidden;">
+        radial-gradient(900px 420px at 86% -18%, rgba(217,119,87,.30), transparent 62%),
+        radial-gradient(760px 420px at -6% 22%, rgba(154,134,224,.14), transparent 62%),
+        linear-gradient(135deg,#151211,#0b0a09);
+      font-family:'Inter Tight',Inter,system-ui,sans-serif;color:#f3efec;position:relative;overflow:hidden;">
     <div style="position:absolute;inset:0;background-image:
-        linear-gradient(#1a2745 1px,transparent 1px),linear-gradient(90deg,#1a2745 1px,transparent 1px);
-        background-size:44px 44px;opacity:.22"></div>
+        linear-gradient(#262220 1px,transparent 1px),linear-gradient(90deg,#262220 1px,transparent 1px);
+        background-size:44px 44px;opacity:.28"></div>
     <div style="position:relative;flex:0 0 auto">${img(logo)}</div>
     <div style="position:relative;min-width:0">
       <div style="font-size:${Math.round(h * 0.155)}px;font-weight:800;letter-spacing:.14em;line-height:1">${title}</div>
-      <div style="font-size:${Math.round(h * 0.062)}px;color:#a3b3cc;margin-top:${Math.round(h * 0.038)}px;line-height:1.35;max-width:${Math.round(w * 0.62)}px">${sub}</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:${Math.round(h * 0.045)}px;color:#6d809e;margin-top:${Math.round(h * 0.05)}px">${tag}</div>
+      <div style="font-size:${Math.round(h * 0.062)}px;color:#a49a93;margin-top:${Math.round(h * 0.038)}px;line-height:1.35;max-width:${Math.round(w * 0.62)}px">${sub}</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:${Math.round(h * 0.045)}px;color:#6f6762;margin-top:${Math.round(h * 0.05)}px">${tag}</div>
     </div>
   </div>`;
 }
 
-const SUB = "Deadline-aware perception placement for edge robotics. The real per-frame scheduler, running live in your browser.";
+const SUB = "An answer after the deadline isn’t a late answer. It’s no answer.<br>The real per-frame scheduler, running live in your browser.";
 const TAG = "IEEE FMEC 2026 &nbsp;·&nbsp; Awaiz Ahmed and Khubaib Amjad Alam &nbsp;·&nbsp; Al Ain University";
 
 await shot(join(root, "site", "assets", "social-preview.png"), 1280, 640,
-  card(1280, 640, { title: "DAPPER", sub: SUB, tag: TAG, logo: 300, pad: 84 }), { background: "#04070e" });
+  card(1280, 640, { title: "DAPPER", sub: SUB, tag: TAG, logo: 300, pad: 84 }), { background: "#0b0a09" });
 await shot(join(root, "assets", "social-preview.png"), 1280, 640,
-  card(1280, 640, { title: "DAPPER", sub: SUB, tag: TAG, logo: 300, pad: 84 }), { background: "#04070e" });
+  card(1280, 640, { title: "DAPPER", sub: SUB, tag: TAG, logo: 300, pad: 84 }), { background: "#0b0a09" });
 await shot(join(root, "assets", "banner.png"), 1280, 320,
-  card(1280, 320, { title: "DAPPER", sub: SUB, tag: TAG, logo: 180, pad: 40 }), { background: "#04070e" });
+  card(1280, 320, { title: "DAPPER", sub: SUB, tag: TAG, logo: 180, pad: 40 }), { background: "#0b0a09" });
 
 ws.close();
 chrome.kill();

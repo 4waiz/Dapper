@@ -194,15 +194,14 @@ export class Research {
         let detail = "";
         if (h.id === "all_frame_recall") {
           detail = `<div class="table-wrap"><table class="data"><thead><tr><th class="l">Profile</th>
-            <th>DAPPER, all frames</th><th>local-only</th><th>DAPPER, fresh frames</th><th>Reuse (%)</th></tr></thead><tbody>` +
+            <th>all fr.</th><th>local-only</th><th>fresh fr.</th><th>reuse %</th></tr></thead><tbody>` +
             h.profiles.map((p) => `<tr><td class="l">${titleCase(p.profile)}</td>
               <td class="miss">${num(p.dapper_recall_all, 3)}</td><td>${num(p.local_recall_all, 3)}</td>
               <td>${num(p.dapper_recall_fresh, 3)}</td><td>${num(p.reuse_pct, 1)}</td></tr>`).join("") +
             `</tbody></table></div>`;
         } else if (h.id === "bandwidth_cost") {
           detail = `<div class="table-wrap"><table class="data"><thead><tr><th class="l">Profile</th>
-            <th>Uplink (MB/1k)</th><th>Accepted (%)</th><th>Late (%)</th><th>Lost (%)</th>
-            <th>Wasted (MB/1k)</th></tr></thead><tbody>` +
+            <th>MB/1k</th><th>acc %</th><th>late %</th><th>lost %</th><th>wasted</th></tr></thead><tbody>` +
             h.profiles.map((p) => `<tr><td class="l">${titleCase(p.profile)}</td>
               <td>${num(p.bandwidth_mb_per_1k, 2)}</td><td>${num(p.accepted_pct, 1)}</td>
               <td class="miss">${num(p.rejected_deadline_pct, 1)}</td><td class="miss">${num(p.lost_pct, 1)}</td>
@@ -210,7 +209,7 @@ export class Research {
             `</tbody></table></div>`;
         } else if (h.id === "larger_deadlines") {
           detail = `<div class="table-wrap"><table class="data"><thead><tr><th class="l">Deadline D</th>
-            <th>Deadline miss (%)</th><th>edge-accurate share (%)</th></tr></thead><tbody>` +
+            <th>miss %</th><th>edge-accurate %</th></tr></thead><tbody>` +
             h.deadlines.map((d) => `<tr><td class="l">${num(d.deadline_ms, 0)} ms</td>
               <td class="miss">${num(d.miss_pct, 2)}</td><td>${num(d.pct_edge_accurate, 1)}</td></tr>`).join("") +
             `</tbody></table></div>`;

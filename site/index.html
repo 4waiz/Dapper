@@ -3,49 +3,47 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DAPPER Mission Control</title>
-  <meta name="description" content="DAPPER Mission Control: a live deadline-aware perception scheduler for edge robotics, running the real per-frame decision rule in your browser against the published scenario traces from the IEEE FMEC 2026 paper." />
+  <title>DAPPER — deadline-aware edge perception</title>
+  <meta name="description" content="A perception result that arrives after the control deadline is no answer at all. DAPPER scores every frame's deadline risk and places it on the robot, on the edge, both, or on a conservative fallback. The real scheduler from the IEEE FMEC 2026 paper, running live in your browser." />
   <meta name="author" content="Awaiz Ahmed" />
-  <meta property="og:title" content="DAPPER Mission Control" />
-  <meta property="og:description" content="Deadline-aware edge perception placement for mission-critical robots. The real scheduler, running live on the published traces. Built by Awaiz Ahmed." />
+  <meta property="og:title" content="DAPPER — deadline-aware edge perception" />
+  <meta property="og:description" content="An answer after the deadline isn't a late answer. It's no answer. The real per-frame scheduler, running live. Built by Awaiz Ahmed." />
   <meta property="og:image" content="assets/social-preview.png" />
-  <meta name="theme-color" content="#04070e" />
+  <meta name="theme-color" content="#0b0a09" />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/app.css" />
 </head>
 <body>
   <div id="boot" class="boot" role="status" aria-live="polite">
     <div class="boot-card">
-      <img src="assets/logo.svg" alt="" class="boot-logo" width="88" height="88" />
+      <img src="assets/logo.svg" alt="" class="boot-logo" width="56" height="56" />
       <h1>DAPPER</h1>
-      <p class="boot-sub">Deadline-Aware Perception Placement for Edge Robotics</p>
+      <p class="boot-sub">Deadline-aware perception placement</p>
       <div class="boot-bar"><div id="boot-fill" class="boot-fill"></div></div>
-      <ol id="boot-log" class="boot-log mono"></ol>
+      <ol id="boot-log" class="boot-log"></ol>
     </div>
   </div>
 
   <header class="topbar">
-    <a class="brand" href="#top" aria-label="DAPPER Mission Control home">
-      <img src="assets/logo.svg" alt="DAPPER logo" width="34" height="34" />
+    <a class="brand" href="#top" aria-label="DAPPER home">
+      <img src="assets/logo.svg" alt="" width="28" height="28" />
       <span class="brand-name">DAPPER</span>
-      <span class="brand-sub">Mission Control</span>
     </a>
     <nav class="nav" aria-label="Sections">
-      <a href="#mission">Mission control</a>
-      <a href="#decision">Decision path</a>
-      <a href="#telemetry">Telemetry</a>
+      <a href="#mission">Console</a>
+      <a href="#decision">How it decides</a>
       <a href="#race">Policy race</a>
       <a href="#research">Research</a>
       <a href="paper/">Paper</a>
       <a href="https://github.com/4waiz/Dapper" target="_blank" rel="noopener">GitHub</a>
     </nav>
-    <div class="status mono">
-      <span id="status-dot" class="dot"></span><span id="status-text">BOOTING</span>
+    <div class="status">
+      <span id="status-dot" class="dot-live"></span><span id="status-text">booting</span>
       <span class="sep"></span><span id="status-mode">—</span>
       <span class="sep"></span><span id="status-frame">0</span>
       <span class="sep"></span><span id="status-parity" title="Worst disagreement between this browser engine and the Python engine on the loaded trace">parity —</span>
@@ -53,103 +51,157 @@
   </header>
 
   <main id="top">
-    <!-- 1. the scene -->
-    <section id="mission" class="mission">
-      <div class="panel">
-        <div class="panel-head">
-          <h2>Robot → edge → cloud</h2>
-          <span id="stage-chip" class="chip mono">—</span>
+    <!-- ───────────────────────── hero ───────────────────────── -->
+    <section class="hero">
+      <div>
+        <div class="hero-eyebrow">
+          <p class="eyebrow">Deadline-aware edge perception · IEEE FMEC 2026</p>
+          <span class="tag accent"><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--accent)"></span> watch it decide</span>
         </div>
-        <div class="stage">
-          <canvas id="scene" width="1280" height="720" aria-label="Animated robot, edge and cloud perception pipeline"></canvas>
-          <div class="stage-bar mono">
-            <span>frame <b id="sc-frame">0</b></span>
-            <span>R<sub>t</sub> <b id="sc-risk">—</b></span>
-            <span>RTT <b id="sc-rtt">—</b></span>
-            <span>control latency <b id="sc-lat">—</b></span>
-            <span id="sc-verdict">—</span>
-          </div>
+        <h1>An answer after the deadline isn't a late answer. <span class="fade">It's no answer.</span></h1>
+        <p class="sub">Mission-critical robots have milliseconds. A stronger model on the edge is worth having, but it puts the network in the critical path, and the right place to run a frame changes frame by frame. DAPPER scores each frame's deadline risk, places it, and refuses any remote result that arrives outside its freshness window.</p>
+        <div class="hero-actions">
+          <a class="pill solid" href="#mission"><span class="dot"></span> Open the console</a>
+          <a class="pill" href="paper/">Read the paper</a>
         </div>
-        <div class="legend">
-          <span><b>placement</b></span>
-          <span><i style="background:var(--local)"></i> local-fast</span>
-          <span><i style="background:var(--edge)"></i> edge-accurate (commits the frame)</span>
-          <span><i style="background:var(--hybrid)"></i> hybrid (local answer + refinement)</span>
-          <span><i style="background:var(--degraded)"></i> degraded-safe (reuse or local)</span>
-        </div>
-        <div class="legend">
-          <span><b>remote reply</b></span>
-          <span><i style="background:var(--green)"></i> accepted, on time and fresh</span>
-          <span><i style="background:var(--rose)"></i> rejected at the deadline</span>
-          <span><i style="background:var(--text-3)"></i> lost, or the edge was unreachable</span>
-        </div>
-        <p class="note" id="scene-note">Synthetic network study. The confidence values are simulated proxies, not detector accuracy, and nothing here is a physical-robot or safety result.</p>
+        <p class="hero-foot">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Synthetic network benchmark. Confidence values are simulated proxies, never detector accuracy, and nothing here ran on a robot.
+        </p>
       </div>
 
-      <aside class="rail">
-        <div class="panel">
-          <div class="panel-head">
-            <h2>Live KPIs</h2>
-            <span id="kpi-scope" class="chip mono">—</span>
+      <div>
+        <div class="decision-card">
+          <div class="dc-top">
+            <span class="dc-src" id="hero-src">dapper · frame 0</span>
+            <span class="tag" id="hero-state">live</span>
           </div>
-          <div class="kpis" id="kpis"></div>
-          <p class="note">Computed by the same reduction as <code>dapper/metrics.py</code>, over the frames played so far.</p>
-        </div>
-
-        <div class="panel audit">
-          <div class="panel-head">
-            <h2>Decision audit log</h2>
-            <button id="audit-clear" class="ghost small" type="button">Clear</button>
+          <h2 class="dc-mode" id="hero-mode">—</h2>
+          <p class="dc-why" id="hero-why">Loading the frozen configuration and a published scenario trace.</p>
+          <ul class="dc-tests" id="hero-tests"></ul>
+          <div class="dc-critical">
+            <span class="label" id="hero-critical-label">deciding gate</span>
+            <p id="hero-critical-text">—</p>
+            <span class="expr" id="hero-critical-expr"></span>
           </div>
-          <ol id="audit" class="audit-list" aria-live="polite"></ol>
-          <p id="audit-empty" class="empty">Every frame is logged with the gate that fired and its reason string, drawn from a closed set of nine.</p>
+          <div class="dc-foot">
+            <span id="hero-verdict">—</span>
+            <span class="val" id="hero-latency">—</span>
+          </div>
         </div>
-      </aside>
-    </section>
-
-    <!-- 2 + 3. decision path and risk score -->
-    <section id="decision" class="reason-row">
-      <div class="panel">
-        <div class="panel-head">
-          <h2>Decision path (paper Fig. 1)</h2>
-          <span id="path-chip" class="chip mono">—</span>
-        </div>
-        <div class="pathwrap" id="pathwrap"></div>
-        <ul class="gate-tests mono" id="gate-tests"></ul>
-      </div>
-
-      <div class="panel">
-        <div class="panel-head">
-          <h2>Deadline-risk score R<sub>t</sub></h2>
-          <span class="chip mono">five weighted terms, clipped to [0,1]</span>
-        </div>
-        <div class="risk-total mono">
-          <b id="risk-value">—</b>
-          <span id="risk-verdict">—</span>
-        </div>
-        <div class="risk-bar" id="risk-bar"></div>
-        <div class="risk-marks mono" id="risk-marks"></div>
-        <table class="terms" id="risk-terms"></table>
+        <p class="dc-caption">Live · this is the real scheduler, not a mock</p>
       </div>
     </section>
 
-    <!-- 4. rolling telemetry -->
-    <section id="telemetry" class="panel">
-      <div class="panel-head">
-        <h2>Telemetry</h2>
-        <span class="chip mono">rolling window, newest on the right</span>
+    <!-- ───────────────────────── console ───────────────────────── -->
+    <section id="mission">
+      <div class="sec-head">
+        <p class="eyebrow">The console</p>
+        <h2>Every frame takes the path the execution model recorded.</h2>
+        <p>A local inference that never leaves the robot. A hybrid request that answers locally now and asks for a refinement anyway. A lost packet. A reply rejected at the deadline. A degraded-safe reuse of the last still-fresh output. The ring closes on the frame's real control latency.</p>
+      </div>
+
+      <div class="stage-wrap">
+        <div>
+          <div class="stage">
+            <canvas id="scene" width="1280" height="720" aria-label="Animated robot, edge and cloud perception pipeline"></canvas>
+            <div class="stage-bar">
+              <span>frame <b id="sc-frame">0</b></span>
+              <span>R<sub>t</sub> <b id="sc-risk">—</b></span>
+              <span>RTT <b id="sc-rtt">—</b></span>
+              <span>control latency <b id="sc-lat">—</b></span>
+              <span id="sc-verdict">—</span>
+            </div>
+          </div>
+          <div class="legend">
+            <span><b>placement</b></span>
+            <span><i style="background:var(--local)"></i> local-fast</span>
+            <span><i style="background:var(--edge)"></i> edge-accurate (commits the frame)</span>
+            <span><i style="background:var(--hybrid)"></i> hybrid (local answer + refinement)</span>
+            <span><i style="background:var(--degraded)"></i> degraded-safe (reuse or local)</span>
+          </div>
+          <div class="legend">
+            <span><b>remote reply</b></span>
+            <span><i style="background:var(--ok)"></i> accepted, on time and fresh</span>
+            <span><i style="background:var(--degraded)"></i> rejected at the deadline</span>
+            <span><i style="background:var(--text-3)"></i> lost, or the edge was unreachable</span>
+          </div>
+          <p class="fine" id="stage-chip"></p>
+        </div>
+
+        <aside class="rail">
+          <div class="card">
+            <div class="card-head">
+              <h2>Live KPIs</h2>
+              <span class="tag" id="kpi-scope">—</span>
+            </div>
+            <div class="kpis" id="kpis"></div>
+            <p class="fine">Reduced by the same code as <code>dapper/metrics.py</code>, over the frames played so far.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <h2>Audit log</h2>
+              <button id="audit-clear" class="pill small" type="button">Clear</button>
+            </div>
+            <ol id="audit" class="audit-list" aria-live="polite"></ol>
+            <p id="audit-empty" class="empty">Every frame is logged with the gate that fired and its reason string, drawn from a closed set of nine.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── decision path ───────────────────────── -->
+    <section id="decision">
+      <div class="sec-head">
+        <p class="eyebrow">How it decides</p>
+        <h2>One risk score, two thresholds, three gates — and a reason string for every frame.</h2>
+        <p>This is the paper's Fig. 1, lit by the reason the scheduler actually emitted. Underneath it, the numeric test behind each gate, evaluated on the frame you are looking at.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head">
+            <h2>Decision path</h2>
+            <span class="tag" id="path-chip">—</span>
+          </div>
+          <div class="pathwrap" id="pathwrap"></div>
+          <ul class="gate-tests" id="gate-tests"></ul>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Deadline risk R<sub>t</sub></h2>
+            <span class="tag">five weighted terms</span>
+          </div>
+          <div class="risk-total">
+            <b id="risk-value">—</b>
+            <span id="risk-verdict">—</span>
+          </div>
+          <div class="risk-bar" id="risk-bar"></div>
+          <div class="risk-marks" id="risk-marks"></div>
+          <table class="terms" id="risk-terms"></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── telemetry ───────────────────────── -->
+    <section id="telemetry">
+      <div class="sec-head">
+        <p class="eyebrow">Telemetry</p>
+        <h2>What the monitor sees, and what the control loop gets.</h2>
       </div>
       <div class="charts">
         <figure class="chart">
-          <figcaption>Network state <em>RTT (ms), loss, normalised load</em></figcaption>
+          <figcaption>Network state <em>RTT (ms), loss, load</em></figcaption>
           <canvas id="ch-net" height="150"></canvas>
         </figure>
         <figure class="chart">
-          <figcaption>Control latency vs deadline D <em id="ch-lat-cap">—</em></figcaption>
+          <figcaption>Control latency vs deadline <em id="ch-lat-cap">—</em></figcaption>
           <canvas id="ch-lat" height="150"></canvas>
         </figure>
         <figure class="chart">
-          <figcaption>Usable confidence proxy <em>0 when late or stale</em></figcaption>
+          <figcaption>Usable confidence <em>0 when late or stale</em></figcaption>
           <canvas id="ch-conf" height="150"></canvas>
         </figure>
         <figure class="chart">
@@ -159,162 +211,172 @@
       </div>
     </section>
 
-    <!-- controls -->
-    <section id="controls" class="panel">
-      <div class="panel-head">
-        <h2>Scenario control</h2>
-        <div class="ctl-row">
-          <div class="seg" role="group" aria-label="Scenario source">
-            <button id="src-replay" class="on" type="button">Replay published trace</button>
-            <button id="src-live" type="button">Live synthetic</button>
-          </div>
-          <button id="play" class="primary" type="button">Pause</button>
-          <button id="reset" class="ghost" type="button">Restart</button>
-        </div>
-      </div>
-      <p class="hint" id="source-hint">—</p>
-
-      <div class="controls">
-        <div class="ctl">
-          <label for="profile">Network profile</label>
-          <select id="profile" class="mono"></select>
-          <span class="sub" id="profile-sub">—</span>
-        </div>
-        <div class="ctl">
-          <label for="seed">Scenario seed <b id="seed-val">100</b></label>
-          <select id="seed" class="mono"></select>
-          <span class="sub" id="seed-sub">—</span>
-        </div>
-        <div class="ctl">
-          <label for="deadline">Control deadline D <b id="deadline-val">100 ms</b></label>
-          <input id="deadline" type="range" min="50" max="250" step="5" value="100" />
-          <span class="sub">50–250 ms. The paper calibrates at 100 ms only.</span>
-        </div>
-        <div class="ctl">
-          <label for="speed">Speed <b id="speed-val">1×</b></label>
-          <input id="speed" type="range" min="0" max="5" step="1" value="2" />
-          <span class="sub" id="speed-sub">—</span>
-        </div>
-        <div class="ctl">
-          <label for="bias-rtt">RTT estimate bias <b id="bias-rtt-val">0%</b></label>
-          <input id="bias-rtt" type="range" min="-30" max="30" step="5" value="0" />
-          <span class="sub">Perturbs only what the scheduler believes.</span>
-        </div>
-        <div class="ctl">
-          <label for="bias-compute">Edge-compute estimate bias <b id="bias-compute-val">0%</b></label>
-          <input id="bias-compute" type="range" min="-30" max="30" step="5" value="0" />
-          <span class="sub">Negative = underestimate, the dangerous direction.</span>
-        </div>
-        <div class="ctl">
-          <label>Outage burst injector</label>
-          <div class="ctl-row">
-            <button id="inject" type="button">Drop the edge for</button>
-            <select id="inject-len" class="mono">
-              <option value="15">15 frames</option>
-              <option value="30" selected>30 frames</option>
-              <option value="60">60 frames</option>
-              <option value="120">120 frames</option>
-            </select>
-          </div>
-          <span class="sub">Marks the edge unreachable from the next frame.</span>
-        </div>
-        <div class="ctl">
-          <label>Mechanisms</label>
-          <div class="ctl-row">
-            <button id="g-conf" class="small on" type="button">confidence gate</button>
-            <button id="g-fresh" class="small on" type="button">freshness gate</button>
-            <button id="g-reuse" class="small on" type="button">degraded reuse</button>
-          </div>
-          <span class="sub">Switch one off to reproduce a row of the paper's Table V.</span>
-        </div>
+    <!-- ───────────────────────── controls ───────────────────────── -->
+    <section id="controls">
+      <div class="sec-head">
+        <p class="eyebrow">Drive it yourself</p>
+        <h2>Move the deadline and watch the calibration stop holding.</h2>
+        <p>Parameters were frozen at a 100 ms deadline. Drag D past it and the committing edge-accurate branch starts taking frames — and starts missing.</p>
       </div>
 
-      <div class="custom-grid" id="custom-grid" hidden>
-        <div class="ctl">
-          <label for="c-rtt">RTT mean <b id="c-rtt-val">—</b></label>
-          <input id="c-rtt" type="range" min="5" max="300" step="5" value="50" />
+      <div class="card">
+        <div class="card-head">
+          <div class="ctl-row">
+            <div class="seg" role="group" aria-label="Scenario source">
+              <button id="src-replay" class="on" type="button">Replay published trace</button>
+              <button id="src-live" type="button">Live synthetic</button>
+            </div>
+          </div>
+          <div class="ctl-row">
+            <button id="play" class="pill" type="button"><span class="dot"></span> Pause</button>
+            <button id="reset" class="pill" type="button">Restart</button>
+          </div>
         </div>
-        <div class="ctl">
-          <label for="c-jit">RTT std <b id="c-jit-val">—</b></label>
-          <input id="c-jit" type="range" min="0" max="100" step="5" value="35" />
+        <p class="fine" id="source-hint">—</p>
+
+        <div class="controls" style="margin-top:22px">
+          <div class="ctl">
+            <label for="profile">Network profile</label>
+            <select id="profile"></select>
+            <span class="sub" id="profile-sub">—</span>
+          </div>
+          <div class="ctl">
+            <label for="seed">Scenario seed <b id="seed-val">100</b></label>
+            <select id="seed"></select>
+            <span class="sub" id="seed-sub">—</span>
+          </div>
+          <div class="ctl">
+            <label for="deadline">Control deadline D <b id="deadline-val">100 ms</b></label>
+            <input id="deadline" type="range" min="50" max="250" step="5" value="100" />
+            <span class="sub">50–250 ms. The paper calibrates at 100 ms only.</span>
+          </div>
+          <div class="ctl">
+            <label for="speed">Speed <b id="speed-val">1×</b></label>
+            <input id="speed" type="range" min="0" max="5" step="1" value="2" />
+            <span class="sub" id="speed-sub">—</span>
+          </div>
+          <div class="ctl">
+            <label for="bias-rtt">RTT estimate bias <b id="bias-rtt-val">0%</b></label>
+            <input id="bias-rtt" type="range" min="-30" max="30" step="5" value="0" />
+            <span class="sub">Perturbs only what the scheduler believes.</span>
+          </div>
+          <div class="ctl">
+            <label for="bias-compute">Edge-compute estimate bias <b id="bias-compute-val">0%</b></label>
+            <input id="bias-compute" type="range" min="-30" max="30" step="5" value="0" />
+            <span class="sub">Negative = underestimate, the dangerous direction.</span>
+          </div>
+          <div class="ctl">
+            <label>Outage burst</label>
+            <div class="ctl-row">
+              <button id="inject" class="pill small" type="button">Drop the edge for</button>
+              <select id="inject-len">
+                <option value="15">15 frames</option>
+                <option value="30" selected>30 frames</option>
+                <option value="60">60 frames</option>
+                <option value="120">120 frames</option>
+              </select>
+            </div>
+            <span class="sub">Marks the edge unreachable from the next frame.</span>
+          </div>
+          <div class="ctl">
+            <label>Mechanisms</label>
+            <div class="ctl-row">
+              <button id="g-conf" class="pill small on" type="button">confidence gate</button>
+              <button id="g-fresh" class="pill small on" type="button">freshness gate</button>
+              <button id="g-reuse" class="pill small on" type="button">degraded reuse</button>
+            </div>
+            <span class="sub">Switch one off to reproduce a row of Table V.</span>
+          </div>
         </div>
-        <div class="ctl">
-          <label for="c-loss">Packet loss <b id="c-loss-val">—</b></label>
-          <input id="c-loss" type="range" min="0" max="50" step="1" value="7" />
-        </div>
-        <div class="ctl">
-          <label for="c-load">Edge load <b id="c-load-val">—</b></label>
-          <input id="c-load" type="range" min="0" max="100" step="5" value="50" />
-        </div>
-        <div class="ctl">
-          <label for="c-out">Outage probability <b id="c-out-val">—</b></label>
-          <input id="c-out" type="range" min="0" max="50" step="1" value="2" />
+
+        <div class="custom-grid" id="custom-grid" hidden>
+          <div class="ctl">
+            <label for="c-rtt">RTT mean <b id="c-rtt-val">—</b></label>
+            <input id="c-rtt" type="range" min="5" max="300" step="5" value="50" />
+          </div>
+          <div class="ctl">
+            <label for="c-jit">RTT std <b id="c-jit-val">—</b></label>
+            <input id="c-jit" type="range" min="0" max="100" step="5" value="35" />
+          </div>
+          <div class="ctl">
+            <label for="c-loss">Packet loss <b id="c-loss-val">—</b></label>
+            <input id="c-loss" type="range" min="0" max="50" step="1" value="7" />
+          </div>
+          <div class="ctl">
+            <label for="c-load">Edge load <b id="c-load-val">—</b></label>
+            <input id="c-load" type="range" min="0" max="100" step="5" value="50" />
+          </div>
+          <div class="ctl">
+            <label for="c-out">Outage probability <b id="c-out-val">—</b></label>
+            <input id="c-out" type="range" min="0" max="50" step="1" value="2" />
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 6. policy race -->
-    <section id="race" class="panel">
-      <div class="panel-head">
-        <h2>Policy race</h2>
-        <span class="chip mono">same paired scenario, same execution model</span>
+    <!-- ───────────────────────── policy race ───────────────────────── -->
+    <section id="race">
+      <div class="sec-head">
+        <p class="eyebrow">Policy race</p>
+        <h2>Five policies, one immutable future.</h2>
+        <p>Each replays the identical trace through the identical cost model, so a decision selects which outcome is realised but cannot change the random future. The oracle reads the realised outcome of the current frame and <em>is not deployable</em>; it is here to bound what perfect knowledge of the next instant would buy.</p>
       </div>
-      <p class="lead">Every policy replays the identical immutable trace through the identical cost model, so a decision selects which outcome is realised but cannot change the random future. The oracle reads the realised outcome of the current frame and <em>is not deployable</em>; it is here to bound what perfect knowledge of the next instant would buy.</p>
-      <div class="race-wrap"><table class="race" id="race-table"></table></div>
-      <div class="race-bars" id="race-bars"></div>
-      <p class="note" id="race-note">—</p>
+      <div class="card">
+        <div class="table-wrap"><table class="race" id="race-table"></table></div>
+        <div class="race-bars" id="race-bars"></div>
+        <p class="fine" id="race-note">—</p>
+      </div>
     </section>
 
-    <!-- 7. research -->
-    <section id="research" class="panel">
-      <div class="panel-head">
-        <h2>Published results</h2>
-        <span id="research-chip" class="chip mono">—</span>
+    <!-- ───────────────────────── research ───────────────────────── -->
+    <section id="research">
+      <div class="sec-head">
+        <p class="eyebrow">Published results</p>
+        <h2>Every number here was read from a CSV by a script.</h2>
+        <p id="research-chip">—</p>
       </div>
+
       <div class="research-grid">
         <div>
           <div class="headline" id="headline"></div>
           <div class="tabs" role="tablist" id="table-tabs"></div>
-          <h3 id="table-title" style="margin-bottom:6px"></h3>
+          <h3 id="table-title" style="margin-bottom:10px;font-size:17px;font-weight:600"></h3>
           <div class="table-wrap"><table class="data" id="data-table"></table></div>
-          <p class="note" id="table-caption"></p>
-          <div class="charts" style="margin-top:16px">
+          <p class="fine" id="table-caption"></p>
+          <div class="charts" style="margin-top:18px">
             <figure class="chart">
-              <figcaption>p95 control latency by profile <em>paper Fig. 2a, 95% CI over 30 seeds</em></figcaption>
-              <canvas id="ch-p95" height="200"></canvas>
+              <figcaption>p95 control latency by profile <em>Fig. 2a, 95% CI over 30 seeds</em></figcaption>
+              <canvas id="ch-p95" height="220"></canvas>
             </figure>
             <figure class="chart">
-              <figcaption>Usable confidence proxy by profile <em>paper Fig. 2b</em></figcaption>
-              <canvas id="ch-confidence" height="200"></canvas>
+              <figcaption>Usable confidence by profile <em>Fig. 2b</em></figcaption>
+              <canvas id="ch-confidence" height="220"></canvas>
             </figure>
             <figure class="chart">
-              <figcaption>Mode share vs control deadline <em>paper Fig. 3a, pooled over profiles</em></figcaption>
-              <canvas id="ch-deadline" height="200"></canvas>
+              <figcaption>Mode share vs deadline <em>Fig. 3a, pooled</em></figcaption>
+              <canvas id="ch-deadline" height="220"></canvas>
             </figure>
             <figure class="chart">
-              <figcaption>Deadline misses vs estimate bias <em>paper Fig. 3b, profile mean</em></figcaption>
-              <canvas id="ch-bias" height="200"></canvas>
+              <figcaption>Misses vs estimate bias <em>Fig. 3b, profile mean</em></figcaption>
+              <canvas id="ch-bias" height="220"></canvas>
             </figure>
           </div>
         </div>
 
         <div class="research-side">
           <div class="paper-card">
-            <img src="assets/logo.svg" alt="" width="46" height="46" />
-            <div>
-              <h3>Read the paper</h3>
-              <p>DAPPER: Deadline-Aware Edge Perception for Mission-Critical Robots under Dynamic Network Conditions</p>
-              <p class="authors">Awaiz Ahmed and Khubaib Amjad Alam · Al Ain University, Abu Dhabi, United Arab Emirates · IEEE FMEC 2026</p>
-              <div class="paper-links">
-                <a class="primary" href="paper/">Read online</a>
-                <a class="ghost" href="paper/dapper-fmec2026.pdf">PDF</a>
-                <a class="ghost" href="https://github.com/4waiz/Dapper">Artifact</a>
-              </div>
+            <p class="eyebrow" style="margin-bottom:10px">The paper</p>
+            <h3>DAPPER: Deadline-Aware Edge Perception for Mission-Critical Robots under Dynamic Network Conditions</h3>
+            <p class="authors">Awaiz Ahmed and Khubaib Amjad Alam · Al Ain University, Abu Dhabi, United Arab Emirates · IEEE FMEC 2026</p>
+            <div class="paper-links">
+              <a class="pill small" href="paper/">Read online</a>
+              <a class="pill small" href="paper/dapper-fmec2026.pdf">PDF</a>
+              <a class="pill small" href="https://github.com/4waiz/Dapper">Artifact</a>
             </div>
           </div>
 
-          <div class="panel" style="background:transparent;padding:0;border:0">
-            <h2 style="margin-bottom:10px">Where DAPPER does not win</h2>
+          <div>
+            <p class="eyebrow" style="margin-bottom:14px">Where DAPPER does not win</p>
             <div class="honest" id="honest"></div>
           </div>
         </div>
@@ -323,8 +385,8 @@
   </main>
 
   <footer class="footer">
-    <div><strong>DAPPER</strong> · Built by <strong>Awaiz Ahmed</strong> · research artifact for IEEE FMEC 2026 · <a href="https://github.com/4waiz/Dapper">source</a></div>
-    <div class="caveat">Controlled synthetic network study with a secondary measured-detector experiment. Confidence values in the main tables are simulated proxies, never detector accuracy. Nothing here ran on a robot or on embedded hardware, no energy was instrumented, and <em>degraded-safe</em> names a conservative fallback mode, not a certified safety property.</div>
+    <div><strong>DAPPER</strong><br />Built by <strong>Awaiz Ahmed</strong><br />Research artifact for IEEE FMEC 2026<br /><a href="https://github.com/4waiz/Dapper">github.com/4waiz/Dapper</a></div>
+    <div class="caveat">A controlled synthetic network study with a secondary measured-detector experiment. Confidence values in the main tables are simulated proxies, never detector accuracy. Nothing here ran on a robot or on embedded hardware, no energy was instrumented, and <em>degraded-safe</em> names a conservative fallback mode, not a certified safety property.</div>
   </footer>
 
   <script type="module" src="js/app.js"></script>

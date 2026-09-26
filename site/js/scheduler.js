@@ -37,8 +37,8 @@ export const REASON_TEXT = {
   risk_high_local_fallback: "R ≥ θD and no fresh output — ran the guaranteed local path",
   risk_moderate_prefer_local: "θL ≤ R < θD — stayed local for predictable latency",
   local_confidence_sufficient: "R < θL but c ≥ τc — the local model was confident enough",
-  low_confidence_edge_margin_ok: "R < θL, c < τc, T̂ ≤ mD — committed the frame to the edge",
-  low_confidence_hybrid_refresh: "R < θL, c < τc, T̂⁻ ≤ W — local answer now, refinement requested",
+  low_confidence_edge_margin_ok: "R < θL, c < τc, the expected completion fits mD — committed the frame to the edge",
+  low_confidence_hybrid_refresh: "R < θL, c < τc, the optimistic completion fits W — local answer now, refinement requested",
   low_confidence_refresh_infeasible: "R < θL, c < τc, no feasible refresh — stayed local, sent nothing",
 };
 

@@ -8,9 +8,9 @@
 //   * one message per chart.
 
 const FONT = '11px "JetBrains Mono", ui-monospace, Consolas, monospace';
-const INK = "#a3b3cc";
-const INK_DIM = "#6d809e";
-const GRID = "#1a2745";
+const INK = "#a49a93";
+const INK_DIM = "#6f6762";
+const GRID = "#262220";
 
 /** Size the backing store to the CSS box and return a device-pixel context. */
 export function fit(canvas, cssHeight = null) {
@@ -176,7 +176,7 @@ export function groupedBars(canvas, { categories, series, yMax = null, yFormat, 
       const y = Y(p.mean);
       ctx.fillRect(x, y, bw - 1.5, box.y1 - y);
       if (Number.isFinite(p.lo) && Number.isFinite(p.hi) && p.hi > p.lo) {
-        ctx.strokeStyle = "#e8eef8";
+        ctx.strokeStyle = "#f3efec";
         ctx.lineWidth = 1;
         const cx = x + (bw - 1.5) / 2;
         ctx.beginPath();
@@ -318,7 +318,7 @@ export function shareBar(canvas, { parts, height = null }) {
     ctx.fillStyle = p.color;
     ctx.fillRect(x, y, Math.max(0, pw - 1), barH);
     if (pw > 46) {
-      ctx.fillStyle = "#04070e";
+      ctx.fillStyle = "#0b0a09";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.font = '600 11px "JetBrains Mono", ui-monospace, monospace';

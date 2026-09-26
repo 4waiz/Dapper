@@ -135,11 +135,15 @@ const rect = async (sel, pad = 14) =>
   })()`);
 
 if (mobile) {
-  await shot("mobile-mission.png", { x: 0, y: 0, width: VW, height: 1500 });
+  await shot("mobile-hero.png", { x: 0, y: 0, width: VW, height: 1500 });
+  const m = await rect("#mission");
+  if (m) await shot("mobile-mission.png", { ...m, height: Math.min(m.height, 1600) });
   const research = await rect("#research");
   if (research) await shot("mobile-research.png", { ...research, height: Math.min(research.height, 1500) });
 } else {
-  await shot("mission-control.png", { x: 0, y: 0, width: VW, height: 1000 });
+  await shot("hero.png", { x: 0, y: 0, width: VW, height: 980 });
+  const mission = await rect("#mission");
+  if (mission) await shot("mission-control.png", { ...mission, height: Math.min(mission.height, 1080) });
   for (const [sel, name, cap] of [
     ["#decision", "decision-path.png", 1200],
     ["#telemetry", "telemetry.png", 900],

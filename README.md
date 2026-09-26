@@ -77,11 +77,15 @@ DAPPER holds a **0.00% deadline-miss rate on every profile** while keeping tail 
 
 Full tables, the ablations, the sensitivity sweeps and the secondary YOLO11n/YOLO11m study on COCO val2017 are in the [paper](https://4waiz.github.io/Dapper/paper/). Every figure and table there is generated from a CSV under `results/`; `experiments/verify_paper_claims.py` re-checks all 426 numeric claims in the camera-ready against those files and exits non-zero on a disagreement.
 
-## The live dashboard
+## The live console
 
-[**DAPPER Mission Control**](https://4waiz.github.io/Dapper/) runs the real scheduler in your browser — a JavaScript port of `dapper/scheduler.py`, `dapper/executor.py`, `dapper/policies.py` and `dapper/metrics.py`, not a mock. It replays the same immutable scenario traces the 30-seed benchmark replayed, and on boot it re-derives the metrics Python recorded for the loaded trace and prints the worst disagreement in the status bar. It currently reads **3.6 × 10⁻¹⁵**.
+[**The console**](https://4waiz.github.io/Dapper/) runs the real scheduler in your browser — a JavaScript port of `dapper/scheduler.py`, `dapper/executor.py`, `dapper/policies.py` and `dapper/metrics.py`, not a mock. It replays the same immutable scenario traces the 30-seed benchmark replayed, and on boot it re-derives the metrics Python recorded for the loaded trace and prints the worst disagreement in the status bar. It currently reads **3.6 × 10⁻¹⁵**.
 
-<p align="center"><img src="assets/screens/mission-control.png" alt="DAPPER Mission Control: the robot to edge to cloud stage, with live KPIs and the decision audit log" width="100%"></p>
+<p align="center"><img src="assets/screens/hero.png" alt="DAPPER: the live decision card showing the mode, the reason string, what every gate saw and which single test decided the frame" width="100%"></p>
+
+The card on the right is the frame the scheduler is on right now: what it chose, why, what each gate saw, and the one test that settled it.
+
+<p align="center"><img src="assets/screens/mission-control.png" alt="The robot to edge to cloud stage, with live KPIs and the decision audit log" width="100%"></p>
 
 Each frame travels the path the execution model actually recorded: a local inference that never leaves the robot, a hybrid request that returns an immediate local answer while a refinement is in flight, a lost packet, a reply rejected at the deadline, a degraded-safe reuse of the last still-fresh output. The deadline ring closes on the frame's real control latency.
 
