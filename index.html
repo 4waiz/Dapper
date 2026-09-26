@@ -142,10 +142,11 @@
           <div class="card">
             <div class="card-head">
               <h2>Audit log</h2>
+              <span class="tag ok" id="audit-rate">every frame</span>
               <button id="audit-clear" class="pill small" type="button">Clear</button>
             </div>
             <ol id="audit" class="audit-list" aria-live="polite"></ol>
-            <p id="audit-empty" class="empty">Every frame is logged with the gate that fired and its reason string, drawn from a closed set of nine.</p>
+            <p id="audit-empty" class="empty">The newest decisions, each with the gate that fired and its reason string, drawn from a closed set of nine. Above 1× the engine outruns the page and the log is sampled.</p>
           </div>
         </aside>
       </div>
@@ -229,6 +230,7 @@
           </div>
           <div class="ctl-row">
             <button id="play" class="pill" type="button"><span class="dot"></span> Pause</button>
+            <button id="step" class="pill" type="button">Step one frame</button>
             <button id="reset" class="pill" type="button">Restart</button>
           </div>
         </div>
@@ -252,7 +254,7 @@
           </div>
           <div class="ctl">
             <label for="speed">Speed <b id="speed-val">1×</b></label>
-            <input id="speed" type="range" min="0" max="5" step="1" value="2" />
+            <input id="speed" type="range" min="0" max="5" step="1" value="1" />
             <span class="sub" id="speed-sub">—</span>
           </div>
           <div class="ctl">

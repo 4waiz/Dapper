@@ -29,7 +29,15 @@ const RACE_LABEL = {
   dapper: "DAPPER",
   oracle_feasible: "oracle",
 };
-const SPEEDS = [0.25, 0.5, 1, 2, 4, 8];
+// 1x is real time: the trace is a 30 FPS capture, so 1x means 30 decisions a
+// second, which is far more than anyone can read. The default sits at 0.25x.
+const SPEEDS = [0.1, 0.25, 0.5, 1, 2, 4];
+const DEFAULT_SPEED = 1;
+// The engine may run at 30 decisions a second; the DOM does not have to. The
+// panels refresh at most this often, so the numbers stay legible at any speed.
+const UI_MIN_MS = 110;
+// At most this many log entries are written to the DOM per refresh.
+const AUDIT_FLUSH_MAX = 6;
 const WINDOW = 240;
 
 const state = {
@@ -41,7 +49,7 @@ const state = {
   profile: "variable",
   seed: 100,
   deadlineMs: 100,
-  speedIndex: 2,
+  speedIndex: DEFAULT_SPEED,
   biasRtt: 0,
   biasCompute: 0,
   gates: { confidence: true, freshness: true, degraded: true },
@@ -51,6 +59,10 @@ const state = {
   runners: new Map(),
   history: { rtt: [], loss: [], load: [], latency: [], confidence: [] },
   parity: null,
+  lastStep: null,
+  auditQueue: [],
+  uiDirty: true,
+  lastUiTs: 0,
   scene: null,
   path: null,
   risk: null,
@@ -253,12 +265,12 @@ function rebuild() {
   state.scene.deadlineMs = state.deadlineMs;
   $("audit").innerHTML = "";
   $("audit-empty").hidden = false;
-  refreshStatus();
+  state.lastStep = null;
+  state.auditQueue = [];
   refreshChips();
-  drawCharts();
-  renderRace();
   // Show the first frame immediately, so a paused page is never blank.
   advance(1);
+  renderUi();
 }
 
 // ------------------------------------------------------------------- loop
@@ -266,21 +278,26 @@ function loop(ts) {
   const dt = state.lastTs ? Math.min(120, ts - state.lastTs) : 16;
   state.lastTs = ts;
   if (state.playing) {
-    // The trace is a 30 FPS capture, so 1x means 30 scheduler frames a second.
     const want = (dt / 1000) * 30 * SPEEDS[state.speedIndex];
     state.carry = (state.carry || 0) + want;
     const n = Math.floor(state.carry);
     state.carry -= n;
     if (n > 0) advance(n);
   }
+  // The scene animates every frame -- it is motion, and motion should be
+  // smooth. The panels are text, and text that rewrites thirty times a second
+  // is unreadable, so they refresh on their own slower clock.
+  if (state.uiDirty && ts - (state.lastUiTs || 0) >= UI_MIN_MS) {
+    state.lastUiTs = ts;
+    renderUi();
+  }
   state.scene.tick(dt);
   state.scene.draw();
   requestAnimationFrame(loop);
 }
 
+/** Run `n` frames through the engine. Touches no DOM; see renderUi. */
 function advance(n) {
-  const dapper = state.runners.get("dapper");
-  let last = null;
   for (let k = 0; k < n; k++) {
     if (state.frame >= state.trace.frames) {
       if (state.source === "live") {
@@ -288,7 +305,7 @@ function advance(n) {
         extendLiveTrace();
       } else {
         state.playing = false;
-        refreshStatus();
+        state.uiDirty = true;
         break;
       }
     }
@@ -297,25 +314,53 @@ function advance(n) {
       const step = stepFrame(state.trace, r.policy, r.model, r.run, i);
       r.live.push(step.row);
       if (r.name === "dapper") {
-        last = step;
+        state.lastStep = step;
         state.scene.push(step, state.deadlineMs);
         pushHistory(step.row);
-        addAudit(step);
+        state.auditQueue.push(step);
       }
     }
     state.frame += 1;
   }
+  state.uiDirty = true;
+}
+
+/** Repaint the panels from the newest frame the engine produced. */
+function renderUi() {
+  const last = state.lastStep;
   if (last) {
-    const sched = dapper.policy.scheduler;
+    const sched = state.runners.get("dapper").policy.scheduler;
     const tests = sched.gateTests(last.obs);
     state.path.light(last.decision, tests);
     state.risk.update(sched.riskTerms(last.obs), tests, last.row.selected_mode);
     updateStageBar(last);
   }
+  flushAudit();
   renderKpis();
   renderRace();
   drawCharts();
   refreshStatus();
+  state.uiDirty = false;
+}
+
+/**
+ * Write the queued decisions to the log, newest first.
+ *
+ * Past about 1x the engine outruns what anyone can read, so only the newest
+ * AUDIT_FLUSH_MAX are written and the rest are dropped. The chip beside the
+ * heading says so, rather than letting the log imply it shows every frame.
+ */
+function flushAudit() {
+  const queue = state.auditQueue;
+  if (!queue.length) return;
+  const skipped = Math.max(0, queue.length - AUDIT_FLUSH_MAX);
+  for (const step of queue.slice(skipped)) addAudit(step);
+  state.auditQueue = [];
+  const chip = $("audit-rate");
+  if (chip) {
+    chip.textContent = skipped ? `sampled \u00b7 ${skipped} skipped` : "every frame";
+    chip.className = `tag${skipped ? "" : " ok"}`;
+  }
 }
 
 function extendLiveTrace() {
@@ -673,7 +718,7 @@ function refreshStatus() {
     el.textContent = `parity ${sci(p.worst)}`;
     el.style.color = p.ok ? "var(--green)" : "var(--rose)";
   }
-  $("play").textContent = state.playing ? "Pause" : "Play";
+  $("play").innerHTML = `<span class="dot"></span> ${state.playing ? "Pause" : "Play"}`;
 }
 
 function refreshChips() {
@@ -737,11 +782,17 @@ function buildControls() {
   $("play").addEventListener("click", () => {
     state.playing = !state.playing;
     if (state.playing && state.frame >= state.trace.frames) rebuild();
-    refreshStatus();
+    renderUi();
   });
   $("reset").addEventListener("click", () => {
     state.playing = true;
     rebuild();
+  });
+  // One frame at a time, for actually reading a decision.
+  $("step").addEventListener("click", () => {
+    state.playing = false;
+    advance(1);
+    renderUi();
   });
   $("audit-clear").addEventListener("click", () => {
     $("audit").innerHTML = "";
@@ -760,8 +811,10 @@ function buildControls() {
   const speed = $("speed");
   speed.value = String(state.speedIndex);
   const speedLabel = () => {
+    const fps = SPEEDS[state.speedIndex] * 30;
     $("speed-val").textContent = `${SPEEDS[state.speedIndex]}×`;
-    $("speed-sub").textContent = `${(SPEEDS[state.speedIndex] * 30).toFixed(0)} scheduler frames per second (capture is 30 FPS)`;
+    $("speed-sub").textContent =
+      `${fps < 10 ? fps.toFixed(1) : fps.toFixed(0)} decisions per second. 1× is real time: the capture is 30 FPS.`;
   };
   speedLabel();
   speed.addEventListener("input", () => {
