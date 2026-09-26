@@ -15,8 +15,9 @@ What it does, in order:
    paper/figures/runtime_bias.pdf, which is the one camera-ready figure the
    repository has no generator for (see the note in write_figures).
 4. Builds site/paper/dapper-fmec2026.pdf: the IEEE accepted-manuscript notice on
-   a cover page, followed by the untouched pages of the official camera-ready.
-   The posted PDF is the certified document, not a re-print of this web page.
+   a cover page, followed by the untouched pages of
+   paper/DAPPER_FMEC2026_IEEE_CameraReady.pdf, which is the PDF eXpress-certified
+   document. The posted PDF is that file, not a re-print of this web page.
 5. Rewrites the block between <!-- RESULTS:START --> and <!-- RESULTS:END --> in
    README.md from the same numbers.
 
@@ -50,8 +51,10 @@ from verify_paper_claims import PROFILES, Results, run as verify_run  # noqa: E4
 
 TEMPLATE = os.path.join(ROOT, "paper", "paper.template.html")
 OUT_DIR = os.path.join(ROOT, "site", "paper")
-SOURCE_PDF = os.path.join(ROOT, "paper", "DAPPER_FMEC2026_CameraReady_IEEE_certified.pdf")
-FALLBACK_PDF = os.path.join(ROOT, "paper", "DAPPER_FMEC2026_IEEE_CameraReady.pdf")
+#: The IEEE PDF eXpress-certified camera-ready. This is the only camera-ready
+#: PDF in the repository, and the posted PDF is built from it, so the link on
+#: the paper page serves the certified document rather than a re-print.
+SOURCE_PDF = os.path.join(ROOT, "paper", "DAPPER_FMEC2026_IEEE_CameraReady.pdf")
 POSTED_PDF = os.path.join(OUT_DIR, "dapper-fmec2026.pdf")
 DEFAULT_DOI = "10.1109/FMEC.2026.XXXXXXX (to be assigned)"
 
@@ -488,12 +491,10 @@ def write_pdf(doi: str) -> Optional[str]:
         print("  PyMuPDF missing; posted PDF not built")
         return None
 
-    source = SOURCE_PDF if os.path.exists(SOURCE_PDF) else FALLBACK_PDF
+    source = SOURCE_PDF
     if not os.path.exists(source):
         print("  no camera-ready PDF found; posted PDF not built")
         return None
-    if source == FALLBACK_PDF:
-        print("  WARNING: the IEEE-certified PDF is absent; using the local build instead")
 
     doc = fitz.open(source)
     page0 = doc[0].rect

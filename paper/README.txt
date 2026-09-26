@@ -1,5 +1,12 @@
 DAPPER - FMEC 2026 camera-ready LaTeX source (revised)
 
+PDF
+  DAPPER_FMEC2026_IEEE_CameraReady.pdf is the document IEEE PDF eXpress
+  certified on 20 September 2026. It is the camera-ready of record. A local
+  LaTeX build of the same source will not be byte-identical to it: a
+  different engine breaks lines and places floats differently, even though
+  the manuscript is the same.
+
 Build
   pdflatex DAPPER_FMEC2026_CameraReady.tex   (run twice)
   or: latexmk -pdf DAPPER_FMEC2026_CameraReady.tex
