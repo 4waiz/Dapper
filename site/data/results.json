@@ -1,0 +1,2804 @@
+{
+ "generated_by": "experiments/export_web_results.py",
+ "note": "Every value is read from a CSV under results/. The main benchmark is a synthetic network study; confidence is a simulated proxy, not detector accuracy. The secondary detector study reports measured COCO recall and is labelled separately. Nothing here is a physical-robot or safety result.",
+ "paper": {
+  "title": "DAPPER: Deadline-Aware Edge Perception for Mission-Critical Robots under Dynamic Network Conditions",
+  "venue": "IEEE FMEC 2026",
+  "authors": [
+   "Awaiz Ahmed",
+   "Khubaib Amjad Alam"
+  ],
+  "affiliation": "Al Ain University, Abu Dhabi, United Arab Emirates"
+ },
+ "protocol": {
+  "deadline_ms": 100.0,
+  "seeds": 30,
+  "seed_start": 100,
+  "calibration_seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "frames_per_cell": 1000,
+  "profiles": [
+   "stable",
+   "congested",
+   "lossy",
+   "variable",
+   "outage"
+  ],
+  "policies": [
+   "local_only",
+   "edge_only",
+   "cloud_only",
+   "dapper",
+   "deadline_greedy",
+   "confidence_deadline",
+   "rtt_threshold",
+   "oracle_feasible"
+  ],
+  "runs": 1200,
+  "frame_decisions": 1200000,
+  "bootstrap": {
+   "n_boot": 10000,
+   "seed": 20260920,
+   "alpha": 0.05
+  }
+ },
+ "tables": {
+  "main": {
+   "id": "main",
+   "paper_table": "III",
+   "title": "Repeated evaluation over 30 independent seeds",
+   "caption": "1,000 frames per seed, profile and policy at D = 100 ms. Intervals are 95% percentile bootstrap over seeds. The confidence proxy is the synthetic value the control loop holds at the deadline, not detector accuracy.",
+   "source": "results/final/multi_seed_ci.csv",
+   "rows": [
+    {
+     "profile": "stable",
+     "policy": "local_only",
+     "policy_label": "local-only",
+     "p95_latency_ms": {
+      "mean": 33.984265110354684,
+      "lo": 33.933733268366254,
+      "hi": 34.03567770889089,
+      "std": 0.1461290829276958,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.7249667322554326,
+      "lo": 0.7244497389647496,
+      "hi": 0.7255141489616964,
+      "std": 0.0015304909747104,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "stable",
+     "policy": "edge_only",
+     "policy_label": "edge-only",
+     "p95_latency_ms": {
+      "mean": 132.81733139293937,
+      "lo": 132.70758132085106,
+      "hi": 132.92298990880607,
+      "std": 0.3059301583384979,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 48.76666666666666,
+      "lo": 48.17333333333333,
+      "hi": 49.383333333333326,
+      "std": 1.73072305665885,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.4483087878864294,
+      "lo": 0.4428924800654157,
+      "hi": 0.4535359178719119,
+      "std": 0.0152001567794636,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 25.0,
+      "lo": 25.0,
+      "hi": 25.0,
+      "std": 0.0,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "stable",
+     "policy": "cloud_only",
+     "policy_label": "cloud-only",
+     "p95_latency_ms": {
+      "mean": 133.9842651103547,
+      "lo": 133.93373326836627,
+      "hi": 134.0356777088909,
+      "std": 0.1461290829276994,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 100.0,
+      "lo": 100.0,
+      "hi": 100.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 35.0,
+      "lo": 35.0,
+      "hi": 35.0,
+      "std": 0.0,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "stable",
+     "policy": "dapper",
+     "policy_label": "DAPPER",
+     "p95_latency_ms": {
+      "mean": 33.984265110354684,
+      "lo": 33.933733268366254,
+      "hi": 34.03567770889089,
+      "std": 0.1461290829276958,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.7959976928158301,
+      "lo": 0.7949080850073025,
+      "hi": 0.7970417324338718,
+      "std": 0.0030581965746421,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 21.62166666666667,
+      "lo": 21.499166666666667,
+      "hi": 21.73583333333333,
+      "std": 0.33584256711301125,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "congested",
+     "policy": "local_only",
+     "policy_label": "local-only",
+     "p95_latency_ms": {
+      "mean": 33.94268972592376,
+      "lo": 33.905792187259216,
+      "hi": 33.976328928607806,
+      "std": 0.0980310426148253,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.7249282051819181,
+      "lo": 0.7243644131564243,
+      "hi": 0.7255162553009149,
+      "std": 0.0016092933478095,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "congested",
+     "policy": "edge_only",
+     "policy_label": "edge-only",
+     "p95_latency_ms": {
+      "mean": 133.9426897259238,
+      "lo": 133.9057921872592,
+      "hi": 133.97632892860784,
+      "std": 0.098031042614826,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 100.0,
+      "lo": 100.0,
+      "hi": 100.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 25.0,
+      "lo": 25.0,
+      "hi": 25.0,
+      "std": 0.0,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "congested",
+     "policy": "cloud_only",
+     "policy_label": "cloud-only",
+     "p95_latency_ms": {
+      "mean": 133.9426897259238,
+      "lo": 133.9057921872592,
+      "hi": 133.97632892860784,
+      "std": 0.098031042614826,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 100.0,
+      "lo": 100.0,
+      "hi": 100.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 35.0,
+      "lo": 35.0,
+      "hi": 35.0,
+      "std": 0.0,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "congested",
+     "policy": "dapper",
+     "policy_label": "DAPPER",
+     "p95_latency_ms": {
+      "mean": 33.93663339562628,
+      "lo": 33.89765936597646,
+      "hi": 33.97222933477223,
+      "std": 0.1038459726355846,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.724962592880273,
+      "lo": 0.7244213882112449,
+      "hi": 0.7255313473425076,
+      "std": 0.0015628817788862,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 0.0025,
+      "lo": 0.0,
+      "hi": 0.005833333333333333,
+      "std": 0.007628214415734118,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "lossy",
+     "policy": "local_only",
+     "policy_label": "local-only",
+     "p95_latency_ms": {
+      "mean": 34.012278154614826,
+      "lo": 33.96825412712669,
+      "hi": 34.05448763655662,
+      "std": 0.121209433766078,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.7247968267120143,
+      "lo": 0.7243290816945883,
+      "hi": 0.7252513425625742,
+      "std": 0.0013222500022528,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "lossy",
+     "policy": "edge_only",
+     "policy_label": "edge-only",
+     "p95_latency_ms": {
+      "mean": 133.85583842676783,
+      "lo": 133.8050507867707,
+      "hi": 133.90940589108996,
+      "std": 0.1488101991783642,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 87.50666666666666,
+      "lo": 87.05666666666666,
+      "hi": 87.93666666666665,
+      "std": 1.25008505457755,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.1093286409076934,
+      "lo": 0.1055459755097783,
+      "hi": 0.1133262894295496,
+      "std": 0.0110313510825006,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 25.0,
+      "lo": 25.0,
+      "hi": 25.0,
+      "std": 0.0,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "lossy",
+     "policy": "cloud_only",
+     "policy_label": "cloud-only",
+     "p95_latency_ms": {
+      "mean": 134.01227815461485,
+      "lo": 133.9682541271267,
+      "hi": 134.05448763655662,
+      "std": 0.1212094337660772,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 100.0,
+      "lo": 100.0,
+      "hi": 100.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 35.0,
+      "lo": 35.0,
+      "hi": 35.0,
+      "std": 0.0,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "lossy",
+     "policy": "dapper",
+     "policy_label": "DAPPER",
+     "p95_latency_ms": {
+      "mean": 34.012278154614826,
+      "lo": 33.96825412712669,
+      "hi": 34.05448763655662,
+      "std": 0.121209433766078,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.7405908249005024,
+      "lo": 0.7398371863884554,
+      "hi": 0.7413865873770361,
+      "std": 0.0021791822011149,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 18.12666666666667,
+      "lo": 17.975,
+      "hi": 18.28083333333333,
+      "std": 0.43992227631185293,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "variable",
+     "policy": "local_only",
+     "policy_label": "local-only",
+     "p95_latency_ms": {
+      "mean": 33.968149024906744,
+      "lo": 33.91696415295809,
+      "hi": 34.01719132457602,
+      "std": 0.1405586387811733,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.7253139635038416,
+      "lo": 0.72477236895505,
+      "hi": 0.7258565366898948,
+      "std": 0.001558687831728,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "variable",
+     "policy": "edge_only",
+     "policy_label": "edge-only",
+     "p95_latency_ms": {
+      "mean": 133.58563931025864,
+      "lo": 133.49959953276556,
+      "hi": 133.67492057454533,
+      "std": 0.2503107508975509,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 74.00333333333333,
+      "lo": 72.61666666666666,
+      "hi": 75.42666666666666,
+      "std": 3.9436097006758097,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.1947771769498917,
+      "lo": 0.1843483588564416,
+      "hi": 0.2047864906493864,
+      "std": 0.0286722056669306,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 19.55,
+      "lo": 19.19083333333333,
+      "hi": 19.905,
+      "std": 1.002346385169353,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "variable",
+     "policy": "cloud_only",
+     "policy_label": "cloud-only",
+     "p95_latency_ms": {
+      "mean": 133.6663704718774,
+      "lo": 133.58590631894333,
+      "hi": 133.74796713082046,
+      "std": 0.2303474546051647,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 78.19999999999999,
+      "lo": 76.76333333333332,
+      "hi": 79.62000000000002,
+      "std": 4.0093855406774095,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.1580399411309307,
+      "lo": 0.1477128199457988,
+      "hi": 0.168446377957376,
+      "std": 0.0290877380689275,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 27.37,
+      "lo": 26.86716666666667,
+      "hi": 27.867,
+      "std": 1.4032849392370943,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "variable",
+     "policy": "dapper",
+     "policy_label": "DAPPER",
+     "p95_latency_ms": {
+      "mean": 33.74407704498113,
+      "lo": 33.66991459060688,
+      "hi": 33.819528499197034,
+      "std": 0.2126750836043015,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.731537829380306,
+      "lo": 0.7306375575355787,
+      "hi": 0.7323912626304034,
+      "std": 0.0025052990492905,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 5.7775,
+      "lo": 5.5575,
+      "hi": 5.9975000000000005,
+      "std": 0.6189308774285565,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "outage",
+     "policy": "local_only",
+     "policy_label": "local-only",
+     "p95_latency_ms": {
+      "mean": 34.0121154317442,
+      "lo": 33.95612468699971,
+      "hi": 34.06642381717916,
+      "std": 0.1579557782129047,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.7249467226228217,
+      "lo": 0.7244492443659767,
+      "hi": 0.7254164481558691,
+      "std": 0.0013696023696029,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "outage",
+     "policy": "edge_only",
+     "policy_label": "edge-only",
+     "p95_latency_ms": {
+      "mean": 128.07706649270384,
+      "lo": 127.70553940054008,
+      "hi": 128.44310799887478,
+      "std": 1.0513613154171977,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 14.680000000000001,
+      "lo": 14.06333333333333,
+      "hi": 15.32666666666666,
+      "std": 1.79162804021447,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.6187231720593105,
+      "lo": 0.6139892776727712,
+      "hi": 0.6232440517520567,
+      "std": 0.0131858325250041,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 3.67,
+      "lo": 3.515833333333333,
+      "hi": 3.8316666666666666,
+      "std": 0.4479070100536186,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "outage",
+     "policy": "cloud_only",
+     "policy_label": "cloud-only",
+     "p95_latency_ms": {
+      "mean": 128.07706649270384,
+      "lo": 127.70553940054008,
+      "hi": 128.44310799887478,
+      "std": 1.0513613154171977,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 14.680000000000001,
+      "lo": 14.06333333333333,
+      "hi": 15.32666666666666,
+      "std": 1.79162804021447,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.6187231720593105,
+      "lo": 0.6139892776727712,
+      "hi": 0.6232440517520567,
+      "std": 0.0131858325250041,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 5.138,
+      "lo": 4.9221666666666675,
+      "hi": 5.364333333333333,
+      "std": 0.627069814075066,
+      "n_seeds": 30
+     }
+    },
+    {
+     "profile": "outage",
+     "policy": "dapper",
+     "policy_label": "DAPPER",
+     "p95_latency_ms": {
+      "mean": 31.18838425196936,
+      "lo": 31.01292571232953,
+      "hi": 31.362502768723584,
+      "std": 0.5009047087578914,
+      "n_seeds": 30
+     },
+     "deadline_miss_pct": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     },
+     "usable_confidence_proxy": {
+      "mean": 0.7255264574970844,
+      "lo": 0.724534548793681,
+      "hi": 0.7264857617893061,
+      "std": 0.0027313892999157,
+      "n_seeds": 30
+     },
+     "bandwidth_mb_per_1k": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "std": 0.0,
+      "n_seeds": 30
+     }
+    }
+   ]
+  },
+  "placement": {
+   "id": "placement",
+   "paper_table": "IV (left)",
+   "title": "DAPPER placement and remote accounting",
+   "caption": "At D = 100 ms over 30 seeds. Accepted is a percentage of transmitted requests; reuse and stale are percentages of all frames. Stale acceptance is zero by construction and measured so the claim is checked rather than asserted.",
+   "source": "results/final/mode_distribution.csv",
+   "rows": [
+    {
+     "profile": "stable",
+     "pct_local_fast": 13.513333333333332,
+     "pct_edge_accurate": 0.0,
+     "pct_hybrid": 86.48666666666666,
+     "pct_degraded_safe": 0.0,
+     "transmit_pct": 86.48666666666665,
+     "accepted_pct": 51.192996362198016,
+     "reuse_pct": 0.0,
+     "stale_pct": 0.0,
+     "mode_switches_per_1000": 233.3
+    },
+    {
+     "profile": "congested",
+     "pct_local_fast": 99.24666666666668,
+     "pct_edge_accurate": 0.0,
+     "pct_hybrid": 0.01,
+     "pct_degraded_safe": 0.7433333333333334,
+     "transmit_pct": 0.01,
+     "accepted_pct": 0.0,
+     "reuse_pct": 0.74333333333333,
+     "stale_pct": 0.0,
+     "mode_switches_per_1000": 12.133333333333333
+    },
+    {
+     "profile": "lossy",
+     "pct_local_fast": 27.49333333333333,
+     "pct_edge_accurate": 0.0,
+     "pct_hybrid": 72.50666666666666,
+     "pct_degraded_safe": 0.0,
+     "transmit_pct": 72.50666666666666,
+     "accepted_pct": 13.67909377384439,
+     "reuse_pct": 0.0,
+     "stale_pct": 0.0,
+     "mode_switches_per_1000": 363.26666666666665
+    },
+    {
+     "profile": "variable",
+     "pct_local_fast": 60.06,
+     "pct_edge_accurate": 0.0,
+     "pct_hybrid": 23.11,
+     "pct_degraded_safe": 16.83,
+     "transmit_pct": 23.11,
+     "accepted_pct": 15.932259046475588,
+     "reuse_pct": 16.830000000000002,
+     "stale_pct": 0.0,
+     "mode_switches_per_1000": 315.43333333333334
+    },
+    {
+     "profile": "outage",
+     "pct_local_fast": 22.63,
+     "pct_edge_accurate": 0.0,
+     "pct_hybrid": 0.0,
+     "pct_degraded_safe": 77.36999999999999,
+     "transmit_pct": 0.0,
+     "accepted_pct": 0.0,
+     "reuse_pct": 73.40333333333334,
+     "stale_pct": 0.0,
+     "mode_switches_per_1000": 418.4333333333333
+    }
+   ]
+  },
+  "adaptive": {
+   "id": "adaptive",
+   "paper_table": "IV (right)",
+   "title": "DAPPER against the calibrated adaptive comparators and the offline oracle",
+   "caption": "Averaged over the five profiles at D = 100 ms. Each comparator's hyperparameters were fitted on the calibration seeds with the same objective used for DAPPER. The oracle reads the realised frame outcome and is not deployable.",
+   "source": "results/final/multi_seed_ci.csv",
+   "rows": [
+    {
+     "policy": "local_only",
+     "policy_label": "local-only",
+     "is_oracle": false,
+     "transmit_pct": 0.0,
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 33.98389948950884,
+     "usable_confidence_proxy": 0.7249904900552057,
+     "bandwidth_mb_per_1k": 0.0
+    },
+    {
+     "policy": "deadline_greedy",
+     "policy_label": "deadline-greedy",
+     "is_oracle": false,
+     "transmit_pct": 0.0,
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 33.98389948950884,
+     "usable_confidence_proxy": 0.7249904900552057,
+     "bandwidth_mb_per_1k": 0.0
+    },
+    {
+     "policy": "confidence_deadline",
+     "policy_label": "conf.+deadline",
+     "is_oracle": false,
+     "transmit_pct": 0.0,
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 33.98389948950884,
+     "usable_confidence_proxy": 0.7249904900552057,
+     "bandwidth_mb_per_1k": 0.0
+    },
+    {
+     "policy": "rtt_threshold",
+     "policy_label": "RTT-threshold",
+     "is_oracle": false,
+     "transmit_pct": 0.014666666666666,
+     "deadline_miss_pct": 0.004666666666666,
+     "p95_latency_ms": 33.98760887221499,
+     "usable_confidence_proxy": 0.7249756936672165,
+     "bandwidth_mb_per_1k": 0.0036666666666666657
+    },
+    {
+     "policy": "dapper",
+     "policy_label": "DAPPER",
+     "is_oracle": false,
+     "transmit_pct": 36.42266666666667,
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 33.37312759150926,
+     "usable_confidence_proxy": 0.7437230794947992,
+     "bandwidth_mb_per_1k": 9.105666666666668
+    },
+    {
+     "policy": "oracle_feasible",
+     "policy_label": "oracle",
+     "is_oracle": true,
+     "transmit_pct": 13.584666666666667,
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 60.76806026843279,
+     "usable_confidence_proxy": 0.7453740962241393,
+     "bandwidth_mb_per_1k": 3.3961666666666672
+    }
+   ]
+  },
+  "ablation": {
+   "id": "ablation",
+   "paper_table": "V",
+   "title": "One-at-a-time ablation",
+   "caption": "Averaged over the five profiles and 30 seeds. Removing a risk signal sets its weight to zero and renormalises the remainder. No ablated variant produced a nonzero deadline-miss rate.",
+   "source": "results/ablation/ablation_summary.csv",
+   "rows": [
+    {
+     "variant": "dapper_full",
+     "label": "full DAPPER",
+     "family": "risk signal",
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 33.37312759150925,
+     "usable_confidence_proxy": 0.7437230794947991,
+     "bandwidth_mb_per_1k": 9.105666666666668,
+     "reuse_pct": 18.195333333333334,
+     "delta_confidence": 0.0,
+     "delta_bandwidth_mb_per_1k": 0.0
+    },
+    {
+     "variant": "dapper_no_rtt",
+     "label": "− RTT",
+     "family": "risk signal",
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 33.428842453617676,
+     "usable_confidence_proxy": 0.7426727268987747,
+     "bandwidth_mb_per_1k": 8.0875,
+     "reuse_pct": 17.668000000000006,
+     "delta_confidence": -0.0010503525960243731,
+     "delta_bandwidth_mb_per_1k": -1.018166666666668
+    },
+    {
+     "variant": "dapper_no_loss",
+     "label": "− packet loss",
+     "family": "risk signal",
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 32.57839829193039,
+     "usable_confidence_proxy": 0.7337156434019041,
+     "bandwidth_mb_per_1k": 2.499166666666667,
+     "reuse_pct": 41.30399999999999,
+     "delta_confidence": -0.010007436092895006,
+     "delta_bandwidth_mb_per_1k": -6.606500000000001
+    },
+    {
+     "variant": "dapper_no_load",
+     "label": "− edge load",
+     "family": "risk signal",
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 33.3733762383769,
+     "usable_confidence_proxy": 0.7431243093462889,
+     "bandwidth_mb_per_1k": 8.138833333333334,
+     "reuse_pct": 18.11133333333333,
+     "delta_confidence": -0.0005987701485101748,
+     "delta_bandwidth_mb_per_1k": -0.966833333333334
+    },
+    {
+     "variant": "dapper_no_frame_age",
+     "label": "− frame age",
+     "family": "risk signal",
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 33.37312759150926,
+     "usable_confidence_proxy": 0.7437230794947991,
+     "bandwidth_mb_per_1k": 9.105666666666668,
+     "reuse_pct": 18.195333333333334,
+     "delta_confidence": 0.0,
+     "delta_bandwidth_mb_per_1k": 0.0
+    },
+    {
+     "variant": "dapper_no_deadline",
+     "label": "− deadline pressure",
+     "family": "risk signal",
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 33.37921530405328,
+     "usable_confidence_proxy": 0.7439457051664474,
+     "bandwidth_mb_per_1k": 9.710333333333335,
+     "reuse_pct": 18.01666666666667,
+     "delta_confidence": 0.00022262567164832436,
+     "delta_bandwidth_mb_per_1k": 0.604666666666666
+    },
+    {
+     "variant": "dapper_no_confidence_gate",
+     "label": "− confidence gate",
+     "family": "mechanism",
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 33.37312759150926,
+     "usable_confidence_proxy": 0.7452681758871249,
+     "bandwidth_mb_per_1k": 10.526833333333332,
+     "reuse_pct": 18.195333333333334,
+     "delta_confidence": 0.0015450963923258065,
+     "delta_bandwidth_mb_per_1k": 1.4211666666666642
+    },
+    {
+     "variant": "dapper_no_freshness_gate",
+     "label": "− freshness gate",
+     "family": "mechanism",
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 33.37312759150926,
+     "usable_confidence_proxy": 0.7437230794947991,
+     "bandwidth_mb_per_1k": 9.957000000000003,
+     "reuse_pct": 18.195333333333334,
+     "delta_confidence": 0.0,
+     "delta_bandwidth_mb_per_1k": 0.8513333333333339
+    },
+    {
+     "variant": "dapper_no_degraded_reuse",
+     "label": "− degraded reuse",
+     "family": "mechanism",
+     "deadline_miss_pct": 0.0,
+     "p95_latency_ms": 33.95070226473987,
+     "usable_confidence_proxy": 0.743573628424873,
+     "bandwidth_mb_per_1k": 9.105666666666668,
+     "reuse_pct": 2.6713333333333296,
+     "delta_confidence": -0.0001494510699261431,
+     "delta_bandwidth_mb_per_1k": 0.0
+    }
+   ]
+  },
+  "detector": {
+   "id": "detector",
+   "paper_table": "VI",
+   "title": "Measured detector quality on all 5,000 COCO val2017 images",
+   "caption": "Confidence threshold 0.25, IoU matching at 0.50. Safety-relevant classes are person, bicycle, car, motorcycle, bus and truck. Measured on one workstation; not embedded or robot timing.",
+   "source": "results/real_detector/model_quality.csv, model_accuracy.csv, model_latency.csv",
+   "rows": [
+    {
+     "role": "local",
+     "model": "YOLO11n",
+     "note": "local model",
+     "images": 5000,
+     "recall": 0.5071418742259529,
+     "precision": 0.7043421756746426,
+     "safety_recall": 0.6231080793007887,
+     "map50": 0.5461597575166717,
+     "map50_95": 0.3889329124505398,
+     "gpu_ms": 6.065591439639684,
+     "cpu_ms": 35.19284060007194
+    },
+    {
+     "role": "remote",
+     "model": "YOLO11m",
+     "note": "remote model",
+     "images": 5000,
+     "recall": 0.6377322141186184,
+     "precision": 0.7295510358289781,
+     "safety_recall": 0.7341718183756129,
+     "map50": 0.677780359193654,
+     "map50_95": 0.5098573749892265,
+     "gpu_ms": 8.076857920037583,
+     "cpu_ms": 177.5173015985638
+    }
+   ]
+  },
+  "replay": {
+   "id": "replay",
+   "paper_table": "VII",
+   "paper_profiles": [
+    "stable",
+    "lossy",
+    "variable",
+    "outage"
+   ],
+   "title": "Detection quality delivered when the measured detector outputs are replayed",
+   "caption": "D = 100 ms, 10 seeds, synthetic network profiles. “all” scores a reused output as detecting nothing, which is a lower bound because consecutive COCO images are unrelated; “fresh” averages only freshly computed outputs. Both are reported rather than choosing whichever is more favourable.",
+   "source": "results/real_detector/dapper_replay.csv",
+   "rows": [
+    {
+     "profile": "stable",
+     "policy": "local_only",
+     "policy_label": "local-only",
+     "recall_all": 0.6391523349965231,
+     "recall_fresh": 0.6391523349965231,
+     "safety_recall": 0.7365956065300292,
+     "deadline_miss_pct": 0.0,
+     "reuse_pct": 0.0,
+     "in_paper": true
+    },
+    {
+     "profile": "stable",
+     "policy": "edge_only",
+     "policy_label": "edge-only",
+     "recall_all": 0.739795117345973,
+     "recall_fresh": 0.7469600939357405,
+     "safety_recall": 0.8153731334644687,
+     "deadline_miss_pct": 0.9600000000000001,
+     "reuse_pct": 0.0,
+     "in_paper": true
+    },
+    {
+     "profile": "stable",
+     "policy": "dapper",
+     "policy_label": "DAPPER",
+     "recall_all": 0.6737684206053539,
+     "recall_fresh": 0.6737684206053539,
+     "safety_recall": 0.7619214987013413,
+     "deadline_miss_pct": 0.0,
+     "reuse_pct": 0.0,
+     "in_paper": true
+    },
+    {
+     "profile": "congested",
+     "policy": "local_only",
+     "policy_label": "local-only",
+     "recall_all": 0.6391523349965231,
+     "recall_fresh": 0.6391523349965231,
+     "safety_recall": 0.7365956065300292,
+     "deadline_miss_pct": 0.0,
+     "reuse_pct": 0.0,
+     "in_paper": false
+    },
+    {
+     "profile": "congested",
+     "policy": "edge_only",
+     "policy_label": "edge-only",
+     "recall_all": 0.698133551994867,
+     "recall_fresh": 0.7468329743486444,
+     "safety_recall": 0.769024789098777,
+     "deadline_miss_pct": 6.544,
+     "reuse_pct": 0.0,
+     "in_paper": false
+    },
+    {
+     "profile": "congested",
+     "policy": "dapper",
+     "policy_label": "DAPPER",
+     "recall_all": 0.633625571062334,
+     "recall_fresh": 0.6392148723620925,
+     "safety_recall": 0.7299904385249285,
+     "deadline_miss_pct": 0.0,
+     "reuse_pct": 0.8820000000000001,
+     "in_paper": false
+    },
+    {
+     "profile": "lossy",
+     "policy": "local_only",
+     "policy_label": "local-only",
+     "recall_all": 0.6391523349965231,
+     "recall_fresh": 0.6391523349965231,
+     "safety_recall": 0.7365956065300292,
+     "deadline_miss_pct": 0.0,
+     "reuse_pct": 0.0,
+     "in_paper": true
+    },
+    {
+     "profile": "lossy",
+     "policy": "edge_only",
+     "policy_label": "edge-only",
+     "recall_all": 0.5999548699314682,
+     "recall_fresh": 0.7472709165059539,
+     "safety_recall": 0.660785773174414,
+     "deadline_miss_pct": 19.74,
+     "reuse_pct": 0.0,
+     "in_paper": true
+    },
+    {
+     "profile": "lossy",
+     "policy": "dapper",
+     "policy_label": "DAPPER",
+     "recall_all": 0.6632624977096838,
+     "recall_fresh": 0.6632624977096838,
+     "safety_recall": 0.7548481731359036,
+     "deadline_miss_pct": 0.0,
+     "reuse_pct": 0.0,
+     "in_paper": true
+    },
+    {
+     "profile": "variable",
+     "policy": "local_only",
+     "policy_label": "local-only",
+     "recall_all": 0.6391523349965231,
+     "recall_fresh": 0.6391523349965231,
+     "safety_recall": 0.7365956065300292,
+     "deadline_miss_pct": 0.0,
+     "reuse_pct": 0.0,
+     "in_paper": true
+    },
+    {
+     "profile": "variable",
+     "policy": "edge_only",
+     "policy_label": "edge-only",
+     "recall_all": 0.6799020994474041,
+     "recall_fresh": 0.7206834806122474,
+     "safety_recall": 0.7570099337726626,
+     "deadline_miss_pct": 5.664000000000001,
+     "reuse_pct": 0.0,
+     "in_paper": true
+    },
+    {
+     "profile": "variable",
+     "policy": "dapper",
+     "policy_label": "DAPPER",
+     "recall_all": 0.5448607397198124,
+     "recall_fresh": 0.6489930783922006,
+     "safety_recall": 0.6255973939880992,
+     "deadline_miss_pct": 0.0,
+     "reuse_pct": 16.036,
+     "in_paper": true
+    },
+    {
+     "profile": "outage",
+     "policy": "local_only",
+     "policy_label": "local-only",
+     "recall_all": 0.6391523349965231,
+     "recall_fresh": 0.6391523349965231,
+     "safety_recall": 0.7365956065300292,
+     "deadline_miss_pct": 0.0,
+     "reuse_pct": 0.0,
+     "in_paper": true
+    },
+    {
+     "profile": "outage",
+     "policy": "edge_only",
+     "policy_label": "edge-only",
+     "recall_all": 0.5458358568663938,
+     "recall_fresh": 0.6387622790380946,
+     "safety_recall": 0.6307457787200048,
+     "deadline_miss_pct": 14.538,
+     "reuse_pct": 0.0,
+     "in_paper": true
+    },
+    {
+     "profile": "outage",
+     "policy": "dapper",
+     "policy_label": "DAPPER",
+     "recall_all": 0.2231261750374772,
+     "recall_fresh": 0.6372092380539722,
+     "safety_recall": 0.2623899935133486,
+     "deadline_miss_pct": 0.0,
+     "reuse_pct": 64.98,
+     "in_paper": true
+    }
+   ]
+  }
+ },
+ "series": {
+  "p95_by_profile": {
+   "local_only": [
+    {
+     "profile": "stable",
+     "mean": 33.984265110354684,
+     "lo": 33.933733268366254,
+     "hi": 34.03567770889089
+    },
+    {
+     "profile": "congested",
+     "mean": 33.94268972592376,
+     "lo": 33.905792187259216,
+     "hi": 33.976328928607806
+    },
+    {
+     "profile": "lossy",
+     "mean": 34.012278154614826,
+     "lo": 33.96825412712669,
+     "hi": 34.05448763655662
+    },
+    {
+     "profile": "variable",
+     "mean": 33.968149024906744,
+     "lo": 33.91696415295809,
+     "hi": 34.01719132457602
+    },
+    {
+     "profile": "outage",
+     "mean": 34.0121154317442,
+     "lo": 33.95612468699971,
+     "hi": 34.06642381717916
+    }
+   ],
+   "edge_only": [
+    {
+     "profile": "stable",
+     "mean": 132.81733139293937,
+     "lo": 132.70758132085106,
+     "hi": 132.92298990880607
+    },
+    {
+     "profile": "congested",
+     "mean": 133.9426897259238,
+     "lo": 133.9057921872592,
+     "hi": 133.97632892860784
+    },
+    {
+     "profile": "lossy",
+     "mean": 133.85583842676783,
+     "lo": 133.8050507867707,
+     "hi": 133.90940589108996
+    },
+    {
+     "profile": "variable",
+     "mean": 133.58563931025864,
+     "lo": 133.49959953276556,
+     "hi": 133.67492057454533
+    },
+    {
+     "profile": "outage",
+     "mean": 128.07706649270384,
+     "lo": 127.70553940054008,
+     "hi": 128.44310799887478
+    }
+   ],
+   "cloud_only": [
+    {
+     "profile": "stable",
+     "mean": 133.9842651103547,
+     "lo": 133.93373326836627,
+     "hi": 134.0356777088909
+    },
+    {
+     "profile": "congested",
+     "mean": 133.9426897259238,
+     "lo": 133.9057921872592,
+     "hi": 133.97632892860784
+    },
+    {
+     "profile": "lossy",
+     "mean": 134.01227815461485,
+     "lo": 133.9682541271267,
+     "hi": 134.05448763655662
+    },
+    {
+     "profile": "variable",
+     "mean": 133.6663704718774,
+     "lo": 133.58590631894333,
+     "hi": 133.74796713082046
+    },
+    {
+     "profile": "outage",
+     "mean": 128.07706649270384,
+     "lo": 127.70553940054008,
+     "hi": 128.44310799887478
+    }
+   ],
+   "dapper": [
+    {
+     "profile": "stable",
+     "mean": 33.984265110354684,
+     "lo": 33.933733268366254,
+     "hi": 34.03567770889089
+    },
+    {
+     "profile": "congested",
+     "mean": 33.93663339562628,
+     "lo": 33.89765936597646,
+     "hi": 33.97222933477223
+    },
+    {
+     "profile": "lossy",
+     "mean": 34.012278154614826,
+     "lo": 33.96825412712669,
+     "hi": 34.05448763655662
+    },
+    {
+     "profile": "variable",
+     "mean": 33.74407704498113,
+     "lo": 33.66991459060688,
+     "hi": 33.819528499197034
+    },
+    {
+     "profile": "outage",
+     "mean": 31.18838425196936,
+     "lo": 31.01292571232953,
+     "hi": 31.362502768723584
+    }
+   ]
+  },
+  "confidence_by_profile": {
+   "local_only": [
+    {
+     "profile": "stable",
+     "mean": 0.7249667322554326,
+     "lo": 0.7244497389647496,
+     "hi": 0.7255141489616964
+    },
+    {
+     "profile": "congested",
+     "mean": 0.7249282051819181,
+     "lo": 0.7243644131564243,
+     "hi": 0.7255162553009149
+    },
+    {
+     "profile": "lossy",
+     "mean": 0.7247968267120143,
+     "lo": 0.7243290816945883,
+     "hi": 0.7252513425625742
+    },
+    {
+     "profile": "variable",
+     "mean": 0.7253139635038416,
+     "lo": 0.72477236895505,
+     "hi": 0.7258565366898948
+    },
+    {
+     "profile": "outage",
+     "mean": 0.7249467226228217,
+     "lo": 0.7244492443659767,
+     "hi": 0.7254164481558691
+    }
+   ],
+   "edge_only": [
+    {
+     "profile": "stable",
+     "mean": 0.4483087878864294,
+     "lo": 0.4428924800654157,
+     "hi": 0.4535359178719119
+    },
+    {
+     "profile": "congested",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "lossy",
+     "mean": 0.1093286409076934,
+     "lo": 0.1055459755097783,
+     "hi": 0.1133262894295496
+    },
+    {
+     "profile": "variable",
+     "mean": 0.1947771769498917,
+     "lo": 0.1843483588564416,
+     "hi": 0.2047864906493864
+    },
+    {
+     "profile": "outage",
+     "mean": 0.6187231720593105,
+     "lo": 0.6139892776727712,
+     "hi": 0.6232440517520567
+    }
+   ],
+   "cloud_only": [
+    {
+     "profile": "stable",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "congested",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "lossy",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "variable",
+     "mean": 0.1580399411309307,
+     "lo": 0.1477128199457988,
+     "hi": 0.168446377957376
+    },
+    {
+     "profile": "outage",
+     "mean": 0.6187231720593105,
+     "lo": 0.6139892776727712,
+     "hi": 0.6232440517520567
+    }
+   ],
+   "dapper": [
+    {
+     "profile": "stable",
+     "mean": 0.7959976928158301,
+     "lo": 0.7949080850073025,
+     "hi": 0.7970417324338718
+    },
+    {
+     "profile": "congested",
+     "mean": 0.724962592880273,
+     "lo": 0.7244213882112449,
+     "hi": 0.7255313473425076
+    },
+    {
+     "profile": "lossy",
+     "mean": 0.7405908249005024,
+     "lo": 0.7398371863884554,
+     "hi": 0.7413865873770361
+    },
+    {
+     "profile": "variable",
+     "mean": 0.731537829380306,
+     "lo": 0.7306375575355787,
+     "hi": 0.7323912626304034
+    },
+    {
+     "profile": "outage",
+     "mean": 0.7255264574970844,
+     "lo": 0.724534548793681,
+     "hi": 0.7264857617893061
+    }
+   ]
+  },
+  "miss_by_profile": {
+   "local_only": [
+    {
+     "profile": "stable",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "congested",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "lossy",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "variable",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "outage",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    }
+   ],
+   "edge_only": [
+    {
+     "profile": "stable",
+     "mean": 48.76666666666666,
+     "lo": 48.17333333333333,
+     "hi": 49.383333333333326
+    },
+    {
+     "profile": "congested",
+     "mean": 100.0,
+     "lo": 100.0,
+     "hi": 100.0
+    },
+    {
+     "profile": "lossy",
+     "mean": 87.50666666666666,
+     "lo": 87.05666666666666,
+     "hi": 87.93666666666665
+    },
+    {
+     "profile": "variable",
+     "mean": 74.00333333333333,
+     "lo": 72.61666666666666,
+     "hi": 75.42666666666666
+    },
+    {
+     "profile": "outage",
+     "mean": 14.680000000000001,
+     "lo": 14.06333333333333,
+     "hi": 15.32666666666666
+    }
+   ],
+   "cloud_only": [
+    {
+     "profile": "stable",
+     "mean": 100.0,
+     "lo": 100.0,
+     "hi": 100.0
+    },
+    {
+     "profile": "congested",
+     "mean": 100.0,
+     "lo": 100.0,
+     "hi": 100.0
+    },
+    {
+     "profile": "lossy",
+     "mean": 100.0,
+     "lo": 100.0,
+     "hi": 100.0
+    },
+    {
+     "profile": "variable",
+     "mean": 78.19999999999999,
+     "lo": 76.76333333333332,
+     "hi": 79.62000000000002
+    },
+    {
+     "profile": "outage",
+     "mean": 14.680000000000001,
+     "lo": 14.06333333333333,
+     "hi": 15.32666666666666
+    }
+   ],
+   "dapper": [
+    {
+     "profile": "stable",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "congested",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "lossy",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "variable",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "outage",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    }
+   ]
+  },
+  "bandwidth_by_profile": {
+   "local_only": [
+    {
+     "profile": "stable",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "congested",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "lossy",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "variable",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    {
+     "profile": "outage",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    }
+   ],
+   "edge_only": [
+    {
+     "profile": "stable",
+     "mean": 25.0,
+     "lo": 25.0,
+     "hi": 25.0
+    },
+    {
+     "profile": "congested",
+     "mean": 25.0,
+     "lo": 25.0,
+     "hi": 25.0
+    },
+    {
+     "profile": "lossy",
+     "mean": 25.0,
+     "lo": 25.0,
+     "hi": 25.0
+    },
+    {
+     "profile": "variable",
+     "mean": 19.55,
+     "lo": 19.19083333333333,
+     "hi": 19.905
+    },
+    {
+     "profile": "outage",
+     "mean": 3.67,
+     "lo": 3.515833333333333,
+     "hi": 3.8316666666666666
+    }
+   ],
+   "cloud_only": [
+    {
+     "profile": "stable",
+     "mean": 35.0,
+     "lo": 35.0,
+     "hi": 35.0
+    },
+    {
+     "profile": "congested",
+     "mean": 35.0,
+     "lo": 35.0,
+     "hi": 35.0
+    },
+    {
+     "profile": "lossy",
+     "mean": 35.0,
+     "lo": 35.0,
+     "hi": 35.0
+    },
+    {
+     "profile": "variable",
+     "mean": 27.37,
+     "lo": 26.86716666666667,
+     "hi": 27.867
+    },
+    {
+     "profile": "outage",
+     "mean": 5.138,
+     "lo": 4.9221666666666675,
+     "hi": 5.364333333333333
+    }
+   ],
+   "dapper": [
+    {
+     "profile": "stable",
+     "mean": 21.62166666666667,
+     "lo": 21.499166666666667,
+     "hi": 21.73583333333333
+    },
+    {
+     "profile": "congested",
+     "mean": 0.0025,
+     "lo": 0.0,
+     "hi": 0.005833333333333333
+    },
+    {
+     "profile": "lossy",
+     "mean": 18.12666666666667,
+     "lo": 17.975,
+     "hi": 18.28083333333333
+    },
+    {
+     "profile": "variable",
+     "mean": 5.7775,
+     "lo": 5.5575,
+     "hi": 5.9975000000000005
+    },
+    {
+     "profile": "outage",
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    }
+   ]
+  },
+  "mode_vs_deadline": [
+   {
+    "deadline_ms": 50.0,
+    "pct_local_fast": 48.42933333333333,
+    "pct_edge_accurate": 0.0,
+    "pct_hybrid": 0.0,
+    "pct_degraded_safe": 51.57066666666667,
+    "deadline_miss_pct": 0.0,
+    "p95_latency_ms": 32.587458426071656,
+    "usable_confidence_proxy": 0.7251338469748896,
+    "bandwidth_mb_per_1k": 0.0
+   },
+   {
+    "deadline_ms": 75.0,
+    "pct_local_fast": 57.37066666666667,
+    "pct_edge_accurate": 0.0,
+    "pct_hybrid": 10.574000000000002,
+    "pct_degraded_safe": 32.05533333333334,
+    "deadline_miss_pct": 0.0,
+    "p95_latency_ms": 33.15989719566545,
+    "usable_confidence_proxy": 0.7258135478510832,
+    "bandwidth_mb_per_1k": 2.6435
+   },
+   {
+    "deadline_ms": 100.0,
+    "pct_local_fast": 44.58866666666667,
+    "pct_edge_accurate": 0.0,
+    "pct_hybrid": 36.422666666666665,
+    "pct_degraded_safe": 18.988666666666667,
+    "deadline_miss_pct": 0.0,
+    "p95_latency_ms": 33.37312759150925,
+    "usable_confidence_proxy": 0.7437230794947992,
+    "bandwidth_mb_per_1k": 9.105666666666666
+   },
+   {
+    "deadline_ms": 125.0,
+    "pct_local_fast": 42.400666666666666,
+    "pct_edge_accurate": 11.255333333333333,
+    "pct_hybrid": 27.532,
+    "pct_degraded_safe": 18.812,
+    "deadline_miss_pct": 5.23866666666666,
+    "p95_latency_ms": 56.40262813434968,
+    "usable_confidence_proxy": 0.70656120319272,
+    "bandwidth_mb_per_1k": 9.696833333333334
+   },
+   {
+    "deadline_ms": 150.0,
+    "pct_local_fast": 42.36533333333333,
+    "pct_edge_accurate": 31.97066666666667,
+    "pct_hybrid": 6.870666666666666,
+    "pct_degraded_safe": 18.793333333333333,
+    "deadline_miss_pct": 13.312666666666658,
+    "p95_latency_ms": 108.58294849781244,
+    "usable_confidence_proxy": 0.6488392840201628,
+    "bandwidth_mb_per_1k": 9.710333333333335
+   },
+   {
+    "deadline_ms": 200.0,
+    "pct_local_fast": 26.066,
+    "pct_edge_accurate": 55.31133333333334,
+    "pct_hybrid": 0.0,
+    "pct_degraded_safe": 18.622666666666667,
+    "deadline_miss_pct": 4.205333333333329,
+    "p95_latency_ms": 152.57098483695998,
+    "usable_confidence_proxy": 0.714020943236319,
+    "bandwidth_mb_per_1k": 13.827833333333334
+   },
+   {
+    "deadline_ms": 250.0,
+    "pct_local_fast": 16.019333333333336,
+    "pct_edge_accurate": 65.53266666666667,
+    "pct_hybrid": 0.0,
+    "pct_degraded_safe": 18.448,
+    "deadline_miss_pct": 0.0,
+    "p95_latency_ms": 156.2757566432646,
+    "usable_confidence_proxy": 0.7440526990768586,
+    "bandwidth_mb_per_1k": 16.383166666666668
+   }
+  ],
+  "miss_vs_bias": {
+   "both": [
+    {
+     "bias": -0.3,
+     "miss_pct_mean": 15.29444444444444,
+     "miss_pct_worst": 42.216666666666654
+    },
+    {
+     "bias": -0.2,
+     "miss_pct_mean": 8.732222222222218,
+     "miss_pct_worst": 25.89999999999999
+    },
+    {
+     "bias": -0.1,
+     "miss_pct_mean": 0.006666666666666667,
+     "miss_pct_worst": 0.02
+    },
+    {
+     "bias": 0.0,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    },
+    {
+     "bias": 0.1,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    },
+    {
+     "bias": 0.2,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    },
+    {
+     "bias": 0.3,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    }
+   ],
+   "compute": [
+    {
+     "bias": -0.3,
+     "miss_pct_mean": 13.131111111111105,
+     "miss_pct_worst": 38.54666666666665
+    },
+    {
+     "bias": -0.2,
+     "miss_pct_mean": 0.28222222222222,
+     "miss_pct_worst": 0.7000000000000001
+    },
+    {
+     "bias": -0.1,
+     "miss_pct_mean": 0.006666666666666667,
+     "miss_pct_worst": 0.02
+    },
+    {
+     "bias": 0.0,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    },
+    {
+     "bias": 0.1,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    },
+    {
+     "bias": 0.2,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    },
+    {
+     "bias": 0.3,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    }
+   ],
+   "rtt": [
+    {
+     "bias": -0.3,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    },
+    {
+     "bias": -0.2,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    },
+    {
+     "bias": -0.1,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    },
+    {
+     "bias": 0.0,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    },
+    {
+     "bias": 0.1,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    },
+    {
+     "bias": 0.2,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    },
+    {
+     "bias": 0.3,
+     "miss_pct_mean": 0.0,
+     "miss_pct_worst": 0.0
+    }
+   ]
+  }
+ },
+ "rankings": {
+  "stable": {
+   "deadline_miss_rate": {
+    "lower_is_better": true,
+    "unit": "%",
+    "digits": 2,
+    "order": [
+     {
+      "policy": "local_only",
+      "value": 0.0,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "dapper",
+      "value": 0.0,
+      "rank": 2,
+      "is_best": true
+     },
+     {
+      "policy": "edge_only",
+      "value": 48.76666666666666,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 100.0,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "local_only",
+     "dapper"
+    ]
+   },
+   "p95_latency_ms": {
+    "lower_is_better": true,
+    "unit": " ms",
+    "digits": 1,
+    "order": [
+     {
+      "policy": "local_only",
+      "value": 33.984265110354684,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "dapper",
+      "value": 33.984265110354684,
+      "rank": 2,
+      "is_best": true
+     },
+     {
+      "policy": "edge_only",
+      "value": 132.81733139293937,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 133.9842651103547,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "local_only",
+     "dapper"
+    ]
+   },
+   "usable_confidence_proxy": {
+    "lower_is_better": false,
+    "unit": "",
+    "digits": 3,
+    "order": [
+     {
+      "policy": "dapper",
+      "value": 0.7959976928158301,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "local_only",
+      "value": 0.7249667322554326,
+      "rank": 2,
+      "is_best": false
+     },
+     {
+      "policy": "edge_only",
+      "value": 0.4483087878864294,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 0.0,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "dapper"
+    ]
+   },
+   "bandwidth_per_1000_frames_kb": {
+    "lower_is_better": true,
+    "unit": " MB/1k fr.",
+    "digits": 2,
+    "order": [
+     {
+      "policy": "local_only",
+      "value": 0.0,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "dapper",
+      "value": 21.62166666666667,
+      "rank": 2,
+      "is_best": false
+     },
+     {
+      "policy": "edge_only",
+      "value": 25.0,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 35.0,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "local_only"
+    ]
+   }
+  },
+  "congested": {
+   "deadline_miss_rate": {
+    "lower_is_better": true,
+    "unit": "%",
+    "digits": 2,
+    "order": [
+     {
+      "policy": "local_only",
+      "value": 0.0,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "dapper",
+      "value": 0.0,
+      "rank": 2,
+      "is_best": true
+     },
+     {
+      "policy": "edge_only",
+      "value": 100.0,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 100.0,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "local_only",
+     "dapper"
+    ]
+   },
+   "p95_latency_ms": {
+    "lower_is_better": true,
+    "unit": " ms",
+    "digits": 1,
+    "order": [
+     {
+      "policy": "dapper",
+      "value": 33.93663339562628,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "local_only",
+      "value": 33.94268972592376,
+      "rank": 2,
+      "is_best": true
+     },
+     {
+      "policy": "edge_only",
+      "value": 133.9426897259238,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 133.9426897259238,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "dapper",
+     "local_only"
+    ]
+   },
+   "usable_confidence_proxy": {
+    "lower_is_better": false,
+    "unit": "",
+    "digits": 3,
+    "order": [
+     {
+      "policy": "dapper",
+      "value": 0.724962592880273,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "local_only",
+      "value": 0.7249282051819181,
+      "rank": 2,
+      "is_best": true
+     },
+     {
+      "policy": "edge_only",
+      "value": 0.0,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 0.0,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "dapper",
+     "local_only"
+    ]
+   },
+   "bandwidth_per_1000_frames_kb": {
+    "lower_is_better": true,
+    "unit": " MB/1k fr.",
+    "digits": 2,
+    "order": [
+     {
+      "policy": "local_only",
+      "value": 0.0,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "dapper",
+      "value": 0.0025,
+      "rank": 2,
+      "is_best": true
+     },
+     {
+      "policy": "edge_only",
+      "value": 25.0,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 35.0,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "local_only",
+     "dapper"
+    ]
+   }
+  },
+  "lossy": {
+   "deadline_miss_rate": {
+    "lower_is_better": true,
+    "unit": "%",
+    "digits": 2,
+    "order": [
+     {
+      "policy": "local_only",
+      "value": 0.0,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "dapper",
+      "value": 0.0,
+      "rank": 2,
+      "is_best": true
+     },
+     {
+      "policy": "edge_only",
+      "value": 87.50666666666666,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 100.0,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "local_only",
+     "dapper"
+    ]
+   },
+   "p95_latency_ms": {
+    "lower_is_better": true,
+    "unit": " ms",
+    "digits": 1,
+    "order": [
+     {
+      "policy": "local_only",
+      "value": 34.012278154614826,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "dapper",
+      "value": 34.012278154614826,
+      "rank": 2,
+      "is_best": true
+     },
+     {
+      "policy": "edge_only",
+      "value": 133.85583842676783,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 134.01227815461485,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "local_only",
+     "dapper"
+    ]
+   },
+   "usable_confidence_proxy": {
+    "lower_is_better": false,
+    "unit": "",
+    "digits": 3,
+    "order": [
+     {
+      "policy": "dapper",
+      "value": 0.7405908249005024,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "local_only",
+      "value": 0.7247968267120143,
+      "rank": 2,
+      "is_best": false
+     },
+     {
+      "policy": "edge_only",
+      "value": 0.1093286409076934,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 0.0,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "dapper"
+    ]
+   },
+   "bandwidth_per_1000_frames_kb": {
+    "lower_is_better": true,
+    "unit": " MB/1k fr.",
+    "digits": 2,
+    "order": [
+     {
+      "policy": "local_only",
+      "value": 0.0,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "dapper",
+      "value": 18.12666666666667,
+      "rank": 2,
+      "is_best": false
+     },
+     {
+      "policy": "edge_only",
+      "value": 25.0,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 35.0,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "local_only"
+    ]
+   }
+  },
+  "variable": {
+   "deadline_miss_rate": {
+    "lower_is_better": true,
+    "unit": "%",
+    "digits": 2,
+    "order": [
+     {
+      "policy": "local_only",
+      "value": 0.0,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "dapper",
+      "value": 0.0,
+      "rank": 2,
+      "is_best": true
+     },
+     {
+      "policy": "edge_only",
+      "value": 74.00333333333333,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 78.19999999999999,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "local_only",
+     "dapper"
+    ]
+   },
+   "p95_latency_ms": {
+    "lower_is_better": true,
+    "unit": " ms",
+    "digits": 1,
+    "order": [
+     {
+      "policy": "dapper",
+      "value": 33.74407704498113,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "local_only",
+      "value": 33.968149024906744,
+      "rank": 2,
+      "is_best": false
+     },
+     {
+      "policy": "edge_only",
+      "value": 133.58563931025864,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 133.6663704718774,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "dapper"
+    ]
+   },
+   "usable_confidence_proxy": {
+    "lower_is_better": false,
+    "unit": "",
+    "digits": 3,
+    "order": [
+     {
+      "policy": "dapper",
+      "value": 0.731537829380306,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "local_only",
+      "value": 0.7253139635038416,
+      "rank": 2,
+      "is_best": false
+     },
+     {
+      "policy": "edge_only",
+      "value": 0.1947771769498917,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 0.1580399411309307,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "dapper"
+    ]
+   },
+   "bandwidth_per_1000_frames_kb": {
+    "lower_is_better": true,
+    "unit": " MB/1k fr.",
+    "digits": 2,
+    "order": [
+     {
+      "policy": "local_only",
+      "value": 0.0,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "dapper",
+      "value": 5.7775,
+      "rank": 2,
+      "is_best": false
+     },
+     {
+      "policy": "edge_only",
+      "value": 19.55,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 27.37,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "local_only"
+    ]
+   }
+  },
+  "outage": {
+   "deadline_miss_rate": {
+    "lower_is_better": true,
+    "unit": "%",
+    "digits": 2,
+    "order": [
+     {
+      "policy": "local_only",
+      "value": 0.0,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "dapper",
+      "value": 0.0,
+      "rank": 2,
+      "is_best": true
+     },
+     {
+      "policy": "edge_only",
+      "value": 14.680000000000001,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 14.680000000000001,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "local_only",
+     "dapper"
+    ]
+   },
+   "p95_latency_ms": {
+    "lower_is_better": true,
+    "unit": " ms",
+    "digits": 1,
+    "order": [
+     {
+      "policy": "dapper",
+      "value": 31.18838425196936,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "local_only",
+      "value": 34.0121154317442,
+      "rank": 2,
+      "is_best": false
+     },
+     {
+      "policy": "edge_only",
+      "value": 128.07706649270384,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 128.07706649270384,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "dapper"
+    ]
+   },
+   "usable_confidence_proxy": {
+    "lower_is_better": false,
+    "unit": "",
+    "digits": 3,
+    "order": [
+     {
+      "policy": "dapper",
+      "value": 0.7255264574970844,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "local_only",
+      "value": 0.7249467226228217,
+      "rank": 2,
+      "is_best": false
+     },
+     {
+      "policy": "edge_only",
+      "value": 0.6187231720593105,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 0.6187231720593105,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "dapper"
+    ]
+   },
+   "bandwidth_per_1000_frames_kb": {
+    "lower_is_better": true,
+    "unit": " MB/1k fr.",
+    "digits": 2,
+    "order": [
+     {
+      "policy": "local_only",
+      "value": 0.0,
+      "rank": 1,
+      "is_best": true
+     },
+     {
+      "policy": "dapper",
+      "value": 0.0,
+      "rank": 2,
+      "is_best": true
+     },
+     {
+      "policy": "edge_only",
+      "value": 3.67,
+      "rank": 3,
+      "is_best": false
+     },
+     {
+      "policy": "cloud_only",
+      "value": 5.138,
+      "rank": 4,
+      "is_best": false
+     }
+    ],
+    "best_policies": [
+     "local_only",
+     "dapper"
+    ]
+   }
+  }
+ },
+ "facts": {
+  "dapper_worst_miss_pct": 0.0,
+  "worst_stale_pct": 0.0,
+  "dapper_profile_mean_p95_ms": 33.37312759150926,
+  "local_profile_mean_p95_ms": 33.98389948950884,
+  "dapper_profile_mean_bandwidth_mb_per_1k": 9.105666666666668,
+  "confidence_gain_vs_local": [
+   {
+    "profile": "stable",
+    "mean_diff": 0.0710309605603974,
+    "lo": 0.0699945261707533,
+    "hi": 0.0720170952318278,
+    "excludes_zero": true
+   },
+   {
+    "profile": "congested",
+    "mean_diff": 3.438769835493553e-05,
+    "lo": -3.289185139498181e-05,
+    "hi": 0.0001007471911412,
+    "excludes_zero": false
+   },
+   {
+    "profile": "lossy",
+    "mean_diff": 0.0157939981884882,
+    "lo": 0.0151485666893054,
+    "hi": 0.0164675381788039,
+    "excludes_zero": true
+   },
+   {
+    "profile": "variable",
+    "mean_diff": 0.0062238658764644,
+    "lo": 0.0055874309162791,
+    "hi": 0.0068402592360496,
+    "excludes_zero": true
+   },
+   {
+    "profile": "outage",
+    "mean_diff": 0.0005797348742627,
+    "lo": -0.0002495457330522,
+    "hi": 0.0014430284010222,
+    "excludes_zero": false
+   }
+  ],
+  "scheduler_decision_us": {
+   "mean": 1.44693,
+   "median": 1.4,
+   "p95": 1.8,
+   "p99": 2.0,
+   "calls": 200000
+  },
+  "dapper_added_wall_us_per_frame": 1.3082666666666665,
+  "dapper_mode_switches_per_1000": {
+   "min": 12.133333333333333,
+   "max": 418.4333333333333
+  },
+  "calibration": {
+   "candidates": 400,
+   "zero_worst_profile_miss": 328
+  },
+  "commit_margin": {
+   "swept_deadlines_ms": [
+    100.0,
+    125.0,
+    150.0,
+    200.0
+   ],
+   "margins_with_zero_miss": [
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6
+   ],
+   "largest_safe_margin": 0.6,
+   "calibrated_margin_worst_miss_pct": 50.386666666666656
+  },
+  "detector_gap": {
+   "recall_points": 13.059033989266544,
+   "safety_recall_points": 11.106373907482414
+  }
+ },
+ "honest": [
+  {
+   "id": "all_frame_recall",
+   "headline": "All-frame delivered recall falls below local-only where DAPPER reuses",
+   "explanation": "A reused output is scored as detecting nothing in the current image. Consecutive COCO validation images are unrelated, so this is a lower bound a real video stream would not incur; the fresh-frame column shows no such gap. Both views are reported.",
+   "profiles": [
+    {
+     "profile": "congested",
+     "dapper_recall_all": 0.633625571062334,
+     "local_recall_all": 0.6391523349965231,
+     "dapper_recall_fresh": 0.6392148723620925,
+     "reuse_pct": 0.8820000000000001
+    },
+    {
+     "profile": "variable",
+     "dapper_recall_all": 0.5448607397198124,
+     "local_recall_all": 0.6391523349965231,
+     "dapper_recall_fresh": 0.6489930783922006,
+     "reuse_pct": 16.036
+    },
+    {
+     "profile": "outage",
+     "dapper_recall_all": 0.2231261750374772,
+     "local_recall_all": 0.6391523349965231,
+     "dapper_recall_fresh": 0.6372092380539722,
+     "reuse_pct": 64.98
+    }
+   ],
+   "source": "results/real_detector/dapper_replay.csv",
+   "paper_ref": "Table VII, Sec. V-D"
+  },
+  {
+   "id": "bandwidth_cost",
+   "headline": "Bandwidth is the price, and a large share of it buys nothing",
+   "explanation": "Every transmitted request is charged its upload bandwidth even when the packet is lost or the reply arrives too late to accept. Under stable conditions roughly half the traffic, and under lossy conditions the large majority, returns no usable result.",
+   "profiles": [
+    {
+     "profile": "stable",
+     "bandwidth_mb_per_1k": 21.62166666666667,
+     "transmit_pct": 86.48666666666666,
+     "accepted_pct": 51.192996362198016,
+     "rejected_deadline_pct": 47.690963533308015,
+     "lost_pct": 1.1160401044939599,
+     "wasted_mb_per_1k": 10.55288763655342
+    },
+    {
+     "profile": "congested",
+     "bandwidth_mb_per_1k": 0.0025,
+     "transmit_pct": 0.01,
+     "accepted_pct": 0.0,
+     "rejected_deadline_pct": 10.0,
+     "lost_pct": 0.0,
+     "wasted_mb_per_1k": 0.0025
+    },
+    {
+     "profile": "lossy",
+     "bandwidth_mb_per_1k": 18.12666666666667,
+     "transmit_pct": 72.50666666666666,
+     "accepted_pct": 13.67909377384439,
+     "rejected_deadline_pct": 67.53218499411898,
+     "lost_pct": 18.78872123203663,
+     "wasted_mb_per_1k": 15.647102935261143
+    },
+    {
+     "profile": "variable",
+     "bandwidth_mb_per_1k": 5.7775,
+     "transmit_pct": 23.11,
+     "accepted_pct": 15.932259046475588,
+     "rejected_deadline_pct": 76.87412516943986,
+     "lost_pct": 7.193615784084539,
+     "wasted_mb_per_1k": 4.857013733589873
+    },
+    {
+     "profile": "outage",
+     "bandwidth_mb_per_1k": 0.0,
+     "transmit_pct": 0.0,
+     "accepted_pct": 0.0,
+     "rejected_deadline_pct": 0.0,
+     "lost_pct": 0.0,
+     "wasted_mb_per_1k": 0.0
+    }
+   ],
+   "source": "results/final/multi_seed_ci.csv",
+   "paper_ref": "Table III, Table IV, Sec. V-B"
+  },
+  {
+   "id": "larger_deadlines",
+   "headline": "The frozen 100-ms calibration is not reliable at every larger deadline",
+   "explanation": "Parameters were selected at D = 100 ms, where no frame enters edge-accurate, so the commit margin m is unidentifiable there. At larger deadlines frames do commit, and the calibrated m = 0.80 produces misses. The zero-miss result is scoped to D = 100 ms; multi-deadline calibration is the remedy.",
+   "deadlines": [
+    {
+     "deadline_ms": 125.0,
+     "miss_pct": 5.23866666666666,
+     "pct_edge_accurate": 11.255333333333333
+    },
+    {
+     "deadline_ms": 150.0,
+     "miss_pct": 13.312666666666658,
+     "pct_edge_accurate": 31.97066666666667
+    },
+    {
+     "deadline_ms": 200.0,
+     "miss_pct": 4.205333333333329,
+     "pct_edge_accurate": 55.31133333333334
+    }
+   ],
+   "source": "results/sensitivity/deadline_mode_distribution.csv",
+   "paper_ref": "Fig. 3a, Sec. V-C, Sec. VI"
+  }
+ ]
+}
