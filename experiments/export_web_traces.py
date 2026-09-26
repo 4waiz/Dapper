@@ -119,6 +119,27 @@ def write_json(obj: Any, path: str, indent: Optional[int] = None) -> int:
 
 
 # ------------------------------------------------------------ shipped trace
+def reference_metrics(trace, cfg: Dict[str, Any], policies: Sequence[str],
+                      deadlines: Sequence[float]) -> Dict[str, Any]:
+    """
+    Python's reduced run metrics, small enough to ship inside the trace.
+
+    The dashboard replays the trace, reduces it with its own port of
+    dapper/metrics.py, and shows the worst disagreement with these values in its
+    status bar. Parity therefore stops being a claim in a README and becomes
+    something a visitor watches the page verify. Roughly 10 KiB per trace.
+    """
+    out: Dict[str, Any] = {}
+    for deadline in deadlines:
+        for name in policies:
+            df = execute_run(trace, build_policy(name, cfg), cfg, float(deadline))
+            m = compute_metrics(df, df.attrs.get("mode_switches"))
+            out[f"{name}@{deadline:g}"] = {
+                k: (_f(v) if isinstance(v, float) else v) for k, v in m.__dict__.items()
+            }
+    return out
+
+
 def trace_payload(trace, cfg: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "generated_by": "experiments/export_web_traces.py",
@@ -131,6 +152,8 @@ def trace_payload(trace, cfg: Dict[str, Any]) -> Dict[str, Any]:
         "frames": int(trace.frames),
         "frame_period_ms": float(cfg["execution"]["frame_period_ms"]),
         "fingerprint": trace.fingerprint(),
+        "reference_metrics": reference_metrics(trace, cfg, REFERENCE_POLICIES,
+                                               REFERENCE_DEADLINES_MS),
         "arrays": {
             **{k: _floats(getattr(trace, k)) for k in TRACE_FLOAT_ARRAYS},
             **{k: _ints(getattr(trace, k)) for k in TRACE_INT_ARRAYS},
