@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    name: tests (python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Install
+        run: pip install -r requirements.txt
+      - name: Camera-ready suite
+        # The paper states 69 automated tests; pytest.ini pins the default
+        # collection to tests/ so this number cannot drift.
+        run: python -m pytest -q
+      - name: Quick reproduction protocol
+        # --skip-real-detector because the YOLO stage needs a CUDA GPU and the
+        # cached COCO predictions, neither of which a runner has.
+        run: python experiments/run_camera_ready.py --quick --skip-tests --skip-real-detector
+      - name: Published results still match the camera-ready
+        # run_camera_ready overwrote results/ with the 4-seed quick numbers;
+        # restore the released files before checking the manuscript against them.
+        run: |
+          git checkout -- results artifacts
+          python experiments/verify_paper_claims.py
+
+  browser-engine:
+    name: browser engine matches Python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install
+        run: pip install -r requirements.txt
+      - name: Parity, coverage and export freshness
+        run: python -m pytest tests_web -q
+      - name: Exports are current
+        # An edit to config.yaml or to the scenario generator must be exported,
+        # not left for the dashboard to contradict.
+        run: |
+          python experiments/export_web_config.py
+          python experiments/export_web_traces.py
+          python experiments/export_web_results.py
+          git diff --exit-code -- site/data
+
+  paper-page:
+    name: paper page builds from the results
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -r requirements.txt PyMuPDF
+      - name: Build
+        # This refuses to run unless all 426 camera-ready claims still verify
+        # against results/, so a build is itself the check.
+        run: python experiments/build_paper_page.py --no-readme
