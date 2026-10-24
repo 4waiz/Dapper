@@ -65,10 +65,10 @@
      "policy": "local_only",
      "policy_label": "local-only",
      "p95_latency_ms": {
-      "mean": 33.984265110354684,
-      "lo": 33.933733268366254,
-      "hi": 34.03567770889089,
-      "std": 0.1461290829276958,
+      "mean": 33.98426511,
+      "lo": 33.93373327,
+      "hi": 34.03567771,
+      "std": 0.1461290829,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -79,10 +79,10 @@
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.7249667322554326,
-      "lo": 0.7244497389647496,
-      "hi": 0.7255141489616964,
-      "std": 0.0015304909747104,
+      "mean": 0.7249667323,
+      "lo": 0.724449739,
+      "hi": 0.725514149,
+      "std": 0.001530490975,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
@@ -98,24 +98,24 @@
      "policy": "edge_only",
      "policy_label": "edge-only",
      "p95_latency_ms": {
-      "mean": 132.81733139293937,
-      "lo": 132.70758132085106,
-      "hi": 132.92298990880607,
-      "std": 0.3059301583384979,
+      "mean": 132.8173314,
+      "lo": 132.7075813,
+      "hi": 132.9229899,
+      "std": 0.3059301583,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
-      "mean": 48.76666666666666,
-      "lo": 48.17333333333333,
-      "hi": 49.383333333333326,
-      "std": 1.73072305665885,
+      "mean": 48.76666667,
+      "lo": 48.17333333,
+      "hi": 49.38333333,
+      "std": 1.730723057,
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.4483087878864294,
-      "lo": 0.4428924800654157,
-      "hi": 0.4535359178719119,
-      "std": 0.0152001567794636,
+      "mean": 0.4483087879,
+      "lo": 0.4428924801,
+      "hi": 0.4535359179,
+      "std": 0.01520015678,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
@@ -131,10 +131,10 @@
      "policy": "cloud_only",
      "policy_label": "cloud-only",
      "p95_latency_ms": {
-      "mean": 133.9842651103547,
-      "lo": 133.93373326836627,
-      "hi": 134.0356777088909,
-      "std": 0.1461290829276994,
+      "mean": 133.9842651,
+      "lo": 133.9337333,
+      "hi": 134.0356777,
+      "std": 0.1461290829,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -164,10 +164,10 @@
      "policy": "dapper",
      "policy_label": "DAPPER",
      "p95_latency_ms": {
-      "mean": 33.984265110354684,
-      "lo": 33.933733268366254,
-      "hi": 34.03567770889089,
-      "std": 0.1461290829276958,
+      "mean": 33.98426511,
+      "lo": 33.93373327,
+      "hi": 34.03567771,
+      "std": 0.1461290829,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -178,17 +178,17 @@
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.7959976928158301,
-      "lo": 0.7949080850073025,
-      "hi": 0.7970417324338718,
-      "std": 0.0030581965746421,
+      "mean": 0.7959976928,
+      "lo": 0.794908085,
+      "hi": 0.7970417324,
+      "std": 0.003058196575,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
-      "mean": 21.62166666666667,
-      "lo": 21.499166666666667,
-      "hi": 21.73583333333333,
-      "std": 0.33584256711301125,
+      "mean": 21.62166667,
+      "lo": 21.49916667,
+      "hi": 21.73583333,
+      "std": 0.3358425671,
       "n_seeds": 30
      }
     },
@@ -197,10 +197,10 @@
      "policy": "local_only",
      "policy_label": "local-only",
      "p95_latency_ms": {
-      "mean": 33.94268972592376,
-      "lo": 33.905792187259216,
-      "hi": 33.976328928607806,
-      "std": 0.0980310426148253,
+      "mean": 33.94268973,
+      "lo": 33.90579219,
+      "hi": 33.97632893,
+      "std": 0.09803104261,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -211,10 +211,10 @@
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.7249282051819181,
-      "lo": 0.7243644131564243,
-      "hi": 0.7255162553009149,
-      "std": 0.0016092933478095,
+      "mean": 0.7249282052,
+      "lo": 0.7243644132,
+      "hi": 0.7255162553,
+      "std": 0.001609293348,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
@@ -230,10 +230,10 @@
      "policy": "edge_only",
      "policy_label": "edge-only",
      "p95_latency_ms": {
-      "mean": 133.9426897259238,
-      "lo": 133.9057921872592,
-      "hi": 133.97632892860784,
-      "std": 0.098031042614826,
+      "mean": 133.9426897,
+      "lo": 133.9057922,
+      "hi": 133.9763289,
+      "std": 0.09803104261,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -263,10 +263,10 @@
      "policy": "cloud_only",
      "policy_label": "cloud-only",
      "p95_latency_ms": {
-      "mean": 133.9426897259238,
-      "lo": 133.9057921872592,
-      "hi": 133.97632892860784,
-      "std": 0.098031042614826,
+      "mean": 133.9426897,
+      "lo": 133.9057922,
+      "hi": 133.9763289,
+      "std": 0.09803104261,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -296,10 +296,10 @@
      "policy": "dapper",
      "policy_label": "DAPPER",
      "p95_latency_ms": {
-      "mean": 33.93663339562628,
-      "lo": 33.89765936597646,
-      "hi": 33.97222933477223,
-      "std": 0.1038459726355846,
+      "mean": 33.9366334,
+      "lo": 33.89765937,
+      "hi": 33.97222933,
+      "std": 0.1038459726,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -310,17 +310,17 @@
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.724962592880273,
-      "lo": 0.7244213882112449,
-      "hi": 0.7255313473425076,
-      "std": 0.0015628817788862,
+      "mean": 0.7249625929,
+      "lo": 0.7244213882,
+      "hi": 0.7255313473,
+      "std": 0.001562881779,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
       "mean": 0.0025,
       "lo": 0.0,
-      "hi": 0.005833333333333333,
-      "std": 0.007628214415734118,
+      "hi": 0.005833333333,
+      "std": 0.007628214416,
       "n_seeds": 30
      }
     },
@@ -329,10 +329,10 @@
      "policy": "local_only",
      "policy_label": "local-only",
      "p95_latency_ms": {
-      "mean": 34.012278154614826,
-      "lo": 33.96825412712669,
-      "hi": 34.05448763655662,
-      "std": 0.121209433766078,
+      "mean": 34.01227815,
+      "lo": 33.96825413,
+      "hi": 34.05448764,
+      "std": 0.1212094338,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -343,10 +343,10 @@
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.7247968267120143,
-      "lo": 0.7243290816945883,
-      "hi": 0.7252513425625742,
-      "std": 0.0013222500022528,
+      "mean": 0.7247968267,
+      "lo": 0.7243290817,
+      "hi": 0.7252513426,
+      "std": 0.001322250002,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
@@ -362,24 +362,24 @@
      "policy": "edge_only",
      "policy_label": "edge-only",
      "p95_latency_ms": {
-      "mean": 133.85583842676783,
-      "lo": 133.8050507867707,
-      "hi": 133.90940589108996,
-      "std": 0.1488101991783642,
+      "mean": 133.8558384,
+      "lo": 133.8050508,
+      "hi": 133.9094059,
+      "std": 0.1488101992,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
-      "mean": 87.50666666666666,
-      "lo": 87.05666666666666,
-      "hi": 87.93666666666665,
-      "std": 1.25008505457755,
+      "mean": 87.50666667,
+      "lo": 87.05666667,
+      "hi": 87.93666667,
+      "std": 1.250085055,
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.1093286409076934,
-      "lo": 0.1055459755097783,
-      "hi": 0.1133262894295496,
-      "std": 0.0110313510825006,
+      "mean": 0.1093286409,
+      "lo": 0.1055459755,
+      "hi": 0.1133262894,
+      "std": 0.01103135108,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
@@ -395,10 +395,10 @@
      "policy": "cloud_only",
      "policy_label": "cloud-only",
      "p95_latency_ms": {
-      "mean": 134.01227815461485,
-      "lo": 133.9682541271267,
-      "hi": 134.05448763655662,
-      "std": 0.1212094337660772,
+      "mean": 134.0122782,
+      "lo": 133.9682541,
+      "hi": 134.0544876,
+      "std": 0.1212094338,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -428,10 +428,10 @@
      "policy": "dapper",
      "policy_label": "DAPPER",
      "p95_latency_ms": {
-      "mean": 34.012278154614826,
-      "lo": 33.96825412712669,
-      "hi": 34.05448763655662,
-      "std": 0.121209433766078,
+      "mean": 34.01227815,
+      "lo": 33.96825413,
+      "hi": 34.05448764,
+      "std": 0.1212094338,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -442,17 +442,17 @@
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.7405908249005024,
-      "lo": 0.7398371863884554,
-      "hi": 0.7413865873770361,
-      "std": 0.0021791822011149,
+      "mean": 0.7405908249,
+      "lo": 0.7398371864,
+      "hi": 0.7413865874,
+      "std": 0.002179182201,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
-      "mean": 18.12666666666667,
+      "mean": 18.12666667,
       "lo": 17.975,
-      "hi": 18.28083333333333,
-      "std": 0.43992227631185293,
+      "hi": 18.28083333,
+      "std": 0.4399222763,
       "n_seeds": 30
      }
     },
@@ -461,10 +461,10 @@
      "policy": "local_only",
      "policy_label": "local-only",
      "p95_latency_ms": {
-      "mean": 33.968149024906744,
-      "lo": 33.91696415295809,
-      "hi": 34.01719132457602,
-      "std": 0.1405586387811733,
+      "mean": 33.96814902,
+      "lo": 33.91696415,
+      "hi": 34.01719132,
+      "std": 0.1405586388,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -475,10 +475,10 @@
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.7253139635038416,
-      "lo": 0.72477236895505,
-      "hi": 0.7258565366898948,
-      "std": 0.001558687831728,
+      "mean": 0.7253139635,
+      "lo": 0.724772369,
+      "hi": 0.7258565367,
+      "std": 0.001558687832,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
@@ -494,31 +494,31 @@
      "policy": "edge_only",
      "policy_label": "edge-only",
      "p95_latency_ms": {
-      "mean": 133.58563931025864,
-      "lo": 133.49959953276556,
-      "hi": 133.67492057454533,
-      "std": 0.2503107508975509,
+      "mean": 133.5856393,
+      "lo": 133.4995995,
+      "hi": 133.6749206,
+      "std": 0.2503107509,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
-      "mean": 74.00333333333333,
-      "lo": 72.61666666666666,
-      "hi": 75.42666666666666,
-      "std": 3.9436097006758097,
+      "mean": 74.00333333,
+      "lo": 72.61666667,
+      "hi": 75.42666667,
+      "std": 3.943609701,
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.1947771769498917,
-      "lo": 0.1843483588564416,
-      "hi": 0.2047864906493864,
-      "std": 0.0286722056669306,
+      "mean": 0.1947771769,
+      "lo": 0.1843483589,
+      "hi": 0.2047864906,
+      "std": 0.02867220567,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
       "mean": 19.55,
-      "lo": 19.19083333333333,
+      "lo": 19.19083333,
       "hi": 19.905,
-      "std": 1.002346385169353,
+      "std": 1.002346385,
       "n_seeds": 30
      }
     },
@@ -527,31 +527,31 @@
      "policy": "cloud_only",
      "policy_label": "cloud-only",
      "p95_latency_ms": {
-      "mean": 133.6663704718774,
-      "lo": 133.58590631894333,
-      "hi": 133.74796713082046,
-      "std": 0.2303474546051647,
+      "mean": 133.6663705,
+      "lo": 133.5859063,
+      "hi": 133.7479671,
+      "std": 0.2303474546,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
-      "mean": 78.19999999999999,
-      "lo": 76.76333333333332,
-      "hi": 79.62000000000002,
-      "std": 4.0093855406774095,
+      "mean": 78.2,
+      "lo": 76.76333333,
+      "hi": 79.62,
+      "std": 4.009385541,
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.1580399411309307,
-      "lo": 0.1477128199457988,
-      "hi": 0.168446377957376,
-      "std": 0.0290877380689275,
+      "mean": 0.1580399411,
+      "lo": 0.1477128199,
+      "hi": 0.168446378,
+      "std": 0.02908773807,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
       "mean": 27.37,
-      "lo": 26.86716666666667,
+      "lo": 26.86716667,
       "hi": 27.867,
-      "std": 1.4032849392370943,
+      "std": 1.403284939,
       "n_seeds": 30
      }
     },
@@ -560,10 +560,10 @@
      "policy": "dapper",
      "policy_label": "DAPPER",
      "p95_latency_ms": {
-      "mean": 33.74407704498113,
-      "lo": 33.66991459060688,
-      "hi": 33.819528499197034,
-      "std": 0.2126750836043015,
+      "mean": 33.74407704,
+      "lo": 33.66991459,
+      "hi": 33.8195285,
+      "std": 0.2126750836,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -574,17 +574,17 @@
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.731537829380306,
-      "lo": 0.7306375575355787,
-      "hi": 0.7323912626304034,
-      "std": 0.0025052990492905,
+      "mean": 0.7315378294,
+      "lo": 0.7306375575,
+      "hi": 0.7323912626,
+      "std": 0.002505299049,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
       "mean": 5.7775,
       "lo": 5.5575,
-      "hi": 5.9975000000000005,
-      "std": 0.6189308774285565,
+      "hi": 5.9975,
+      "std": 0.6189308774,
       "n_seeds": 30
      }
     },
@@ -593,10 +593,10 @@
      "policy": "local_only",
      "policy_label": "local-only",
      "p95_latency_ms": {
-      "mean": 34.0121154317442,
-      "lo": 33.95612468699971,
-      "hi": 34.06642381717916,
-      "std": 0.1579557782129047,
+      "mean": 34.01211543,
+      "lo": 33.95612469,
+      "hi": 34.06642382,
+      "std": 0.1579557782,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -607,10 +607,10 @@
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.7249467226228217,
-      "lo": 0.7244492443659767,
-      "hi": 0.7254164481558691,
-      "std": 0.0013696023696029,
+      "mean": 0.7249467226,
+      "lo": 0.7244492444,
+      "hi": 0.7254164482,
+      "std": 0.00136960237,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
@@ -626,31 +626,31 @@
      "policy": "edge_only",
      "policy_label": "edge-only",
      "p95_latency_ms": {
-      "mean": 128.07706649270384,
-      "lo": 127.70553940054008,
-      "hi": 128.44310799887478,
-      "std": 1.0513613154171977,
+      "mean": 128.0770665,
+      "lo": 127.7055394,
+      "hi": 128.443108,
+      "std": 1.051361315,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
-      "mean": 14.680000000000001,
-      "lo": 14.06333333333333,
-      "hi": 15.32666666666666,
-      "std": 1.79162804021447,
+      "mean": 14.68,
+      "lo": 14.06333333,
+      "hi": 15.32666667,
+      "std": 1.79162804,
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.6187231720593105,
-      "lo": 0.6139892776727712,
-      "hi": 0.6232440517520567,
-      "std": 0.0131858325250041,
+      "mean": 0.6187231721,
+      "lo": 0.6139892777,
+      "hi": 0.6232440518,
+      "std": 0.01318583253,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
       "mean": 3.67,
-      "lo": 3.515833333333333,
-      "hi": 3.8316666666666666,
-      "std": 0.4479070100536186,
+      "lo": 3.515833333,
+      "hi": 3.831666667,
+      "std": 0.4479070101,
       "n_seeds": 30
      }
     },
@@ -659,31 +659,31 @@
      "policy": "cloud_only",
      "policy_label": "cloud-only",
      "p95_latency_ms": {
-      "mean": 128.07706649270384,
-      "lo": 127.70553940054008,
-      "hi": 128.44310799887478,
-      "std": 1.0513613154171977,
+      "mean": 128.0770665,
+      "lo": 127.7055394,
+      "hi": 128.443108,
+      "std": 1.051361315,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
-      "mean": 14.680000000000001,
-      "lo": 14.06333333333333,
-      "hi": 15.32666666666666,
-      "std": 1.79162804021447,
+      "mean": 14.68,
+      "lo": 14.06333333,
+      "hi": 15.32666667,
+      "std": 1.79162804,
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.6187231720593105,
-      "lo": 0.6139892776727712,
-      "hi": 0.6232440517520567,
-      "std": 0.0131858325250041,
+      "mean": 0.6187231721,
+      "lo": 0.6139892777,
+      "hi": 0.6232440518,
+      "std": 0.01318583253,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
       "mean": 5.138,
-      "lo": 4.9221666666666675,
-      "hi": 5.364333333333333,
-      "std": 0.627069814075066,
+      "lo": 4.922166667,
+      "hi": 5.364333333,
+      "std": 0.6270698141,
       "n_seeds": 30
      }
     },
@@ -692,10 +692,10 @@
      "policy": "dapper",
      "policy_label": "DAPPER",
      "p95_latency_ms": {
-      "mean": 31.18838425196936,
-      "lo": 31.01292571232953,
-      "hi": 31.362502768723584,
-      "std": 0.5009047087578914,
+      "mean": 31.18838425,
+      "lo": 31.01292571,
+      "hi": 31.36250277,
+      "std": 0.5009047088,
       "n_seeds": 30
      },
      "deadline_miss_pct": {
@@ -706,10 +706,10 @@
       "n_seeds": 30
      },
      "usable_confidence_proxy": {
-      "mean": 0.7255264574970844,
-      "lo": 0.724534548793681,
-      "hi": 0.7264857617893061,
-      "std": 0.0027313892999157,
+      "mean": 0.7255264575,
+      "lo": 0.7245345488,
+      "hi": 0.7264857618,
+      "std": 0.0027313893,
       "n_seeds": 30
      },
      "bandwidth_mb_per_1k": {
@@ -731,39 +731,39 @@
    "rows": [
     {
      "profile": "stable",
-     "pct_local_fast": 13.513333333333332,
+     "pct_local_fast": 13.51333333,
      "pct_edge_accurate": 0.0,
-     "pct_hybrid": 86.48666666666666,
+     "pct_hybrid": 86.48666667,
      "pct_degraded_safe": 0.0,
-     "transmit_pct": 86.48666666666665,
-     "accepted_pct": 51.192996362198016,
+     "transmit_pct": 86.48666667,
+     "accepted_pct": 51.19299636,
      "reuse_pct": 0.0,
      "stale_pct": 0.0,
      "mode_switches_per_1000": 233.3
     },
     {
      "profile": "congested",
-     "pct_local_fast": 99.24666666666668,
+     "pct_local_fast": 99.24666667,
      "pct_edge_accurate": 0.0,
      "pct_hybrid": 0.01,
-     "pct_degraded_safe": 0.7433333333333334,
+     "pct_degraded_safe": 0.7433333333,
      "transmit_pct": 0.01,
      "accepted_pct": 0.0,
-     "reuse_pct": 0.74333333333333,
+     "reuse_pct": 0.7433333333,
      "stale_pct": 0.0,
-     "mode_switches_per_1000": 12.133333333333333
+     "mode_switches_per_1000": 12.13333333
     },
     {
      "profile": "lossy",
-     "pct_local_fast": 27.49333333333333,
+     "pct_local_fast": 27.49333333,
      "pct_edge_accurate": 0.0,
-     "pct_hybrid": 72.50666666666666,
+     "pct_hybrid": 72.50666667,
      "pct_degraded_safe": 0.0,
-     "transmit_pct": 72.50666666666666,
-     "accepted_pct": 13.67909377384439,
+     "transmit_pct": 72.50666667,
+     "accepted_pct": 13.67909377,
      "reuse_pct": 0.0,
      "stale_pct": 0.0,
-     "mode_switches_per_1000": 363.26666666666665
+     "mode_switches_per_1000": 363.2666667
     },
     {
      "profile": "variable",
@@ -772,22 +772,22 @@
      "pct_hybrid": 23.11,
      "pct_degraded_safe": 16.83,
      "transmit_pct": 23.11,
-     "accepted_pct": 15.932259046475588,
-     "reuse_pct": 16.830000000000002,
+     "accepted_pct": 15.93225905,
+     "reuse_pct": 16.83,
      "stale_pct": 0.0,
-     "mode_switches_per_1000": 315.43333333333334
+     "mode_switches_per_1000": 315.4333333
     },
     {
      "profile": "outage",
      "pct_local_fast": 22.63,
      "pct_edge_accurate": 0.0,
      "pct_hybrid": 0.0,
-     "pct_degraded_safe": 77.36999999999999,
+     "pct_degraded_safe": 77.37,
      "transmit_pct": 0.0,
      "accepted_pct": 0.0,
-     "reuse_pct": 73.40333333333334,
+     "reuse_pct": 73.40333333,
      "stale_pct": 0.0,
-     "mode_switches_per_1000": 418.4333333333333
+     "mode_switches_per_1000": 418.4333333
     }
    ]
   },
@@ -804,8 +804,8 @@
      "is_oracle": false,
      "transmit_pct": 0.0,
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 33.98389948950884,
-     "usable_confidence_proxy": 0.7249904900552057,
+     "p95_latency_ms": 33.98389949,
+     "usable_confidence_proxy": 0.7249904901,
      "bandwidth_mb_per_1k": 0.0
     },
     {
@@ -814,8 +814,8 @@
      "is_oracle": false,
      "transmit_pct": 0.0,
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 33.98389948950884,
-     "usable_confidence_proxy": 0.7249904900552057,
+     "p95_latency_ms": 33.98389949,
+     "usable_confidence_proxy": 0.7249904901,
      "bandwidth_mb_per_1k": 0.0
     },
     {
@@ -824,39 +824,39 @@
      "is_oracle": false,
      "transmit_pct": 0.0,
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 33.98389948950884,
-     "usable_confidence_proxy": 0.7249904900552057,
+     "p95_latency_ms": 33.98389949,
+     "usable_confidence_proxy": 0.7249904901,
      "bandwidth_mb_per_1k": 0.0
     },
     {
      "policy": "rtt_threshold",
      "policy_label": "RTT-threshold",
      "is_oracle": false,
-     "transmit_pct": 0.014666666666666,
-     "deadline_miss_pct": 0.004666666666666,
-     "p95_latency_ms": 33.98760887221499,
-     "usable_confidence_proxy": 0.7249756936672165,
-     "bandwidth_mb_per_1k": 0.0036666666666666657
+     "transmit_pct": 0.01466666667,
+     "deadline_miss_pct": 0.004666666667,
+     "p95_latency_ms": 33.98760887,
+     "usable_confidence_proxy": 0.7249756937,
+     "bandwidth_mb_per_1k": 0.003666666667
     },
     {
      "policy": "dapper",
      "policy_label": "DAPPER",
      "is_oracle": false,
-     "transmit_pct": 36.42266666666667,
+     "transmit_pct": 36.42266667,
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 33.37312759150926,
-     "usable_confidence_proxy": 0.7437230794947992,
-     "bandwidth_mb_per_1k": 9.105666666666668
+     "p95_latency_ms": 33.37312759,
+     "usable_confidence_proxy": 0.7437230795,
+     "bandwidth_mb_per_1k": 9.105666667
     },
     {
      "policy": "oracle_feasible",
      "policy_label": "oracle",
      "is_oracle": true,
-     "transmit_pct": 13.584666666666667,
+     "transmit_pct": 13.58466667,
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 60.76806026843279,
-     "usable_confidence_proxy": 0.7453740962241393,
-     "bandwidth_mb_per_1k": 3.3961666666666672
+     "p95_latency_ms": 60.76806027,
+     "usable_confidence_proxy": 0.7453740962,
+     "bandwidth_mb_per_1k": 3.396166667
     }
    ]
   },
@@ -872,10 +872,10 @@
      "label": "full DAPPER",
      "family": "risk signal",
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 33.37312759150925,
-     "usable_confidence_proxy": 0.7437230794947991,
-     "bandwidth_mb_per_1k": 9.105666666666668,
-     "reuse_pct": 18.195333333333334,
+     "p95_latency_ms": 33.37312759,
+     "usable_confidence_proxy": 0.7437230795,
+     "bandwidth_mb_per_1k": 9.105666667,
+     "reuse_pct": 18.19533333,
      "delta_confidence": 0.0,
      "delta_bandwidth_mb_per_1k": 0.0
     },
@@ -884,46 +884,46 @@
      "label": "− RTT",
      "family": "risk signal",
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 33.428842453617676,
-     "usable_confidence_proxy": 0.7426727268987747,
+     "p95_latency_ms": 33.42884245,
+     "usable_confidence_proxy": 0.7426727269,
      "bandwidth_mb_per_1k": 8.0875,
-     "reuse_pct": 17.668000000000006,
-     "delta_confidence": -0.0010503525960243731,
-     "delta_bandwidth_mb_per_1k": -1.018166666666668
+     "reuse_pct": 17.668,
+     "delta_confidence": -0.001050352596,
+     "delta_bandwidth_mb_per_1k": -1.018166667
     },
     {
      "variant": "dapper_no_loss",
      "label": "− packet loss",
      "family": "risk signal",
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 32.57839829193039,
-     "usable_confidence_proxy": 0.7337156434019041,
-     "bandwidth_mb_per_1k": 2.499166666666667,
-     "reuse_pct": 41.30399999999999,
-     "delta_confidence": -0.010007436092895006,
-     "delta_bandwidth_mb_per_1k": -6.606500000000001
+     "p95_latency_ms": 32.57839829,
+     "usable_confidence_proxy": 0.7337156434,
+     "bandwidth_mb_per_1k": 2.499166667,
+     "reuse_pct": 41.304,
+     "delta_confidence": -0.01000743609,
+     "delta_bandwidth_mb_per_1k": -6.6065
     },
     {
      "variant": "dapper_no_load",
      "label": "− edge load",
      "family": "risk signal",
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 33.3733762383769,
-     "usable_confidence_proxy": 0.7431243093462889,
-     "bandwidth_mb_per_1k": 8.138833333333334,
-     "reuse_pct": 18.11133333333333,
-     "delta_confidence": -0.0005987701485101748,
-     "delta_bandwidth_mb_per_1k": -0.966833333333334
+     "p95_latency_ms": 33.37337624,
+     "usable_confidence_proxy": 0.7431243093,
+     "bandwidth_mb_per_1k": 8.138833333,
+     "reuse_pct": 18.11133333,
+     "delta_confidence": -0.0005987701485,
+     "delta_bandwidth_mb_per_1k": -0.9668333333
     },
     {
      "variant": "dapper_no_frame_age",
      "label": "− frame age",
      "family": "risk signal",
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 33.37312759150926,
-     "usable_confidence_proxy": 0.7437230794947991,
-     "bandwidth_mb_per_1k": 9.105666666666668,
-     "reuse_pct": 18.195333333333334,
+     "p95_latency_ms": 33.37312759,
+     "usable_confidence_proxy": 0.7437230795,
+     "bandwidth_mb_per_1k": 9.105666667,
+     "reuse_pct": 18.19533333,
      "delta_confidence": 0.0,
      "delta_bandwidth_mb_per_1k": 0.0
     },
@@ -932,47 +932,47 @@
      "label": "− deadline pressure",
      "family": "risk signal",
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 33.37921530405328,
-     "usable_confidence_proxy": 0.7439457051664474,
-     "bandwidth_mb_per_1k": 9.710333333333335,
-     "reuse_pct": 18.01666666666667,
-     "delta_confidence": 0.00022262567164832436,
-     "delta_bandwidth_mb_per_1k": 0.604666666666666
+     "p95_latency_ms": 33.3792153,
+     "usable_confidence_proxy": 0.7439457052,
+     "bandwidth_mb_per_1k": 9.710333333,
+     "reuse_pct": 18.01666667,
+     "delta_confidence": 0.0002226256716,
+     "delta_bandwidth_mb_per_1k": 0.6046666667
     },
     {
      "variant": "dapper_no_confidence_gate",
      "label": "− confidence gate",
      "family": "mechanism",
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 33.37312759150926,
-     "usable_confidence_proxy": 0.7452681758871249,
-     "bandwidth_mb_per_1k": 10.526833333333332,
-     "reuse_pct": 18.195333333333334,
-     "delta_confidence": 0.0015450963923258065,
-     "delta_bandwidth_mb_per_1k": 1.4211666666666642
+     "p95_latency_ms": 33.37312759,
+     "usable_confidence_proxy": 0.7452681759,
+     "bandwidth_mb_per_1k": 10.52683333,
+     "reuse_pct": 18.19533333,
+     "delta_confidence": 0.001545096392,
+     "delta_bandwidth_mb_per_1k": 1.421166667
     },
     {
      "variant": "dapper_no_freshness_gate",
      "label": "− freshness gate",
      "family": "mechanism",
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 33.37312759150926,
-     "usable_confidence_proxy": 0.7437230794947991,
-     "bandwidth_mb_per_1k": 9.957000000000003,
-     "reuse_pct": 18.195333333333334,
+     "p95_latency_ms": 33.37312759,
+     "usable_confidence_proxy": 0.7437230795,
+     "bandwidth_mb_per_1k": 9.957,
+     "reuse_pct": 18.19533333,
      "delta_confidence": 0.0,
-     "delta_bandwidth_mb_per_1k": 0.8513333333333339
+     "delta_bandwidth_mb_per_1k": 0.8513333333
     },
     {
      "variant": "dapper_no_degraded_reuse",
      "label": "− degraded reuse",
      "family": "mechanism",
      "deadline_miss_pct": 0.0,
-     "p95_latency_ms": 33.95070226473987,
-     "usable_confidence_proxy": 0.743573628424873,
-     "bandwidth_mb_per_1k": 9.105666666666668,
-     "reuse_pct": 2.6713333333333296,
-     "delta_confidence": -0.0001494510699261431,
+     "p95_latency_ms": 33.95070226,
+     "usable_confidence_proxy": 0.7435736284,
+     "bandwidth_mb_per_1k": 9.105666667,
+     "reuse_pct": 2.671333333,
+     "delta_confidence": -0.0001494510699,
      "delta_bandwidth_mb_per_1k": 0.0
     }
    ]
@@ -989,26 +989,26 @@
      "model": "YOLO11n",
      "note": "local model",
      "images": 5000,
-     "recall": 0.5071418742259529,
-     "precision": 0.7043421756746426,
-     "safety_recall": 0.6231080793007887,
-     "map50": 0.5461597575166717,
-     "map50_95": 0.3889329124505398,
-     "gpu_ms": 6.065591439639684,
-     "cpu_ms": 35.19284060007194
+     "recall": 0.5071418742,
+     "precision": 0.7043421757,
+     "safety_recall": 0.6231080793,
+     "map50": 0.5461597575,
+     "map50_95": 0.3889329125,
+     "gpu_ms": 6.06559144,
+     "cpu_ms": 35.1928406
     },
     {
      "role": "remote",
      "model": "YOLO11m",
      "note": "remote model",
      "images": 5000,
-     "recall": 0.6377322141186184,
-     "precision": 0.7295510358289781,
-     "safety_recall": 0.7341718183756129,
-     "map50": 0.677780359193654,
-     "map50_95": 0.5098573749892265,
-     "gpu_ms": 8.076857920037583,
-     "cpu_ms": 177.5173015985638
+     "recall": 0.6377322141,
+     "precision": 0.7295510358,
+     "safety_recall": 0.7341718184,
+     "map50": 0.6777803592,
+     "map50_95": 0.509857375,
+     "gpu_ms": 8.07685792,
+     "cpu_ms": 177.5173016
     }
    ]
   },
@@ -1029,9 +1029,9 @@
      "profile": "stable",
      "policy": "local_only",
      "policy_label": "local-only",
-     "recall_all": 0.6391523349965231,
-     "recall_fresh": 0.6391523349965231,
-     "safety_recall": 0.7365956065300292,
+     "recall_all": 0.639152335,
+     "recall_fresh": 0.639152335,
+     "safety_recall": 0.7365956065,
      "deadline_miss_pct": 0.0,
      "reuse_pct": 0.0,
      "in_paper": true
@@ -1040,10 +1040,10 @@
      "profile": "stable",
      "policy": "edge_only",
      "policy_label": "edge-only",
-     "recall_all": 0.739795117345973,
-     "recall_fresh": 0.7469600939357405,
-     "safety_recall": 0.8153731334644687,
-     "deadline_miss_pct": 0.9600000000000001,
+     "recall_all": 0.7397951173,
+     "recall_fresh": 0.7469600939,
+     "safety_recall": 0.8153731335,
+     "deadline_miss_pct": 0.96,
      "reuse_pct": 0.0,
      "in_paper": true
     },
@@ -1051,9 +1051,9 @@
      "profile": "stable",
      "policy": "dapper",
      "policy_label": "DAPPER",
-     "recall_all": 0.6737684206053539,
-     "recall_fresh": 0.6737684206053539,
-     "safety_recall": 0.7619214987013413,
+     "recall_all": 0.6737684206,
+     "recall_fresh": 0.6737684206,
+     "safety_recall": 0.7619214987,
      "deadline_miss_pct": 0.0,
      "reuse_pct": 0.0,
      "in_paper": true
@@ -1062,9 +1062,9 @@
      "profile": "congested",
      "policy": "local_only",
      "policy_label": "local-only",
-     "recall_all": 0.6391523349965231,
-     "recall_fresh": 0.6391523349965231,
-     "safety_recall": 0.7365956065300292,
+     "recall_all": 0.639152335,
+     "recall_fresh": 0.639152335,
+     "safety_recall": 0.7365956065,
      "deadline_miss_pct": 0.0,
      "reuse_pct": 0.0,
      "in_paper": false
@@ -1073,9 +1073,9 @@
      "profile": "congested",
      "policy": "edge_only",
      "policy_label": "edge-only",
-     "recall_all": 0.698133551994867,
-     "recall_fresh": 0.7468329743486444,
-     "safety_recall": 0.769024789098777,
+     "recall_all": 0.698133552,
+     "recall_fresh": 0.7468329743,
+     "safety_recall": 0.7690247891,
      "deadline_miss_pct": 6.544,
      "reuse_pct": 0.0,
      "in_paper": false
@@ -1084,20 +1084,20 @@
      "profile": "congested",
      "policy": "dapper",
      "policy_label": "DAPPER",
-     "recall_all": 0.633625571062334,
-     "recall_fresh": 0.6392148723620925,
-     "safety_recall": 0.7299904385249285,
+     "recall_all": 0.6336255711,
+     "recall_fresh": 0.6392148724,
+     "safety_recall": 0.7299904385,
      "deadline_miss_pct": 0.0,
-     "reuse_pct": 0.8820000000000001,
+     "reuse_pct": 0.882,
      "in_paper": false
     },
     {
      "profile": "lossy",
      "policy": "local_only",
      "policy_label": "local-only",
-     "recall_all": 0.6391523349965231,
-     "recall_fresh": 0.6391523349965231,
-     "safety_recall": 0.7365956065300292,
+     "recall_all": 0.639152335,
+     "recall_fresh": 0.639152335,
+     "safety_recall": 0.7365956065,
      "deadline_miss_pct": 0.0,
      "reuse_pct": 0.0,
      "in_paper": true
@@ -1106,9 +1106,9 @@
      "profile": "lossy",
      "policy": "edge_only",
      "policy_label": "edge-only",
-     "recall_all": 0.5999548699314682,
-     "recall_fresh": 0.7472709165059539,
-     "safety_recall": 0.660785773174414,
+     "recall_all": 0.5999548699,
+     "recall_fresh": 0.7472709165,
+     "safety_recall": 0.6607857732,
      "deadline_miss_pct": 19.74,
      "reuse_pct": 0.0,
      "in_paper": true
@@ -1117,9 +1117,9 @@
      "profile": "lossy",
      "policy": "dapper",
      "policy_label": "DAPPER",
-     "recall_all": 0.6632624977096838,
-     "recall_fresh": 0.6632624977096838,
-     "safety_recall": 0.7548481731359036,
+     "recall_all": 0.6632624977,
+     "recall_fresh": 0.6632624977,
+     "safety_recall": 0.7548481731,
      "deadline_miss_pct": 0.0,
      "reuse_pct": 0.0,
      "in_paper": true
@@ -1128,9 +1128,9 @@
      "profile": "variable",
      "policy": "local_only",
      "policy_label": "local-only",
-     "recall_all": 0.6391523349965231,
-     "recall_fresh": 0.6391523349965231,
-     "safety_recall": 0.7365956065300292,
+     "recall_all": 0.639152335,
+     "recall_fresh": 0.639152335,
+     "safety_recall": 0.7365956065,
      "deadline_miss_pct": 0.0,
      "reuse_pct": 0.0,
      "in_paper": true
@@ -1139,10 +1139,10 @@
      "profile": "variable",
      "policy": "edge_only",
      "policy_label": "edge-only",
-     "recall_all": 0.6799020994474041,
-     "recall_fresh": 0.7206834806122474,
-     "safety_recall": 0.7570099337726626,
-     "deadline_miss_pct": 5.664000000000001,
+     "recall_all": 0.6799020994,
+     "recall_fresh": 0.7206834806,
+     "safety_recall": 0.7570099338,
+     "deadline_miss_pct": 5.664,
      "reuse_pct": 0.0,
      "in_paper": true
     },
@@ -1150,9 +1150,9 @@
      "profile": "variable",
      "policy": "dapper",
      "policy_label": "DAPPER",
-     "recall_all": 0.5448607397198124,
-     "recall_fresh": 0.6489930783922006,
-     "safety_recall": 0.6255973939880992,
+     "recall_all": 0.5448607397,
+     "recall_fresh": 0.6489930784,
+     "safety_recall": 0.625597394,
      "deadline_miss_pct": 0.0,
      "reuse_pct": 16.036,
      "in_paper": true
@@ -1161,9 +1161,9 @@
      "profile": "outage",
      "policy": "local_only",
      "policy_label": "local-only",
-     "recall_all": 0.6391523349965231,
-     "recall_fresh": 0.6391523349965231,
-     "safety_recall": 0.7365956065300292,
+     "recall_all": 0.639152335,
+     "recall_fresh": 0.639152335,
+     "safety_recall": 0.7365956065,
      "deadline_miss_pct": 0.0,
      "reuse_pct": 0.0,
      "in_paper": true
@@ -1172,9 +1172,9 @@
      "profile": "outage",
      "policy": "edge_only",
      "policy_label": "edge-only",
-     "recall_all": 0.5458358568663938,
-     "recall_fresh": 0.6387622790380946,
-     "safety_recall": 0.6307457787200048,
+     "recall_all": 0.5458358569,
+     "recall_fresh": 0.638762279,
+     "safety_recall": 0.6307457787,
      "deadline_miss_pct": 14.538,
      "reuse_pct": 0.0,
      "in_paper": true
@@ -1183,9 +1183,9 @@
      "profile": "outage",
      "policy": "dapper",
      "policy_label": "DAPPER",
-     "recall_all": 0.2231261750374772,
-     "recall_fresh": 0.6372092380539722,
-     "safety_recall": 0.2623899935133486,
+     "recall_all": 0.223126175,
+     "recall_fresh": 0.6372092381,
+     "safety_recall": 0.2623899935,
      "deadline_miss_pct": 0.0,
      "reuse_pct": 64.98,
      "in_paper": true
@@ -1198,129 +1198,129 @@
    "local_only": [
     {
      "profile": "stable",
-     "mean": 33.984265110354684,
-     "lo": 33.933733268366254,
-     "hi": 34.03567770889089
+     "mean": 33.98426511,
+     "lo": 33.93373327,
+     "hi": 34.03567771
     },
     {
      "profile": "congested",
-     "mean": 33.94268972592376,
-     "lo": 33.905792187259216,
-     "hi": 33.976328928607806
+     "mean": 33.94268973,
+     "lo": 33.90579219,
+     "hi": 33.97632893
     },
     {
      "profile": "lossy",
-     "mean": 34.012278154614826,
-     "lo": 33.96825412712669,
-     "hi": 34.05448763655662
+     "mean": 34.01227815,
+     "lo": 33.96825413,
+     "hi": 34.05448764
     },
     {
      "profile": "variable",
-     "mean": 33.968149024906744,
-     "lo": 33.91696415295809,
-     "hi": 34.01719132457602
+     "mean": 33.96814902,
+     "lo": 33.91696415,
+     "hi": 34.01719132
     },
     {
      "profile": "outage",
-     "mean": 34.0121154317442,
-     "lo": 33.95612468699971,
-     "hi": 34.06642381717916
+     "mean": 34.01211543,
+     "lo": 33.95612469,
+     "hi": 34.06642382
     }
    ],
    "edge_only": [
     {
      "profile": "stable",
-     "mean": 132.81733139293937,
-     "lo": 132.70758132085106,
-     "hi": 132.92298990880607
+     "mean": 132.8173314,
+     "lo": 132.7075813,
+     "hi": 132.9229899
     },
     {
      "profile": "congested",
-     "mean": 133.9426897259238,
-     "lo": 133.9057921872592,
-     "hi": 133.97632892860784
+     "mean": 133.9426897,
+     "lo": 133.9057922,
+     "hi": 133.9763289
     },
     {
      "profile": "lossy",
-     "mean": 133.85583842676783,
-     "lo": 133.8050507867707,
-     "hi": 133.90940589108996
+     "mean": 133.8558384,
+     "lo": 133.8050508,
+     "hi": 133.9094059
     },
     {
      "profile": "variable",
-     "mean": 133.58563931025864,
-     "lo": 133.49959953276556,
-     "hi": 133.67492057454533
+     "mean": 133.5856393,
+     "lo": 133.4995995,
+     "hi": 133.6749206
     },
     {
      "profile": "outage",
-     "mean": 128.07706649270384,
-     "lo": 127.70553940054008,
-     "hi": 128.44310799887478
+     "mean": 128.0770665,
+     "lo": 127.7055394,
+     "hi": 128.443108
     }
    ],
    "cloud_only": [
     {
      "profile": "stable",
-     "mean": 133.9842651103547,
-     "lo": 133.93373326836627,
-     "hi": 134.0356777088909
+     "mean": 133.9842651,
+     "lo": 133.9337333,
+     "hi": 134.0356777
     },
     {
      "profile": "congested",
-     "mean": 133.9426897259238,
-     "lo": 133.9057921872592,
-     "hi": 133.97632892860784
+     "mean": 133.9426897,
+     "lo": 133.9057922,
+     "hi": 133.9763289
     },
     {
      "profile": "lossy",
-     "mean": 134.01227815461485,
-     "lo": 133.9682541271267,
-     "hi": 134.05448763655662
+     "mean": 134.0122782,
+     "lo": 133.9682541,
+     "hi": 134.0544876
     },
     {
      "profile": "variable",
-     "mean": 133.6663704718774,
-     "lo": 133.58590631894333,
-     "hi": 133.74796713082046
+     "mean": 133.6663705,
+     "lo": 133.5859063,
+     "hi": 133.7479671
     },
     {
      "profile": "outage",
-     "mean": 128.07706649270384,
-     "lo": 127.70553940054008,
-     "hi": 128.44310799887478
+     "mean": 128.0770665,
+     "lo": 127.7055394,
+     "hi": 128.443108
     }
    ],
    "dapper": [
     {
      "profile": "stable",
-     "mean": 33.984265110354684,
-     "lo": 33.933733268366254,
-     "hi": 34.03567770889089
+     "mean": 33.98426511,
+     "lo": 33.93373327,
+     "hi": 34.03567771
     },
     {
      "profile": "congested",
-     "mean": 33.93663339562628,
-     "lo": 33.89765936597646,
-     "hi": 33.97222933477223
+     "mean": 33.9366334,
+     "lo": 33.89765937,
+     "hi": 33.97222933
     },
     {
      "profile": "lossy",
-     "mean": 34.012278154614826,
-     "lo": 33.96825412712669,
-     "hi": 34.05448763655662
+     "mean": 34.01227815,
+     "lo": 33.96825413,
+     "hi": 34.05448764
     },
     {
      "profile": "variable",
-     "mean": 33.74407704498113,
-     "lo": 33.66991459060688,
-     "hi": 33.819528499197034
+     "mean": 33.74407704,
+     "lo": 33.66991459,
+     "hi": 33.8195285
     },
     {
      "profile": "outage",
-     "mean": 31.18838425196936,
-     "lo": 31.01292571232953,
-     "hi": 31.362502768723584
+     "mean": 31.18838425,
+     "lo": 31.01292571,
+     "hi": 31.36250277
     }
    ]
   },
@@ -1328,41 +1328,41 @@
    "local_only": [
     {
      "profile": "stable",
-     "mean": 0.7249667322554326,
-     "lo": 0.7244497389647496,
-     "hi": 0.7255141489616964
+     "mean": 0.7249667323,
+     "lo": 0.724449739,
+     "hi": 0.725514149
     },
     {
      "profile": "congested",
-     "mean": 0.7249282051819181,
-     "lo": 0.7243644131564243,
-     "hi": 0.7255162553009149
+     "mean": 0.7249282052,
+     "lo": 0.7243644132,
+     "hi": 0.7255162553
     },
     {
      "profile": "lossy",
-     "mean": 0.7247968267120143,
-     "lo": 0.7243290816945883,
-     "hi": 0.7252513425625742
+     "mean": 0.7247968267,
+     "lo": 0.7243290817,
+     "hi": 0.7252513426
     },
     {
      "profile": "variable",
-     "mean": 0.7253139635038416,
-     "lo": 0.72477236895505,
-     "hi": 0.7258565366898948
+     "mean": 0.7253139635,
+     "lo": 0.724772369,
+     "hi": 0.7258565367
     },
     {
      "profile": "outage",
-     "mean": 0.7249467226228217,
-     "lo": 0.7244492443659767,
-     "hi": 0.7254164481558691
+     "mean": 0.7249467226,
+     "lo": 0.7244492444,
+     "hi": 0.7254164482
     }
    ],
    "edge_only": [
     {
      "profile": "stable",
-     "mean": 0.4483087878864294,
-     "lo": 0.4428924800654157,
-     "hi": 0.4535359178719119
+     "mean": 0.4483087879,
+     "lo": 0.4428924801,
+     "hi": 0.4535359179
     },
     {
      "profile": "congested",
@@ -1372,21 +1372,21 @@
     },
     {
      "profile": "lossy",
-     "mean": 0.1093286409076934,
-     "lo": 0.1055459755097783,
-     "hi": 0.1133262894295496
+     "mean": 0.1093286409,
+     "lo": 0.1055459755,
+     "hi": 0.1133262894
     },
     {
      "profile": "variable",
-     "mean": 0.1947771769498917,
-     "lo": 0.1843483588564416,
-     "hi": 0.2047864906493864
+     "mean": 0.1947771769,
+     "lo": 0.1843483589,
+     "hi": 0.2047864906
     },
     {
      "profile": "outage",
-     "mean": 0.6187231720593105,
-     "lo": 0.6139892776727712,
-     "hi": 0.6232440517520567
+     "mean": 0.6187231721,
+     "lo": 0.6139892777,
+     "hi": 0.6232440518
     }
    ],
    "cloud_only": [
@@ -1410,47 +1410,47 @@
     },
     {
      "profile": "variable",
-     "mean": 0.1580399411309307,
-     "lo": 0.1477128199457988,
-     "hi": 0.168446377957376
+     "mean": 0.1580399411,
+     "lo": 0.1477128199,
+     "hi": 0.168446378
     },
     {
      "profile": "outage",
-     "mean": 0.6187231720593105,
-     "lo": 0.6139892776727712,
-     "hi": 0.6232440517520567
+     "mean": 0.6187231721,
+     "lo": 0.6139892777,
+     "hi": 0.6232440518
     }
    ],
    "dapper": [
     {
      "profile": "stable",
-     "mean": 0.7959976928158301,
-     "lo": 0.7949080850073025,
-     "hi": 0.7970417324338718
+     "mean": 0.7959976928,
+     "lo": 0.794908085,
+     "hi": 0.7970417324
     },
     {
      "profile": "congested",
-     "mean": 0.724962592880273,
-     "lo": 0.7244213882112449,
-     "hi": 0.7255313473425076
+     "mean": 0.7249625929,
+     "lo": 0.7244213882,
+     "hi": 0.7255313473
     },
     {
      "profile": "lossy",
-     "mean": 0.7405908249005024,
-     "lo": 0.7398371863884554,
-     "hi": 0.7413865873770361
+     "mean": 0.7405908249,
+     "lo": 0.7398371864,
+     "hi": 0.7413865874
     },
     {
      "profile": "variable",
-     "mean": 0.731537829380306,
-     "lo": 0.7306375575355787,
-     "hi": 0.7323912626304034
+     "mean": 0.7315378294,
+     "lo": 0.7306375575,
+     "hi": 0.7323912626
     },
     {
      "profile": "outage",
-     "mean": 0.7255264574970844,
-     "lo": 0.724534548793681,
-     "hi": 0.7264857617893061
+     "mean": 0.7255264575,
+     "lo": 0.7245345488,
+     "hi": 0.7264857618
     }
    ]
   },
@@ -1490,9 +1490,9 @@
    "edge_only": [
     {
      "profile": "stable",
-     "mean": 48.76666666666666,
-     "lo": 48.17333333333333,
-     "hi": 49.383333333333326
+     "mean": 48.76666667,
+     "lo": 48.17333333,
+     "hi": 49.38333333
     },
     {
      "profile": "congested",
@@ -1502,21 +1502,21 @@
     },
     {
      "profile": "lossy",
-     "mean": 87.50666666666666,
-     "lo": 87.05666666666666,
-     "hi": 87.93666666666665
+     "mean": 87.50666667,
+     "lo": 87.05666667,
+     "hi": 87.93666667
     },
     {
      "profile": "variable",
-     "mean": 74.00333333333333,
-     "lo": 72.61666666666666,
-     "hi": 75.42666666666666
+     "mean": 74.00333333,
+     "lo": 72.61666667,
+     "hi": 75.42666667
     },
     {
      "profile": "outage",
-     "mean": 14.680000000000001,
-     "lo": 14.06333333333333,
-     "hi": 15.32666666666666
+     "mean": 14.68,
+     "lo": 14.06333333,
+     "hi": 15.32666667
     }
    ],
    "cloud_only": [
@@ -1540,15 +1540,15 @@
     },
     {
      "profile": "variable",
-     "mean": 78.19999999999999,
-     "lo": 76.76333333333332,
-     "hi": 79.62000000000002
+     "mean": 78.2,
+     "lo": 76.76333333,
+     "hi": 79.62
     },
     {
      "profile": "outage",
-     "mean": 14.680000000000001,
-     "lo": 14.06333333333333,
-     "hi": 15.32666666666666
+     "mean": 14.68,
+     "lo": 14.06333333,
+     "hi": 15.32666667
     }
    ],
    "dapper": [
@@ -1639,14 +1639,14 @@
     {
      "profile": "variable",
      "mean": 19.55,
-     "lo": 19.19083333333333,
+     "lo": 19.19083333,
      "hi": 19.905
     },
     {
      "profile": "outage",
      "mean": 3.67,
-     "lo": 3.515833333333333,
-     "hi": 3.8316666666666666
+     "lo": 3.515833333,
+     "hi": 3.831666667
     }
    ],
    "cloud_only": [
@@ -1671,40 +1671,40 @@
     {
      "profile": "variable",
      "mean": 27.37,
-     "lo": 26.86716666666667,
+     "lo": 26.86716667,
      "hi": 27.867
     },
     {
      "profile": "outage",
      "mean": 5.138,
-     "lo": 4.9221666666666675,
-     "hi": 5.364333333333333
+     "lo": 4.922166667,
+     "hi": 5.364333333
     }
    ],
    "dapper": [
     {
      "profile": "stable",
-     "mean": 21.62166666666667,
-     "lo": 21.499166666666667,
-     "hi": 21.73583333333333
+     "mean": 21.62166667,
+     "lo": 21.49916667,
+     "hi": 21.73583333
     },
     {
      "profile": "congested",
      "mean": 0.0025,
      "lo": 0.0,
-     "hi": 0.005833333333333333
+     "hi": 0.005833333333
     },
     {
      "profile": "lossy",
-     "mean": 18.12666666666667,
+     "mean": 18.12666667,
      "lo": 17.975,
-     "hi": 18.28083333333333
+     "hi": 18.28083333
     },
     {
      "profile": "variable",
      "mean": 5.7775,
      "lo": 5.5575,
-     "hi": 5.9975000000000005
+     "hi": 5.9975
     },
     {
      "profile": "outage",
@@ -1717,97 +1717,97 @@
   "mode_vs_deadline": [
    {
     "deadline_ms": 50.0,
-    "pct_local_fast": 48.42933333333333,
+    "pct_local_fast": 48.42933333,
     "pct_edge_accurate": 0.0,
     "pct_hybrid": 0.0,
-    "pct_degraded_safe": 51.57066666666667,
+    "pct_degraded_safe": 51.57066667,
     "deadline_miss_pct": 0.0,
-    "p95_latency_ms": 32.587458426071656,
-    "usable_confidence_proxy": 0.7251338469748896,
+    "p95_latency_ms": 32.58745843,
+    "usable_confidence_proxy": 0.725133847,
     "bandwidth_mb_per_1k": 0.0
    },
    {
     "deadline_ms": 75.0,
-    "pct_local_fast": 57.37066666666667,
+    "pct_local_fast": 57.37066667,
     "pct_edge_accurate": 0.0,
-    "pct_hybrid": 10.574000000000002,
-    "pct_degraded_safe": 32.05533333333334,
+    "pct_hybrid": 10.574,
+    "pct_degraded_safe": 32.05533333,
     "deadline_miss_pct": 0.0,
-    "p95_latency_ms": 33.15989719566545,
-    "usable_confidence_proxy": 0.7258135478510832,
+    "p95_latency_ms": 33.1598972,
+    "usable_confidence_proxy": 0.7258135479,
     "bandwidth_mb_per_1k": 2.6435
    },
    {
     "deadline_ms": 100.0,
-    "pct_local_fast": 44.58866666666667,
+    "pct_local_fast": 44.58866667,
     "pct_edge_accurate": 0.0,
-    "pct_hybrid": 36.422666666666665,
-    "pct_degraded_safe": 18.988666666666667,
+    "pct_hybrid": 36.42266667,
+    "pct_degraded_safe": 18.98866667,
     "deadline_miss_pct": 0.0,
-    "p95_latency_ms": 33.37312759150925,
-    "usable_confidence_proxy": 0.7437230794947992,
-    "bandwidth_mb_per_1k": 9.105666666666666
+    "p95_latency_ms": 33.37312759,
+    "usable_confidence_proxy": 0.7437230795,
+    "bandwidth_mb_per_1k": 9.105666667
    },
    {
     "deadline_ms": 125.0,
-    "pct_local_fast": 42.400666666666666,
-    "pct_edge_accurate": 11.255333333333333,
+    "pct_local_fast": 42.40066667,
+    "pct_edge_accurate": 11.25533333,
     "pct_hybrid": 27.532,
     "pct_degraded_safe": 18.812,
-    "deadline_miss_pct": 5.23866666666666,
-    "p95_latency_ms": 56.40262813434968,
-    "usable_confidence_proxy": 0.70656120319272,
-    "bandwidth_mb_per_1k": 9.696833333333334
+    "deadline_miss_pct": 5.238666667,
+    "p95_latency_ms": 56.40262813,
+    "usable_confidence_proxy": 0.7065612032,
+    "bandwidth_mb_per_1k": 9.696833333
    },
    {
     "deadline_ms": 150.0,
-    "pct_local_fast": 42.36533333333333,
-    "pct_edge_accurate": 31.97066666666667,
-    "pct_hybrid": 6.870666666666666,
-    "pct_degraded_safe": 18.793333333333333,
-    "deadline_miss_pct": 13.312666666666658,
-    "p95_latency_ms": 108.58294849781244,
-    "usable_confidence_proxy": 0.6488392840201628,
-    "bandwidth_mb_per_1k": 9.710333333333335
+    "pct_local_fast": 42.36533333,
+    "pct_edge_accurate": 31.97066667,
+    "pct_hybrid": 6.870666667,
+    "pct_degraded_safe": 18.79333333,
+    "deadline_miss_pct": 13.31266667,
+    "p95_latency_ms": 108.5829485,
+    "usable_confidence_proxy": 0.648839284,
+    "bandwidth_mb_per_1k": 9.710333333
    },
    {
     "deadline_ms": 200.0,
     "pct_local_fast": 26.066,
-    "pct_edge_accurate": 55.31133333333334,
+    "pct_edge_accurate": 55.31133333,
     "pct_hybrid": 0.0,
-    "pct_degraded_safe": 18.622666666666667,
-    "deadline_miss_pct": 4.205333333333329,
-    "p95_latency_ms": 152.57098483695998,
-    "usable_confidence_proxy": 0.714020943236319,
-    "bandwidth_mb_per_1k": 13.827833333333334
+    "pct_degraded_safe": 18.62266667,
+    "deadline_miss_pct": 4.205333333,
+    "p95_latency_ms": 152.5709848,
+    "usable_confidence_proxy": 0.7140209432,
+    "bandwidth_mb_per_1k": 13.82783333
    },
    {
     "deadline_ms": 250.0,
-    "pct_local_fast": 16.019333333333336,
-    "pct_edge_accurate": 65.53266666666667,
+    "pct_local_fast": 16.01933333,
+    "pct_edge_accurate": 65.53266667,
     "pct_hybrid": 0.0,
     "pct_degraded_safe": 18.448,
     "deadline_miss_pct": 0.0,
-    "p95_latency_ms": 156.2757566432646,
-    "usable_confidence_proxy": 0.7440526990768586,
-    "bandwidth_mb_per_1k": 16.383166666666668
+    "p95_latency_ms": 156.2757566,
+    "usable_confidence_proxy": 0.7440526991,
+    "bandwidth_mb_per_1k": 16.38316667
    }
   ],
   "miss_vs_bias": {
    "both": [
     {
      "bias": -0.3,
-     "miss_pct_mean": 15.29444444444444,
-     "miss_pct_worst": 42.216666666666654
+     "miss_pct_mean": 15.29444444,
+     "miss_pct_worst": 42.21666667
     },
     {
      "bias": -0.2,
-     "miss_pct_mean": 8.732222222222218,
-     "miss_pct_worst": 25.89999999999999
+     "miss_pct_mean": 8.732222222,
+     "miss_pct_worst": 25.9
     },
     {
      "bias": -0.1,
-     "miss_pct_mean": 0.006666666666666667,
+     "miss_pct_mean": 0.006666666667,
      "miss_pct_worst": 0.02
     },
     {
@@ -1834,17 +1834,17 @@
    "compute": [
     {
      "bias": -0.3,
-     "miss_pct_mean": 13.131111111111105,
-     "miss_pct_worst": 38.54666666666665
+     "miss_pct_mean": 13.13111111,
+     "miss_pct_worst": 38.54666667
     },
     {
      "bias": -0.2,
-     "miss_pct_mean": 0.28222222222222,
-     "miss_pct_worst": 0.7000000000000001
+     "miss_pct_mean": 0.2822222222,
+     "miss_pct_worst": 0.7
     },
     {
      "bias": -0.1,
-     "miss_pct_mean": 0.006666666666666667,
+     "miss_pct_mean": 0.006666666667,
      "miss_pct_worst": 0.02
     },
     {
@@ -1928,7 +1928,7 @@
      },
      {
       "policy": "edge_only",
-      "value": 48.76666666666666,
+      "value": 48.76666667,
       "rank": 3,
       "is_best": false
      },
@@ -1951,25 +1951,25 @@
     "order": [
      {
       "policy": "local_only",
-      "value": 33.984265110354684,
+      "value": 33.98426511,
       "rank": 1,
       "is_best": true
      },
      {
       "policy": "dapper",
-      "value": 33.984265110354684,
+      "value": 33.98426511,
       "rank": 2,
       "is_best": true
      },
      {
       "policy": "edge_only",
-      "value": 132.81733139293937,
+      "value": 132.8173314,
       "rank": 3,
       "is_best": false
      },
      {
       "policy": "cloud_only",
-      "value": 133.9842651103547,
+      "value": 133.9842651,
       "rank": 4,
       "is_best": false
      }
@@ -1986,19 +1986,19 @@
     "order": [
      {
       "policy": "dapper",
-      "value": 0.7959976928158301,
+      "value": 0.7959976928,
       "rank": 1,
       "is_best": true
      },
      {
       "policy": "local_only",
-      "value": 0.7249667322554326,
+      "value": 0.7249667323,
       "rank": 2,
       "is_best": false
      },
      {
       "policy": "edge_only",
-      "value": 0.4483087878864294,
+      "value": 0.4483087879,
       "rank": 3,
       "is_best": false
      },
@@ -2026,7 +2026,7 @@
      },
      {
       "policy": "dapper",
-      "value": 21.62166666666667,
+      "value": 21.62166667,
       "rank": 2,
       "is_best": false
      },
@@ -2091,25 +2091,25 @@
     "order": [
      {
       "policy": "dapper",
-      "value": 33.93663339562628,
+      "value": 33.9366334,
       "rank": 1,
       "is_best": true
      },
      {
       "policy": "local_only",
-      "value": 33.94268972592376,
+      "value": 33.94268973,
       "rank": 2,
       "is_best": true
      },
      {
       "policy": "edge_only",
-      "value": 133.9426897259238,
+      "value": 133.9426897,
       "rank": 3,
       "is_best": false
      },
      {
       "policy": "cloud_only",
-      "value": 133.9426897259238,
+      "value": 133.9426897,
       "rank": 4,
       "is_best": false
      }
@@ -2126,13 +2126,13 @@
     "order": [
      {
       "policy": "dapper",
-      "value": 0.724962592880273,
+      "value": 0.7249625929,
       "rank": 1,
       "is_best": true
      },
      {
       "policy": "local_only",
-      "value": 0.7249282051819181,
+      "value": 0.7249282052,
       "rank": 2,
       "is_best": true
      },
@@ -2210,7 +2210,7 @@
      },
      {
       "policy": "edge_only",
-      "value": 87.50666666666666,
+      "value": 87.50666667,
       "rank": 3,
       "is_best": false
      },
@@ -2233,25 +2233,25 @@
     "order": [
      {
       "policy": "local_only",
-      "value": 34.012278154614826,
+      "value": 34.01227815,
       "rank": 1,
       "is_best": true
      },
      {
       "policy": "dapper",
-      "value": 34.012278154614826,
+      "value": 34.01227815,
       "rank": 2,
       "is_best": true
      },
      {
       "policy": "edge_only",
-      "value": 133.85583842676783,
+      "value": 133.8558384,
       "rank": 3,
       "is_best": false
      },
      {
       "policy": "cloud_only",
-      "value": 134.01227815461485,
+      "value": 134.0122782,
       "rank": 4,
       "is_best": false
      }
@@ -2268,19 +2268,19 @@
     "order": [
      {
       "policy": "dapper",
-      "value": 0.7405908249005024,
+      "value": 0.7405908249,
       "rank": 1,
       "is_best": true
      },
      {
       "policy": "local_only",
-      "value": 0.7247968267120143,
+      "value": 0.7247968267,
       "rank": 2,
       "is_best": false
      },
      {
       "policy": "edge_only",
-      "value": 0.1093286409076934,
+      "value": 0.1093286409,
       "rank": 3,
       "is_best": false
      },
@@ -2308,7 +2308,7 @@
      },
      {
       "policy": "dapper",
-      "value": 18.12666666666667,
+      "value": 18.12666667,
       "rank": 2,
       "is_best": false
      },
@@ -2350,13 +2350,13 @@
      },
      {
       "policy": "edge_only",
-      "value": 74.00333333333333,
+      "value": 74.00333333,
       "rank": 3,
       "is_best": false
      },
      {
       "policy": "cloud_only",
-      "value": 78.19999999999999,
+      "value": 78.2,
       "rank": 4,
       "is_best": false
      }
@@ -2373,25 +2373,25 @@
     "order": [
      {
       "policy": "dapper",
-      "value": 33.74407704498113,
+      "value": 33.74407704,
       "rank": 1,
       "is_best": true
      },
      {
       "policy": "local_only",
-      "value": 33.968149024906744,
+      "value": 33.96814902,
       "rank": 2,
       "is_best": false
      },
      {
       "policy": "edge_only",
-      "value": 133.58563931025864,
+      "value": 133.5856393,
       "rank": 3,
       "is_best": false
      },
      {
       "policy": "cloud_only",
-      "value": 133.6663704718774,
+      "value": 133.6663705,
       "rank": 4,
       "is_best": false
      }
@@ -2407,25 +2407,25 @@
     "order": [
      {
       "policy": "dapper",
-      "value": 0.731537829380306,
+      "value": 0.7315378294,
       "rank": 1,
       "is_best": true
      },
      {
       "policy": "local_only",
-      "value": 0.7253139635038416,
+      "value": 0.7253139635,
       "rank": 2,
       "is_best": false
      },
      {
       "policy": "edge_only",
-      "value": 0.1947771769498917,
+      "value": 0.1947771769,
       "rank": 3,
       "is_best": false
      },
      {
       "policy": "cloud_only",
-      "value": 0.1580399411309307,
+      "value": 0.1580399411,
       "rank": 4,
       "is_best": false
      }
@@ -2489,13 +2489,13 @@
      },
      {
       "policy": "edge_only",
-      "value": 14.680000000000001,
+      "value": 14.68,
       "rank": 3,
       "is_best": false
      },
      {
       "policy": "cloud_only",
-      "value": 14.680000000000001,
+      "value": 14.68,
       "rank": 4,
       "is_best": false
      }
@@ -2512,25 +2512,25 @@
     "order": [
      {
       "policy": "dapper",
-      "value": 31.18838425196936,
+      "value": 31.18838425,
       "rank": 1,
       "is_best": true
      },
      {
       "policy": "local_only",
-      "value": 34.0121154317442,
+      "value": 34.01211543,
       "rank": 2,
       "is_best": false
      },
      {
       "policy": "edge_only",
-      "value": 128.07706649270384,
+      "value": 128.0770665,
       "rank": 3,
       "is_best": false
      },
      {
       "policy": "cloud_only",
-      "value": 128.07706649270384,
+      "value": 128.0770665,
       "rank": 4,
       "is_best": false
      }
@@ -2546,25 +2546,25 @@
     "order": [
      {
       "policy": "dapper",
-      "value": 0.7255264574970844,
+      "value": 0.7255264575,
       "rank": 1,
       "is_best": true
      },
      {
       "policy": "local_only",
-      "value": 0.7249467226228217,
+      "value": 0.7249467226,
       "rank": 2,
       "is_best": false
      },
      {
       "policy": "edge_only",
-      "value": 0.6187231720593105,
+      "value": 0.6187231721,
       "rank": 3,
       "is_best": false
      },
      {
       "policy": "cloud_only",
-      "value": 0.6187231720593105,
+      "value": 0.6187231721,
       "rank": 4,
       "is_best": false
      }
@@ -2613,43 +2613,43 @@
  "facts": {
   "dapper_worst_miss_pct": 0.0,
   "worst_stale_pct": 0.0,
-  "dapper_profile_mean_p95_ms": 33.37312759150926,
-  "local_profile_mean_p95_ms": 33.98389948950884,
-  "dapper_profile_mean_bandwidth_mb_per_1k": 9.105666666666668,
+  "dapper_profile_mean_p95_ms": 33.37312759,
+  "local_profile_mean_p95_ms": 33.98389949,
+  "dapper_profile_mean_bandwidth_mb_per_1k": 9.105666667,
   "confidence_gain_vs_local": [
    {
     "profile": "stable",
-    "mean_diff": 0.0710309605603974,
-    "lo": 0.0699945261707533,
-    "hi": 0.0720170952318278,
+    "mean_diff": 0.07103096056,
+    "lo": 0.06999452617,
+    "hi": 0.07201709523,
     "excludes_zero": true
    },
    {
     "profile": "congested",
-    "mean_diff": 3.438769835493553e-05,
-    "lo": -3.289185139498181e-05,
-    "hi": 0.0001007471911412,
+    "mean_diff": 3.438769835e-05,
+    "lo": -3.289185139e-05,
+    "hi": 0.0001007471911,
     "excludes_zero": false
    },
    {
     "profile": "lossy",
-    "mean_diff": 0.0157939981884882,
-    "lo": 0.0151485666893054,
-    "hi": 0.0164675381788039,
+    "mean_diff": 0.01579399819,
+    "lo": 0.01514856669,
+    "hi": 0.01646753818,
     "excludes_zero": true
    },
    {
     "profile": "variable",
-    "mean_diff": 0.0062238658764644,
-    "lo": 0.0055874309162791,
-    "hi": 0.0068402592360496,
+    "mean_diff": 0.006223865876,
+    "lo": 0.005587430916,
+    "hi": 0.006840259236,
     "excludes_zero": true
    },
    {
     "profile": "outage",
-    "mean_diff": 0.0005797348742627,
-    "lo": -0.0002495457330522,
-    "hi": 0.0014430284010222,
+    "mean_diff": 0.0005797348743,
+    "lo": -0.0002495457331,
+    "hi": 0.001443028401,
     "excludes_zero": false
    }
   ],
@@ -2660,10 +2660,10 @@
    "p99": 2.0,
    "calls": 200000
   },
-  "dapper_added_wall_us_per_frame": 1.3082666666666665,
+  "dapper_added_wall_us_per_frame": 1.308266667,
   "dapper_mode_switches_per_1000": {
-   "min": 12.133333333333333,
-   "max": 418.4333333333333
+   "min": 12.13333333,
+   "max": 418.4333333
   },
   "calibration": {
    "candidates": 400,
@@ -2684,11 +2684,11 @@
     0.6
    ],
    "largest_safe_margin": 0.6,
-   "calibrated_margin_worst_miss_pct": 50.386666666666656
+   "calibrated_margin_worst_miss_pct": 50.38666667
   },
   "detector_gap": {
-   "recall_points": 13.059033989266544,
-   "safety_recall_points": 11.106373907482414
+   "recall_points": 13.05903399,
+   "safety_recall_points": 11.10637391
   }
  },
  "honest": [
@@ -2699,23 +2699,23 @@
    "profiles": [
     {
      "profile": "congested",
-     "dapper_recall_all": 0.633625571062334,
-     "local_recall_all": 0.6391523349965231,
-     "dapper_recall_fresh": 0.6392148723620925,
-     "reuse_pct": 0.8820000000000001
+     "dapper_recall_all": 0.6336255711,
+     "local_recall_all": 0.639152335,
+     "dapper_recall_fresh": 0.6392148724,
+     "reuse_pct": 0.882
     },
     {
      "profile": "variable",
-     "dapper_recall_all": 0.5448607397198124,
-     "local_recall_all": 0.6391523349965231,
-     "dapper_recall_fresh": 0.6489930783922006,
+     "dapper_recall_all": 0.5448607397,
+     "local_recall_all": 0.639152335,
+     "dapper_recall_fresh": 0.6489930784,
      "reuse_pct": 16.036
     },
     {
      "profile": "outage",
-     "dapper_recall_all": 0.2231261750374772,
-     "local_recall_all": 0.6391523349965231,
-     "dapper_recall_fresh": 0.6372092380539722,
+     "dapper_recall_all": 0.223126175,
+     "local_recall_all": 0.639152335,
+     "dapper_recall_fresh": 0.6372092381,
      "reuse_pct": 64.98
     }
    ],
@@ -2729,12 +2729,12 @@
    "profiles": [
     {
      "profile": "stable",
-     "bandwidth_mb_per_1k": 21.62166666666667,
-     "transmit_pct": 86.48666666666666,
-     "accepted_pct": 51.192996362198016,
-     "rejected_deadline_pct": 47.690963533308015,
-     "lost_pct": 1.1160401044939599,
-     "wasted_mb_per_1k": 10.55288763655342
+     "bandwidth_mb_per_1k": 21.62166667,
+     "transmit_pct": 86.48666667,
+     "accepted_pct": 51.19299636,
+     "rejected_deadline_pct": 47.69096353,
+     "lost_pct": 1.116040104,
+     "wasted_mb_per_1k": 10.55288764
     },
     {
      "profile": "congested",
@@ -2747,21 +2747,21 @@
     },
     {
      "profile": "lossy",
-     "bandwidth_mb_per_1k": 18.12666666666667,
-     "transmit_pct": 72.50666666666666,
-     "accepted_pct": 13.67909377384439,
-     "rejected_deadline_pct": 67.53218499411898,
-     "lost_pct": 18.78872123203663,
-     "wasted_mb_per_1k": 15.647102935261143
+     "bandwidth_mb_per_1k": 18.12666667,
+     "transmit_pct": 72.50666667,
+     "accepted_pct": 13.67909377,
+     "rejected_deadline_pct": 67.53218499,
+     "lost_pct": 18.78872123,
+     "wasted_mb_per_1k": 15.64710294
     },
     {
      "profile": "variable",
      "bandwidth_mb_per_1k": 5.7775,
      "transmit_pct": 23.11,
-     "accepted_pct": 15.932259046475588,
-     "rejected_deadline_pct": 76.87412516943986,
-     "lost_pct": 7.193615784084539,
-     "wasted_mb_per_1k": 4.857013733589873
+     "accepted_pct": 15.93225905,
+     "rejected_deadline_pct": 76.87412517,
+     "lost_pct": 7.193615784,
+     "wasted_mb_per_1k": 4.857013734
     },
     {
      "profile": "outage",
@@ -2783,18 +2783,18 @@
    "deadlines": [
     {
      "deadline_ms": 125.0,
-     "miss_pct": 5.23866666666666,
-     "pct_edge_accurate": 11.255333333333333
+     "miss_pct": 5.238666667,
+     "pct_edge_accurate": 11.25533333
     },
     {
      "deadline_ms": 150.0,
-     "miss_pct": 13.312666666666658,
-     "pct_edge_accurate": 31.97066666666667
+     "miss_pct": 13.31266667,
+     "pct_edge_accurate": 31.97066667
     },
     {
      "deadline_ms": 200.0,
-     "miss_pct": 4.205333333333329,
-     "pct_edge_accurate": 55.31133333333334
+     "miss_pct": 4.205333333,
+     "pct_edge_accurate": 55.31133333
     }
    ],
    "source": "results/sensitivity/deadline_mode_distribution.csv",

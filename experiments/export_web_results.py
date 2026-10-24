@@ -23,6 +23,10 @@ larger deadlines. A consumer that renders `tables` and `series` but skips
 
 NaN and Infinity are illegal in JSON, so every non-finite value becomes null and
 the dump uses allow_nan=False.
+
+Every float is written with JSON_SIGNIFICANT_DIGITS significant digits, so the
+file is byte-identical whichever Python, pandas or platform regenerates it (CI
+regenerates it and fails on any diff). See JSON_SIGNIFICANT_DIGITS.
 """
 
 from __future__ import annotations
@@ -78,6 +82,23 @@ RANKED_METRICS = [
     ("bandwidth_per_1000_frames_kb", " MB/1k fr.", 1e-3, 2),
 ]
 
+#: Significant digits every float in results.json is written with.
+#:
+#: json.dumps writes the shortest repr that round-trips (up to 17 digits), so
+#: the last binary digit (~1e-16 relative) of every mean, bound and ratio reached
+#: the file -- and that digit is a property of the toolchain, not of the study.
+#: pandas 3.1 made read_csv's float parser correctly rounded (2.x and 3.0 are
+#: one ulp off on ~6% of the values in results/), and CPython 3.12 made sum() of
+#: floats compensated, so a file exported on one machine failed CI's
+#: `git diff --exit-code -- site/data` on a runner with another Python or pandas.
+#:
+#: Ten significant digits is a million times coarser than that noise and far
+#: finer than anything the dashboard prints (at most 4 decimals). The rounding
+#: is relative, so even the smallest nonzero value exported (~3e-5) keeps ten
+#: digits. It is applied only at serialization (write_json): the rankings and
+#: every comparison in build() still see the full-precision values.
+JSON_SIGNIFICANT_DIGITS = 10
+
 
 def _f(x: Any) -> Optional[float]:
     """JSON-safe float: NaN and +/-Infinity become null."""
@@ -112,7 +133,10 @@ class Long:
 
     def profile_mean(self, policy: str, metric: str,
                      profiles: Sequence[str] = tuple(PROFILE_ORDER)) -> float:
-        return sum(self.mean(p, policy, metric) for p in profiles) / len(profiles)
+        # math.fsum is correctly rounded on every Python version. The built-in
+        # sum() is not version-stable for floats: CPython 3.12 switched it to
+        # compensated summation, so 3.11 and 3.12 disagreed in the last digit.
+        return math.fsum(self.mean(p, policy, metric) for p in profiles) / len(profiles)
 
     def profiles(self) -> List[str]:
         present = set(self.df["profile"])
@@ -665,9 +689,26 @@ def build(cfg: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+def canonical_floats(obj: Any, digits: int = JSON_SIGNIFICANT_DIGITS) -> Any:
+    """
+    Round every float in a JSON-ready structure to `digits` significant digits.
+
+    Python's float formatting is correctly rounded and does not depend on the
+    platform's C library, so the result is the same on every machine. Booleans
+    and ints pass through untouched (bool is not a float subclass).
+    """
+    if isinstance(obj, float):
+        return float(f"{obj:.{digits}g}")
+    if isinstance(obj, dict):
+        return {k: canonical_floats(v, digits) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [canonical_floats(v, digits) for v in obj]
+    return obj
+
+
 def write_json(obj: Any, path: str) -> str:
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
-    text = json.dumps(obj, indent=1, allow_nan=False, ensure_ascii=False)
+    text = json.dumps(canonical_floats(obj), indent=1, allow_nan=False, ensure_ascii=False)
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write(text + "\n")
     print(f"  wrote {os.path.relpath(path, ROOT)}  ({len(text) / 1024:.0f} KiB)")
